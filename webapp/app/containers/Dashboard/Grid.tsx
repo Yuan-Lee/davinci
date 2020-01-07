@@ -50,7 +50,7 @@ import GlobalControlConfig from 'components/Filters/config/FilterConfig'
 import { getMappingLinkage, processLinkage, removeLinkage } from 'components/Linkages'
 import { hasVizEditPermission } from '../Account/components/checkUtilPermission'
 
-import { Responsive, WidthProvider } from 'react-grid-layout'
+import { Responsive, WidthProvider } from 'libs/react-grid-layout'
 import AntdFormType from 'antd/lib/form/Form'
 import { Row, Col, Button, Modal, Breadcrumb, Icon, Dropdown, Menu, message } from 'antd'
 import { uuid } from 'utils/util'
@@ -60,6 +60,7 @@ import { initiateDownloadTask } from 'containers/App/actions'
 import {
   loadDashboardDetail,
   addDashboardItems,
+  editCurrentDashboard,
   editDashboardItem,
   editDashboardItems,
   deleteDashboardItem,
@@ -80,6 +81,7 @@ import {
   monitoredLinkageDataAction
 } from './actions'
 import {
+  makeSelectDashboards,
   makeSelectCurrentDashboard,
   makeSelectCurrentDashboardLoading,
   makeSelectCurrentItems,
@@ -90,11 +92,9 @@ import {
   makeSelectCurrentDashboardSelectOptions,
   makeSelectCurrentLinkages
 } from './selectors'
-import { VizActions } from 'containers/Viz/actions'
-import { makeSelectCurrentDashboards } from 'containers/Viz/selectors'
 import { ViewActions, ViewActionType } from 'containers/View/actions'
 const { loadViewDataFromVizItem, loadViewsDetail, loadSelectOptions } = ViewActions
-import { makeSelectCurrentPortal } from 'containers/Viz/selectors'
+import { makeSelectCurrentPortal } from 'containers/Portal/selectors'
 import { makeSelectWidgets } from 'containers/Widget/selectors'
 import { makeSelectViews, makeSelectFormedViews } from 'containers/View/selectors'
 import { makeSelectCurrentProject } from 'containers/Projects/selectors'
@@ -354,8 +354,8 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
   }): IVizData {
     return {
       project_id: +projectId,
-      project_name: currentProject && currentProject.name,
-      org_id: currentProject && currentProject.orgId,
+      project_name: currentProject.name,
+      org_id: currentProject.orgId,
       viz_type: 'dashboard',
       viz_id: +portalId,
       viz_name: currentPortal && currentPortal.name,
@@ -442,23 +442,9 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
 
     if (currentDashboard && currentDashboard.name) {
       statistic.setDurations({
-        sub_viz_name: currentDashboard.name
+        sub_viz_name: currentDashboard['name']
       })
     }
-
-    if ( currentProject && currentProject.name) {
-      statistic.setDurations({
-        project_name: currentProject.name,
-        org_id: currentProject.orgId
-      })
-    }
-
-    if ( currentPortal && currentPortal.name) {
-      statistic.setDurations({
-        viz_name:  currentPortal.name
-      })
-    }
-
   }
   private statisticTimeFuc = () => {
     statistic.isTimeout()
@@ -579,6 +565,17 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
       queryConditions
     )
   }
+
+  // private downloadCsv = (itemId: number, widgetId: number) => {
+  //   this.getData(
+  //     (renderType, itemId, widget, requestParams) => {
+  //       this.props.onLoadWidgetCsv(itemId, widget.id, requestParams)
+  //     },
+  //     'rerender',
+  //     itemId,
+  //     widgetId
+  //   )
+  // }
 
   private initiateWidgetDownloadTask = (itemId: number, widgetId: number) => {
     const { widgets } = this.props
@@ -1736,7 +1733,7 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
           onDragStop={this.onDragStop}
           onResizeStop={this.onResizeStop}
           measureBeforeMount={false}
-          draggableHandle={`.${styles.title}`}
+          draggableHandle={`.${styles.draghandle}`}
           useCSSTransforms={mounted}
           isDraggable={gridEditable}
           isResizable={gridEditable}
@@ -1928,7 +1925,7 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
 }
 
 const mapStateToProps = createStructuredSelector({
-  dashboards: makeSelectCurrentDashboards(),
+  dashboards: makeSelectDashboards(),
   currentDashboard: makeSelectCurrentDashboard(),
   currentDashboardLoading: makeSelectCurrentDashboardLoading(),
   currentDashboardShareInfo: makeSelectCurrentDashboardShareInfo(),
@@ -1949,7 +1946,7 @@ export function mapDispatchToProps (dispatch) {
   return {
     onLoadDashboardDetail: (projectId, portalId, dashboardId) => dispatch(loadDashboardDetail(projectId, portalId, dashboardId)),
     onAddDashboardItems: (portalId, items, resolve) => dispatch(addDashboardItems(portalId, items, resolve)),
-    onEditCurrentDashboard: (dashboard, resolve) => dispatch(VizActions.editCurrentDashboard(dashboard, resolve)),
+    onEditCurrentDashboard: (dashboard, resolve) => dispatch(editCurrentDashboard(dashboard, resolve)),
     onEditDashboardItem: (portalId, item, resolve) => dispatch(editDashboardItem(portalId, item, resolve)),
     onEditDashboardItems: (portalId, items) => dispatch(editDashboardItems(portalId, items)),
     onDeleteDashboardItem: (id, resolve) => dispatch(deleteDashboardItem(id, resolve)),

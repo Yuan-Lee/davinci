@@ -23,7 +23,15 @@ export class Chart extends React.PureComponent<IChartProps> {
   }
 
   private renderChart = (props: IChartProps) => {
-    const { selectedChart, renderType, getDataDrillDetail, isDrilling, onSelectChartsItems, onDoInteract, onCheckTableInteract } = props
+    const {
+      selectedChart,
+      renderType,
+      getDataDrillDetail,
+      isDrilling,
+      onSelectChartsItems,
+      onDoInteract,
+      onCheckTableInteract
+    } = props
 
     if (renderType === 'loading') {
       return

@@ -1,6 +1,6 @@
 
 import * as React from 'react'
-import { Row, Col, Input, Checkbox, Select } from 'antd'
+import { Row, Col, Input, Checkbox, Select, Radio } from 'antd'
 const Option = Select.Option
 import ColorPicker from 'components/ColorPicker'
 import {
@@ -47,6 +47,9 @@ export interface IScorecardConfig {
   fontSizeFixed: boolean
   fontSizeMain: string
   fontSizeSub: string
+
+  bgColor: string
+  textAlign: string
 }
 
 interface IScorecardSectionProps {
@@ -71,6 +74,10 @@ export class ScorecardSection extends React.PureComponent<IScorecardSectionProps
 
   private colorChange = (prop) => (color) => {
     this.props.onChange(prop, color)
+  }
+
+  private textAlignChange = (prop) => (e) => {
+    this.props.onChange(prop, e.target.value)
   }
 
   private static FontFamilies = PIVOT_CHART_FONT_FAMILIES.map((f) => (
@@ -117,7 +124,9 @@ export class ScorecardSection extends React.PureComponent<IScorecardSectionProps
 
       fontSizeFixed,
       fontSizeMain,
-      fontSizeSub
+      fontSizeSub,
+      bgColor,
+      textAlign
     } = config
 
     return (
@@ -372,6 +381,27 @@ export class ScorecardSection extends React.PureComponent<IScorecardSectionProps
               </Row>
             )
           }
+          <Row gutter={8} type="flex" align="middle" className={styles.blockRow}>
+            <Col span={6}>背景色</Col>
+            <Col span={4}>
+              <ColorPicker
+                value={bgColor}
+                onChange={this.colorChange('bgColor')}
+              />
+            </Col>
+          </Row>
+        </div>
+        <div className={styles.blockBody}>
+          <Row gutter={8} type="flex" align="middle" className={styles.blockRow}>
+            <Col span={6}>对齐方式</Col>
+            <Col span={18}>
+              <Radio.Group onChange={this.textAlignChange('textAlign')} value={textAlign}>
+                <Radio value='left'>左</Radio>
+                <Radio value='center'>中</Radio>
+                <Radio value='right'>右</Radio>
+              </Radio.Group>
+            </Col>
+          </Row>
         </div>
       </div>
     )

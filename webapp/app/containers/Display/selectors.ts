@@ -18,208 +18,139 @@
  * >>
  */
 
-import { createSelector, createSelectorCreator } from 'reselect'
-import { IDisplayState } from './types'
-import { initialState } from './reducer'
-import { LayerContextValue } from './components/types'
+import { createSelector } from 'reselect'
 
-const selectDisplay = (state: { display: IDisplayState }) =>
-  state.display || initialState
+const selectDisplay = (state) => state.display
 
-const selectPropsSlideId = (_, slideId: number) => slideId
-const selectPropsLayerId = (_, layerId: number) => layerId
+const makeSelectDisplays = () => createSelector(
+  selectDisplay,
+  ({ present }) => present.displays
+)
 
-const selectCurrentSlideId = (state: { display: IDisplayState }) =>
-  state.display ? state.display.currentSlideId : initialState.currentSlideId
-const selectSlideLayers = (state: { display: IDisplayState }) =>
-  state.display ? state.display.slideLayers : initialState.slideLayers
-const selectSlideLayersInfo = (state: { display: IDisplayState }) =>
-  state.display ? state.display.slideLayersInfo : initialState.slideLayersInfo
-const selectSlideLayersOperationInfo = (state: { display: IDisplayState }) =>
-  state.display
-    ? state.display.slideLayersOperationInfo
-    : initialState.slideLayersOperationInfo
+const makeSelectCurrentDisplay = () => createSelector(
+  selectDisplay,
+  ({ present }) => present.currentDisplay
+)
 
-const selectCurrentLayers = (state: { display: IDisplayState }) =>
-  state.display
-    ? state.display.slideLayers[state.display.currentSlideId] || {}
-    : {}
+const makeSelectCurrentSlide = () => createSelector(
+  selectDisplay,
+  ({ present }) => present.currentSlide
+)
 
-const makeSelectCurrentLayersOperationInfo = () => (state: {
-  display: IDisplayState
-}) =>
-  state.display
-    ? state.display.slideLayersOperationInfo[state.display.currentSlideId] || {}
-    : {}
+const makeSelectCurrentLayers = () => createSelector(
+  selectDisplay,
+  ({ present }) =>  present.currentLayers
+)
 
-const makeSelectLayersBySlide = () =>
-  createSelector(
-    selectSlideLayers,
-    selectPropsSlideId,
-    (slideLayers, slideId) => slideLayers[slideId]
-  )
+const makeSelectCurrentLayersInfo = () => createSelector(
+  selectDisplay,
+  ({ present }) => present.currentLayersInfo
+)
+const makeSelectCurrentLayersOperationInfo = () => createSelector(
+  selectDisplay,
+  ({ present }) => present.currentLayersOperationInfo
+)
 
-const makeSelectLayerIdsBySlide = () =>
-  createSelector(
-    makeSelectLayersBySlide(),
-    (layers) => (!layers ? [] : Object.keys(layers).map((id) => +id))
-  )
+const makeSelectCurrentSelectedLayers = () => createSelector(
+  selectDisplay,
+  ({ present }) => {
+    const layersOperationInfo = present.currentLayersOperationInfo
+    const layers = present.currentLayers
+    return layers.filter((layer) => layersOperationInfo[layer.id].selected)
+  }
+)
 
-const makeSelectCurrentLayerList = () =>
-  createSelector(
-    selectCurrentLayers,
-    (currentLayers) =>
-      Object.values(currentLayers).sort((l1, l2) => l2.index - l1.index)
-  )
-const makeSelectCurrentLayerIds = () =>
-  createSelector(
-    selectCurrentLayers,
-    (currentLayers) => Object.keys(currentLayers).map((id) => +id)
-  )
+const makeSelectClipboardLayers = () => createSelector(
+  selectDisplay,
+  ({ present }) => present.clipboardLayers
+)
 
-const makeSelectSlideLayerContextValue = () =>
-  createSelector(
-    selectSlideLayers,
-    selectSlideLayersOperationInfo,
-    selectSlideLayersInfo,
-    (_, slideId: number) => slideId,
-    (_1, _2, layerId: number) => layerId,
-    (_1, _2, _3, editing: boolean = true) => editing,
-    (
-      slideLayers,
-      slideLayersOperationInfo,
-      slideLayersInfo,
-      slideId,
-      layerId,
-      editing
-    ) => {
-      const layerContextValue: LayerContextValue = {
-        layer: slideLayers[slideId][layerId],
-        layerInfo: slideLayersInfo[slideId][layerId]
-      }
-      if (editing) {
-        layerContextValue.operationInfo = slideLayersOperationInfo[slideId][layerId]
-      }
-      return layerContextValue
+const makeSelectCurrentDisplayShareInfo = () => createSelector(
+  selectDisplay,
+  ({ present }) => present.currentDisplayShareInfo
+)
+
+const makeSelectCurrentDisplaySecretInfo = () => createSelector(
+  selectDisplay,
+  ({ present }) => present.currentDisplaySecretInfo
+)
+
+const makeSelectCurrentDisplayShareInfoLoading = () => createSelector(
+  selectDisplay,
+  ({ present }) => present.currentDisplayShareInfoLoading
+)
+
+const makeSelectCanUndo = () => createSelector(
+  selectDisplay,
+  ({ past }) => past.length > 0
+)
+
+const makeSelectCanRedo = () => createSelector(
+  selectDisplay,
+  ({ future }) => future.length > 0
+)
+
+const makeSelectCurrentState = () => createSelector(
+  selectDisplay,
+  ({ present }) => {
+    const display = present.currentDisplay
+    return {
+      displayId: display && display.id,
+      slide: present.currentSlide,
+      layers: present.currentLayers,
+      lastOperationType: present.lastOperationType,
+      lastLayers: present.lastLayers
     }
-  )
+  }
+)
 
-const makeSelectCurrentLayersMaxIndex = () =>
-  createSelector(
-    makeSelectCurrentLayerList(),
-    (currentLayerList) =>
-      currentLayerList.length
-        ? currentLayerList[currentLayerList.length - 1].index
-        : 0
-  )
-
-const makeSelectCurrentSelectedLayerList = () =>
-  createSelector(
-    makeSelectCurrentLayerList(),
-    makeSelectCurrentLayersOperationInfo(),
-    (currentLayerList, currentLayersOperationInfo) =>
-      currentLayerList.filter(
-        ({ id }) => currentLayersOperationInfo[id].selected
-      )
-  )
-const makeSelectCurrentSelectedLayerIds = () =>
-  createSelector(
-    makeSelectCurrentLayersOperationInfo(),
-    (currentLayersOperationInfo) =>
-      Object.keys(currentLayersOperationInfo)
-        .filter((id) => currentLayersOperationInfo[+id].selected)
-        .map((id) => +id)
-  )
-
-const makeSelectCurrentOperatingLayerList = () =>
-  createSelector(
-    selectPropsLayerId,
-    selectCurrentLayers,
-    makeSelectCurrentLayersOperationInfo(),
-    makeSelectCurrentSelectedLayerList(),
-    (layerId, currentLayers, currentLayersOperationInfo, selectedLayerList) => {
-      if (layerId && !currentLayersOperationInfo[layerId].selected) {
-        return [currentLayers[layerId]]
-      } else {
-        return selectedLayerList
-      }
+const makeSelectNextState = () => createSelector(
+  selectDisplay,
+  ({ future }) => {
+    if (future.length === 0) { return {} }
+    const item = future[0]
+    return {
+      displayId: item.currentDisplay.id,
+      slide: item.currentSlide,
+      layers: item.currentLayers,
+      lastOperationType: item.lastOperationType,
+      lastLayers: item.lastLayers
     }
-  )
+  }
+)
 
-const makeSelectCurrentOtherLayerList = () =>
-  createSelector(
-    selectPropsLayerId,
-    makeSelectCurrentLayersOperationInfo(),
-    makeSelectCurrentSelectedLayerIds(),
-    selectCurrentLayers,
-    (layerId, currentLayersOperationInfo, selectedLayerIds, currentLayers) => {
-      if (layerId && !currentLayersOperationInfo[layerId].selected) {
-        return [currentLayers[layerId]]
-      } else {
-        return Object.entries(currentLayers)
-          .filter(([id]) => !selectedLayerIds.includes(+id))
-          .map(([_, layer]) => layer)
-      }
-    }
-  )
+const makeSelectEditorBaselines = () =>  createSelector(
+  selectDisplay,
+  ({ present }) => present.editorBaselines
+)
 
-const makeSelectCurrentDisplayWidgets = () =>
-  createSelector(
-    selectDisplay,
-    (displayState) => displayState.currentDisplayWidgets
-  )
-
-const makeSelectClipboardLayers = () =>
-  createSelector(
-    selectDisplay,
-    (displayState) => displayState.clipboardLayers
-  )
-
-const makeSelectCurrentDisplayShareInfo = () =>
-  createSelector(
-    selectDisplay,
-    (displayState) => displayState.currentDisplayShareInfo
-  )
-
-const makeSelectCurrentDisplaySecretInfo = () =>
-  createSelector(
-    selectDisplay,
-    (displayState) => displayState.currentDisplaySecretInfo
-  )
-
-const makeSelectDisplayLoading = () =>
-  createSelector(
-    selectDisplay,
-    (displayState) => displayState.loading
-  )
-
-const makeSelectEditorBaselines = () =>
-  createSelector(
-    selectDisplay,
-    (displayState) => displayState.editorBaselines
-  )
+const makeSelectCurrentProject = () => createSelector(
+  selectDisplay,
+  ({present}) => present.currentProject
+)
 
 export {
   selectDisplay,
-  //
-  makeSelectLayersBySlide,
-  makeSelectLayerIdsBySlide,
-  //
-  makeSelectCurrentLayerList,
-  makeSelectCurrentLayerIds,
-  makeSelectSlideLayerContextValue,
-  makeSelectCurrentLayersMaxIndex,
+  makeSelectDisplays,
+  makeSelectCurrentDisplay,
+  makeSelectCurrentSlide,
+  makeSelectCurrentLayers,
+  makeSelectCurrentLayersInfo,
   makeSelectCurrentLayersOperationInfo,
-  makeSelectCurrentSelectedLayerList,
-  makeSelectCurrentSelectedLayerIds,
-  //
-  makeSelectCurrentOperatingLayerList,
-  makeSelectCurrentOtherLayerList,
-  //
-  makeSelectCurrentDisplayWidgets,
+
+  makeSelectCurrentSelectedLayers,
+
   makeSelectClipboardLayers,
+
   makeSelectCurrentDisplayShareInfo,
   makeSelectCurrentDisplaySecretInfo,
-  makeSelectDisplayLoading,
-  makeSelectEditorBaselines
+  makeSelectCurrentDisplayShareInfoLoading,
+
+  makeSelectCanUndo,
+  makeSelectCanRedo,
+  makeSelectCurrentState,
+  makeSelectNextState,
+
+  makeSelectEditorBaselines,
+  makeSelectCurrentProject
 }

@@ -8,7 +8,8 @@ import {
   MapSection,
   ParallelSection,
   SankeySection,
-  DoubleYAxisSection
+  DoubleYAxisSection,
+  ProgressSection
 } from './specs'
 
 interface ISpecSectionProps {
@@ -53,6 +54,9 @@ export class SpecSection extends React.PureComponent<ISpecSectionProps, {}> {
         break
       case 'doubleYAxis':
         renderHtml = <DoubleYAxisSection spec={config} title={title} onChange={this.specChange}/>
+        break
+      case 'progress':
+        renderHtml = <ProgressSection spec={config} title={title} onChange={this.specChange}/>
         break
       default:
         renderHtml = <div />

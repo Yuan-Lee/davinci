@@ -21,15 +21,11 @@
     "items": [{
       "name": "positionX",
       "title": "x轴位置（像素）",
-      "component": "inputnumber",
-      "labelCol": 15,
-      "wrapperCol": 8
+      "component": "inputnumber"
     }, {
       "name": "positionY",
       "title": "y轴位置（像素）",
-      "component": "inputnumber",
-      "labelCol": 15,
-      "wrapperCol": 8
+      "component": "inputnumber"
     }]
   }, {
     "name": "format",
@@ -40,7 +36,7 @@
       "title": "时间格式",
       "component": "input",
       "default": "YYYY-MM-DD HH:mm:ss",
-      "labelCol": 8,
+      "labelCol": 6,
       "wrapperCol": 24
     }, {
       "name": "timeDuration",
@@ -48,9 +44,7 @@
       "title": "间隔时间（ms）",
       "component": "inputnumber",
       "default": 1000,
-      "min": 1,
-      "labelCol": 14,
-      "wrapperCol": 10
+      "min": 1
     }]
   }, {
     "name": "font",
@@ -90,23 +84,17 @@
         "name": "MS Sans Serif",
         "value": "MS Sans Serif"
       }],
-      "default": "",
-      "wrapperCol": 24
+      "default": ""
     }, {
       "name": "fontColor",
       "title": "字体颜色",
       "component": "colorPicker",
-      "default": [0,0,0],
-      "labelCol": 10,
-      "wrapperCol": 14
+      "default": [0,0,0]
     }, {
       "name": "fontSize",
-      "title": "字体大小",
+      "title": "字体大小（像素）",
       "component": "inputnumber",
-      "default": 40,
-      "placeholder": "像素",
-      "labelCol": 10,
-      "wrapperCol": 14
+      "default": 40
     }, {
       "name": "textAlign",
       "title": "对齐方式",
@@ -124,9 +112,7 @@
         "name": "两端对齐",
         "value": "justify"
       }],
-      "default": "justify",
-      "labelCol": 10,
-      "wrapperCol": 14
+      "default": "justify"
     }, {
       "name": "fontWeight",
       "title": "字体粗细",
@@ -171,9 +157,7 @@
         "name": "900",
         "value": "900"
       }],
-      "default": "normal",
-      "labelCol": 10,
-      "wrapperCol": 14
+      "default": "normal"
     }, {
       "name": "textStyle",
       "title": "样式",
@@ -185,25 +169,17 @@
         "label": "下划线",
         "value": "underline"
       }],
-      "default": [],
-      "labelCol": 10,
-      "wrapperCol": 14
+      "default": []
     }, {
       "name": "lineHeight",
-      "title": "行高",
+      "title": "行高（像素）",
       "component": "inputnumber",
-      "default": 40,
-      "placeholder": "像素",
-      "labelCol": 10,
-      "wrapperCol": 14
+      "default": 40
     }, {
       "name": "textIndent",
-      "title": "首行缩进",
+      "title": "首行缩进（像素）",
       "component": "inputnumber",
-      "default": 0,
-      "placeholder": "像素",
-      "labelCol": 10,
-      "wrapperCol": 14
+      "default": 0
     }]
   }, {
     "name": "padding",
@@ -214,8 +190,6 @@
       "title": "上",
       "component": "inputnumber",
       "default": 0,
-      "labelCol": 6,
-      "wrapperCol": 18,
       "span": 12
     }, {
       "name": "paddingBottom",
@@ -223,8 +197,6 @@
       "title": "下",
       "component": "inputnumber",
       "default": 0,
-      "labelCol": 6,
-      "wrapperCol": 18,
       "span": 12
     }, {
       "name": "paddingLeft",
@@ -232,8 +204,6 @@
       "title": "左",
       "component": "inputnumber",
       "default": 0,
-      "labelCol": 6,
-      "wrapperCol": 18,
       "span": 12
     }, {
       "name": "paddingRight",
@@ -241,8 +211,6 @@
       "title": "右",
       "component": "inputnumber",
       "default": 0,
-      "labelCol": 6,
-      "wrapperCol": 18,
       "span": 12
     }]
   }, {
@@ -253,8 +221,7 @@
       "title": "背景颜色",
       "component": "colorPicker",
       "default": [255,255,255,0],
-      "labelCol": 10,
-      "wrapperCol": 14
+      "span": 12
     }]
   }, {
     "name": "border",
@@ -263,17 +230,12 @@
       "name": "borderColor",
       "title": "边框颜色",
       "component": "colorPicker",
-      "default": [0,0,0],
-      "labelCol": 10,
-      "wrapperCol": 14
+      "default": [0,0,0]
     }, {
       "name": "borderWidth",
-      "title": "边框粗细",
+      "title": "边框粗细（像素）",
       "component": "inputnumber",
-      "default": 0,
-      "placeholder": "像素",
-      "labelCol": 10,
-      "wrapperCol": 14
+      "default": 0
     }, {
       "name": "borderStyle",
       "title": "边框样式",
@@ -291,18 +253,13 @@
         "name": "双框",
         "value": "double"
       }],
-      "default": "solid",
-      "labelCol": 10,
-      "wrapperCol": 14
+      "default": "solid"
     }, {
       "name": "borderRadius",
       "tip": "px",
-      "title": "圆角半径",
+      "title": "圆角半径（像素）",
       "component": "inputnumber",
-      "default": 0,
-      "placeholder": "像素",
-      "labelCol": 10,
-      "wrapperCol": 14
+      "default": 0
     }]
   }]
 }

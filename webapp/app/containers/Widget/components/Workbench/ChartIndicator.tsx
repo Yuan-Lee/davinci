@@ -15,7 +15,7 @@ interface IChartIndicatorProps {
 
 export function ChartIndicator (props: IChartIndicatorProps) {
   const { chartInfo, dimetionsCount, metricsCount, selectedCharts } = props
-  const { title, icon, rules } = chartInfo
+  const { title, icon, extensionIcon, rules } = chartInfo
 
   const contents = rules.map(({ dimension, metric }, ruleIdx) => {
     const subContents = []
@@ -44,6 +44,7 @@ export function ChartIndicator (props: IChartIndicatorProps) {
 
   const iconClass = classnames({
     iconfont: true,
+    chartfont: extensionIcon,
     [icon]: true,
     [styles.enabled]: checkChartEnable(dimetionsCount, metricsCount, chartInfo),
     [styles.selected]: selectedCharts.filter((s) => s.id !== chartInfo.id).length === 0,

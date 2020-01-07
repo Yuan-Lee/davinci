@@ -33,15 +33,20 @@ import {
   makeSelectSuggestMails,
   makeSelectPortalDashboards
 } from './selectors'
-import { makeSelectPortals, makeSelectDisplays } from 'containers/Viz/selectors'
+import { makeSelectDisplays } from 'containers/Display/selectors'
+import { makeSelectPortals } from 'containers/Portal/selectors'
 import { checkNameUniqueAction } from 'containers/App/actions'
 import { ScheduleActions } from './actions'
 import { hideNavigator } from 'containers/App/actions'
-import { VizActions } from 'containers/Viz/actions'
+import { DisplayActions } from 'containers/Display/actions'
+import { loadPortals } from 'containers/Portal/actions'
+import { loadDashboards } from 'containers/Dashboard/actions'
 import reducer from './reducer'
 import saga from './sagas'
-import vizReducer from 'containers/Viz/reducer'
-import vizSaga from 'containers/Viz/sagas'
+import displayReducer from 'containers/Display/reducer'
+import displaySaga from 'containers/Display/sagas'
+import portalReducer from 'containers/Portal/reducer'
+import portalSaga from 'containers/Portal/sagas'
 import dashboardSaga from 'containers/Dashboard/sagas'
 
 import { Row, Col, Card, Button, Icon, Tooltip, message } from 'antd'
@@ -53,7 +58,8 @@ import ScheduleBaseConfig, {
 import ScheduleMailConfig from './components/ScheduleMailConfig'
 import ScheduleVizConfig from './components/ScheduleVizConfig'
 import { IDashboard } from 'containers/Dashboard'
-import { IPortal, IDisplayFormed } from 'containers/Viz/types'
+import { IDisplay } from 'containers/Display/types'
+import { IPortal } from 'containers/Portal/types'
 import { IProject } from 'containers/Projects/types'
 import { ISchedule, IScheduleLoading } from './types'
 import {
@@ -93,7 +99,7 @@ const getCronExpressionByPartition = (partition: ICronExpressionPartition) => {
 }
 
 interface IScheduleEditorStateProps {
-  displays: IDisplayFormed[]
+  displays: IDisplay[]
   portals: IPortal[]
   portalDashboards: { [key: number]: IDashboard[] }
   loading: IScheduleLoading
@@ -152,19 +158,20 @@ const ScheduleEditor: React.FC<ScheduleEditorProps> = (props) => {
 
   const { portals, loading, editingSchedule, onLoadDashboards } = props
 
-  useEffect(() => {
-    if (!editingSchedule.id || !Array.isArray(portals)) {
-      return
-    }
-    const { contentList } = editingSchedule.config
-    // initial Dashboards loading by contentList Portal setting
-    contentList
-      .filter(({ contentType }) => contentType === 'portal')
-      .forEach(({ id }) => {
-        if (~portals.findIndex((portal) => portal.id === id)) {
-          onLoadDashboards(id)
-        }
-      })
+  useEffect(
+    () => {
+      if (!editingSchedule.id || !Array.isArray(portals)) {
+        return
+      }
+      const { contentList } = editingSchedule.config
+      // initial Dashboards loading by contentList Portal setting
+      contentList
+        .filter(({ contentType }) => contentType === 'portal')
+        .forEach(({ id }) => {
+          if (~portals.findIndex((portal) => portal.id === id)) {
+            onLoadDashboards(id)
+          }
+        })
     },
     [portals, editingSchedule]
   )
@@ -182,9 +189,12 @@ const ScheduleEditor: React.FC<ScheduleEditorProps> = (props) => {
   const { contentList } = config
 
   const [localContentList, setLocalContentList] = useState(contentList)
-  useEffect(() => {
-    setLocalContentList([...contentList])
-  }, [contentList])
+  useEffect(
+    () => {
+      setLocalContentList([...contentList])
+    },
+    [contentList]
+  )
 
   let baseConfigForm: FormComponentProps<ScheduleBaseFormProps> = null
   let mailConfigForm: FormComponentProps<IScheduleMailConfig> = null
@@ -306,11 +316,12 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => ({
   onHideNavigator: () => dispatch(hideNavigator()),
-  onLoadDisplays: (projectId) => dispatch(VizActions.loadDisplays(projectId)),
-  onLoadPortals: (projectId) => dispatch(VizActions.loadPortals(projectId)),
+  onLoadDisplays: (projectId) =>
+    dispatch(DisplayActions.loadDisplays(projectId)),
+  onLoadPortals: (projectId) => dispatch(loadPortals(projectId)),
   onLoadDashboards: (portalId) =>
     dispatch(
-      VizActions.loadPortalDashboards(portalId, (dashboards) => {
+      loadDashboards(portalId, (dashboards) => {
         dispatch(ScheduleActions.portalDashboardsLoaded(portalId, dashboards))
       })
     ),
@@ -333,18 +344,25 @@ const withConnect = connect(
 )
 const withReducer = injectReducer({ key: 'schedule', reducer })
 const withSaga = injectSaga({ key: 'schedule', saga })
-const withVizReducer = injectReducer({
-  key: 'viz',
-  reducer: vizReducer
+const withDisplayReducer = injectReducer({
+  key: 'display',
+  reducer: displayReducer
 })
-const withVizSaga = injectSaga({ key: 'viz', saga: vizSaga })
+const withDisplaySaga = injectSaga({ key: 'display', saga: displaySaga })
+const withPortalReducer = injectReducer({
+  key: 'portal',
+  reducer: portalReducer
+})
+const withPortalSaga = injectSaga({ key: 'portal', saga: portalSaga })
 const withDashboardSaga = injectSaga({ key: 'dashboard', saga: dashboardSaga })
 
 export default compose(
   withReducer,
   withSaga,
-  withVizReducer,
-  withVizSaga,
+  withDisplayReducer,
+  withDisplaySaga,
+  withPortalReducer,
+  withPortalSaga,
   withDashboardSaga,
   withConnect
 )(ScheduleEditor)

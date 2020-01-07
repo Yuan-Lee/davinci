@@ -23,7 +23,7 @@ import { areComponentsEqual } from 'react-hot-loader'
 
 import { uuid } from 'utils/util'
 import { IViewVariable } from '../types'
-import { Resizable, ResizeCallbackData } from 'libs/react-resizable'
+import Resizable, { IResizeCallbackData } from 'libs/react-resizable/lib/Resizable'
 
 import SourceTable from './SourceTable'
 import SqlEditor from './SqlEditor'
@@ -87,12 +87,12 @@ export class EditorContainer extends React.Component<IEditorContainerProps, IEdi
     })
   }
 
-  private siderResize = (_: any, { size }: ResizeCallbackData) => {
+  private siderResize = (_: any, { size }: IResizeCallbackData) => {
     const { width } = size
     this.setState({ siderWidth: width })
   }
 
-  private previewResize = (_: any, { size }: ResizeCallbackData) => {
+  private previewResize = (_: any, { size }: IResizeCallbackData) => {
     const { height } = size
     this.setState(({ editorHeight }) => ({ previewHeight: editorHeight - height }))
   }

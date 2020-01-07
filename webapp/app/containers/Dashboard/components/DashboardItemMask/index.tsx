@@ -16,6 +16,8 @@ function Mask (props: IDashboardItemMaskProps) {
   switch (chartType) {
     case ChartTypes.Iframe:
       return null
+    case ChartTypes.Text:
+      return null
     case ChartTypes.RichText:
       return hasDataConfig && children
     default:
@@ -37,8 +39,8 @@ function Loading (props: IDashboardItemMaskProps) {
 }
 
 function Empty (props: IDashboardItemMaskProps) {
-  const { loading, empty } = props
-  if (loading || !empty) { return null }
+  const { loading, empty, chartType } = props
+  if (loading || !empty || chartType === ChartTypes.Text) { return null }
   return (
     <Mask {...props}>
       <div className={styles.mask}>

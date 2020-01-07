@@ -29,12 +29,10 @@ import { ViewActionType } from './actions'
 import { ActionTypes as SourceActionTypes } from 'containers/Source/constants'
 import { SourceActionType } from 'containers/Source/actions'
 
-import { ActionTypes as WidgetActionTypes } from 'containers/Widget/constants'
-import { WidgetActionType } from 'containers/Widget/actions'
+import { LOAD_WIDGET_DETAIL_SUCCESS } from 'containers/Widget/constants'
 import { LOAD_DASHBOARD_DETAIL_SUCCESS } from 'containers/Dashboard/constants'
 
 import { ActionTypes as DisplayActionTypes } from 'containers/Display/constants'
-import { DisplayActionType } from 'containers/Display/actions'
 import { LOCATION_CHANGE } from 'connected-react-router'
 
 const emptyView: IView = {
@@ -89,10 +87,7 @@ const initialState: IViewState = {
   cancelTokenSources: []
 }
 
-const viewReducer = (
-  state = initialState,
-  action: ViewActionType | WidgetActionType | DisplayActionType | SourceActionType
-): IViewState =>
+const viewReducer = (state = initialState, action: ViewActionType | SourceActionType): IViewState => (
   produce(state, (draft) => {
     switch (action.type) {
       case ActionTypes.LOAD_VIEWS:
@@ -112,11 +107,7 @@ const viewReducer = (
         const detailedViews = action.payload.views
         if (action.payload.isEditing) {
           draft.editingView = detailedViews[0]
-          draft.editingViewInfo = pick(getFormedView(detailedViews[0]), [
-            'model',
-            'variable',
-            'roles'
-          ])
+          draft.editingViewInfo = pick(getFormedView(detailedViews[0]), ['model', 'variable', 'roles'])
         }
         draft.formedViews = detailedViews.reduce((acc, view) => {
           const { id, model, variable, roles } = getFormedView(view)
@@ -139,20 +130,15 @@ const viewReducer = (
         break
       case SourceActionTypes.LOAD_SOURCE_DATABASES_SUCCESS:
         const { sourceDatabases } = action.payload
-        draft.schema.mapDatabases[sourceDatabases.sourceId] =
-          sourceDatabases.databases
+        draft.schema.mapDatabases[sourceDatabases.sourceId] = sourceDatabases.databases
         break
       case SourceActionTypes.LOAD_SOURCE_DATABASE_TABLES_SUCCESS:
         const { databaseTables } = action.payload
-        draft.schema.mapTables[
-          `${databaseTables.sourceId}_${databaseTables.dbName}`
-        ] = databaseTables
+        draft.schema.mapTables[`${databaseTables.sourceId}_${databaseTables.dbName}`] = databaseTables
         break
       case SourceActionTypes.LOAD_SOURCE_TABLE_COLUMNS_SUCCESS:
         const { databaseName, tableColumns } = action.payload
-        draft.schema.mapColumns[
-          `${tableColumns.sourceId}_${databaseName}_${tableColumns.tableName}`
-        ] = tableColumns
+        draft.schema.mapColumns[`${tableColumns.sourceId}_${databaseName}_${tableColumns.tableName}`] = tableColumns
         break
       case ActionTypes.EXECUTE_SQL:
         draft.loading.execute = true
@@ -160,10 +146,7 @@ const viewReducer = (
         break
       case ActionTypes.EXECUTE_SQL_SUCCESS:
         const sqlResponse = action.payload.result
-        const validModel = getValidModel(
-          draft.editingViewInfo.model,
-          sqlResponse.payload.columns
-        )
+        const validModel = getValidModel(draft.editingViewInfo.model, sqlResponse.payload.columns)
         draft.sqlDataSource = sqlResponse.payload
         draft.editingViewInfo.model = validModel
         draft.loading.execute = false
@@ -197,9 +180,7 @@ const viewReducer = (
       case ActionTypes.EDIT_VIEW_SUCCESS:
         draft.editingView = emptyView
         draft.editingViewInfo = { model: {}, variable: [], roles: [] }
-        draft.formedViews[action.payload.result.id] = getFormedView(
-          action.payload.result
-        )
+        draft.formedViews[action.payload.result.id] = getFormedView(action.payload.result)
         break
 
       case ActionTypes.COPY_VIEW:
@@ -207,21 +188,10 @@ const viewReducer = (
         break
       case ActionTypes.COPY_VIEW_SUCCESS:
         const fromViewId = action.payload.fromViewId
-        const copiedViewKeys: Array<keyof IViewBase> = [
-          'id',
-          'name',
-          'description'
-        ]
-        const copiedView: IViewBase = pick(
-          action.payload.result,
-          copiedViewKeys
-        )
+        const copiedViewKeys: Array<keyof IViewBase> = ['id', 'name', 'description']
+        const copiedView: IViewBase = pick(action.payload.result, copiedViewKeys)
         copiedView.sourceName = action.payload.result.source.name
-        draft.views.splice(
-          draft.views.findIndex(({ id }) => id === fromViewId) + 1,
-          0,
-          copiedView
-        )
+        draft.views.splice(draft.views.findIndex(({ id }) => id === fromViewId) + 1, 0, copiedView)
         draft.loading.copy = false
         break
       case ActionTypes.COPY_VIEW_FAILURE:
@@ -246,7 +216,7 @@ const viewReducer = (
       case ActionTypes.RESET_VIEW_STATE:
         return initialState
         break
-      case WidgetActionTypes.LOAD_WIDGET_DETAIL_SUCCESS:
+      case LOAD_WIDGET_DETAIL_SUCCESS:
         const widgetView = action.payload.view
         draft.formedViews[widgetView.id] = {
           ...widgetView,
@@ -255,18 +225,15 @@ const viewReducer = (
         }
         break
       case LOAD_DASHBOARD_DETAIL_SUCCESS:
-      case DisplayActionTypes.LOAD_SLIDE_DETAIL_SUCCESS:
-        const updatedViews: IFormedViews = (action.payload.views || []).reduce(
-          (obj, view) => {
-            obj[view.id] = {
-              ...view,
-              model: JSON.parse(view.model || '{}'),
-              variable: JSON.parse(view.variable || '[]')
-            }
-            return obj
-          },
-          {}
-        )
+      case DisplayActionTypes.LOAD_DISPLAY_DETAIL_SUCCESS:
+        const updatedViews: IFormedViews = (action.payload.views || []).reduce((obj, view) => {
+          obj[view.id] = {
+            ...view,
+            model: JSON.parse(view.model || '{}'),
+            variable: JSON.parse(view.variable || '[]')
+          }
+          return obj
+        }, {})
         draft.formedViews = {
           ...draft.formedViews,
           ...updatedViews
@@ -288,5 +255,6 @@ const viewReducer = (
         break
     }
   })
+)
 
 export default viewReducer

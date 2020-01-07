@@ -47,7 +47,7 @@ const styles = require('../Dashboard.less')
 const utilStyles = require('assets/less/util.less')
 
 export type IGetChartData = (renderType: RenderType, itemId: number, widgetId: number, queryConditions?: any) => void
- 
+
 interface IDashboardItemProps {
   itemId: number
   widget: any
@@ -927,7 +927,7 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
       </div>
     )
 
-    const { selectedChart, cols, rows, metrics } = widgetProps
+    const { selectedChart, cols, rows, metrics, showHeader } = widgetProps
     const hasDataConfig = !!(cols.length || rows.length || metrics.length)
     const empty = (
       <DashboardItemMask.Empty
@@ -937,12 +937,49 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
         hasDataConfig={hasDataConfig}
       />
     )
-
-
-    return (
-      <div className={gridItemClass} ref={(f) => this.container = f}>
+    
+    if (showHeader === false) {
+      const dragClass = classnames({
+        [styles.draghandle]: true,
+        [styles.block]: true
+      })
+      return (
+        <div className={gridItemClass} ref={(f) => this.container = f}>
+          <div className={dragClass}>
+            <Widget
+              {...widgetProps}
+              renderType={loading ? 'loading' : renderType}
+              data={data}
+              interacting={this.props.interacting}
+              queryVariables={queryVariables}
+              pagination={pagination}
+              empty={empty}
+              model={model}
+              onCheckTableInteract={this.checkTableInteract}
+              onDoInteract={this.doInteract}
+              onPaginationChange={this.paginationChange}
+              getDataDrillDetail={this.getDataDrillDetail}
+              isDrilling={this.state.isDrilling}
+              whichDataDrillBrushed={this.state.whichDataDrillBrushed}
+              onSelectChartsItems={this.selectChartsItems}
+              selectedItems={this.props.selectedItems}
+            //  onHideDrillPanel={this.onHideDrillPanel}
+            />
+          </div>
+          <div className={styles.gridItemTextTools}>
+            {widgetButton}
+            {dropdownMenu}
+          </div>
+        </div>
+      )
+    } else {
+      const dragClass = classnames({
+        [styles.draghandle]: true,
+        [styles.title]: true
+      })
+      return (<div className={gridItemClass} ref={(f) => this.container = f}>
         <div className={styles.header}>
-          <div className={styles.title}>
+          <div className={dragClass}>
             {controlToggle}
             <h4>{widget.name}</h4>
             {loadingIcon}
@@ -1020,8 +1057,8 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
             {dataDrillHistory}
           </div>
         </Dropdown>
-      </div>
-    )
+      </div>)
+    }
   }
 }
 

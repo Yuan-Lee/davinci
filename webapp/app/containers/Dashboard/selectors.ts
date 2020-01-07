@@ -23,6 +23,11 @@ import { createSelector } from 'reselect'
 const selectDashboard = (state) => state.dashboard
 const selectForm = (state) => state.form
 
+const makeSelectDashboards = () => createSelector(
+  selectDashboard,
+  (dashboardState) => dashboardState.dashboards
+)
+
 const makeSelectCurrentDashboard = () => createSelector(
   selectDashboard,
   (dashboardState) => dashboardState.currentDashboard
@@ -55,6 +60,10 @@ const makeSelectCurrentItemsInfo = () => createSelector(
   selectDashboard,
   (dashboardState) => dashboardState.currentItemsInfo
 )
+const makeSelectModalLoading = () => createSelector(
+  selectDashboard,
+  (dashboardState) => dashboardState.modalLoading
+)
 
 const makeSelectControlForm = () => createSelector(
   selectForm,
@@ -82,6 +91,7 @@ const makeSelectCurrentLinkages = () => createSelector(
 export {
   selectDashboard,
   selectForm,
+  makeSelectDashboards,
   makeSelectCurrentDashboard,
   makeSelectCurrentDashboardLoading,
   makeSelectCurrentItems,
@@ -90,6 +100,7 @@ export {
   makeSelectCurrentDashboardSecretInfo,
   makeSelectCurrentDashboardShareInfoLoading,
   makeSelectCurrentDashboardSelectOptions,
+  makeSelectModalLoading,
   makeSelectCurrentLinkages,
   makeSelectControlForm
 }

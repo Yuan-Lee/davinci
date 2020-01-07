@@ -397,7 +397,7 @@ export const ViewActions = {
 
   loadViewDataFromVizItem (
     renderType: RenderType,
-    itemId: number | [number, number],
+    itemId: number,
     viewId: number,
     requestParams: IDataRequestParams,
     vizType: 'dashboard' | 'display',
@@ -418,7 +418,7 @@ export const ViewActions = {
   },
   viewDataFromVizItemLoaded (
     renderType: RenderType,
-    itemId: number | [number, number],
+    itemId: number,
     requestParams: IDataRequestParams,
     result: any[],
     vizType: 'dashboard' | 'display',
@@ -436,7 +436,7 @@ export const ViewActions = {
       statistic
     }
   },
-  loadViewDataFromVizItemFail (itemId: number | [number, number], vizType: 'dashboard' | 'display', errorMessage: string) {
+  loadViewDataFromVizItemFail (itemId: number, vizType: 'dashboard' | 'display', errorMessage: string) {
     return {
       type: ActionTypes.LOAD_VIEW_DATA_FROM_VIZ_ITEM_FAILURE,
       payload: {

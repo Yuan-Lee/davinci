@@ -30,10 +30,14 @@ import DoubleYAxisSection, { IDoubleYAxisConfig } from './ConfigSections/DoubleY
 import AreaSelectSection, { IAreaSelectConfig } from './ConfigSections/AreaSelectSection'
 import ScorecardSection, { IScorecardConfig } from './ConfigSections/ScorecardSection'
 import IframeSection, { IframeConfig } from './ConfigSections/IframeSection'
+import ITextSection, { TextConfig } from './ConfigSections/TextSection'
+import TitleSection, { ITitleConfig } from './ConfigSections/TitleSection'
 import TableSection from './ConfigSections/TableSection'
 import GaugeSection from './ConfigSections/GaugeSection'
 import { ITableConfig } from '../Config/Table'
 import BarSection from './ConfigSections/BarSection'
+import ProgressSection from './ConfigSections/ProgressSection'
+import LiquidFillSection from './ConfigSections/LiquidFillSection'
 import RadarSection from './ConfigSections/RadarSection'
 import { encodeMetricName, decodeMetricName, getPivot, getTable, getPivotModeSelectedCharts, checkChartEnable } from '../util'
 import { PIVOT_DEFAULT_SCATTER_SIZE_TIMES } from 'app/globalConstants'
@@ -73,6 +77,7 @@ interface IOperatingPanelProps {
   selectedView: IFormedView
   distinctColumnValues: any[]
   columnValueLoading: boolean
+  showHeader: boolean
   controls: any[]
   cache: boolean
   autoLoadData: boolean
@@ -83,6 +88,7 @@ interface IOperatingPanelProps {
   originalComputed: any[]
   onViewSelect: (viewId: number) => void
   onSetControls: (controls: any[]) => void
+  onShowHeaderChange: (e: CheckboxChangeEvent) => void
   onCacheChange: (e: RadioChangeEvent) => void
   onChangeAutoLoadData: (e: RadioChangeEvent) => void
   onExpiredChange: (expired: number) => void
@@ -228,7 +234,21 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
 
     if ((originalWidgetProps && selectedView) &&
       (originalWidgetProps !== this.props.originalWidgetProps || selectedView !== this.props.selectedView)) {
-      const { cols, rows, metrics, secondaryMetrics, filters, color, label, size, xAxis, tip, chartStyles, mode, selectedChart } = originalWidgetProps
+      const {
+        cols,
+        rows,
+        metrics,
+        secondaryMetrics,
+        filters,
+        color,
+        label,
+        size,
+        xAxis,
+        tip,
+        chartStyles,
+        mode,
+        selectedChart
+      } = originalWidgetProps
       const { dataParams } = this.state
       const model = selectedView.model
       const currentWidgetlibs = widgetlibs[mode || 'pivot'] // FIXME 兼容 0.3.0-beta.1 之前版本
@@ -1240,7 +1260,6 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
           size.value[key] = value
         }
     }
-    console.log('dropboxValueChange')
     this.setWidgetProps(dataParams, styleParams, { renderType: 'refresh' })
   }
 
@@ -1257,7 +1276,7 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
         return childStyle
       }, styleParams[name])
     }
-    let renderType: RenderType = 'clear'
+    let renderType: RenderType = 'rerender'
     switch (prop) {
       case 'layerType':
         renderType = 'rerender'
@@ -1498,6 +1517,7 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
       selectedView,
       distinctColumnValues,
       columnValueLoading,
+      showHeader,
       controls,
       cache,
       autoLoadData,
@@ -1505,6 +1525,7 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
       queryMode,
       multiDrag,
       computed,
+      onShowHeaderChange,
       onCacheChange,
       onChangeAutoLoadData,
       onExpiredChange,
@@ -1541,8 +1562,29 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
     const { metrics } = dataParams
     const [dimetionsCount, metricsCount] = this.getDimetionsAndMetricsCount()
     const {
-      spec, xAxis, yAxis, axis, splitLine, pivot: pivotConfig, label, legend,
-      visualMap, toolbox, areaSelect, scorecard, gauge, iframe, table, bar, radar, doubleYAxis } = styleParams
+      spec,
+      xAxis,
+      yAxis,
+      axis,
+      splitLine,
+      pivot: pivotConfig,
+      title,
+      label,
+      legend,
+      visualMap,
+      toolbox,
+      areaSelect,
+      scorecard,
+      gauge,
+      iframe,
+      table,
+      bar,
+      radar,
+      doubleYAxis,
+      text,
+      progress,
+      liquidFill
+    } = styleParams
 
     let categoryDragItems = this.state.categoryDragItems
     if (mode === 'pivot'
@@ -1671,6 +1713,11 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
               onChange={this.styleChange2}
               isLegendSection={mapLegendLayerType}
             />}
+            {title && <TitleSection
+              title='饼图翻牌器'
+              config={title}
+              onChange={this.styleChange('title')}
+            />}
             {bar && <BarSection
               onChange={this.styleChange('bar')}
               config={bar}
@@ -1762,12 +1809,37 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
               config={pivotConfig}
               onChange={this.styleChange('pivot')}
             />}
+            {text && <ITextSection
+              title="内容"
+              config={text}
+              onChange={this.styleChange('text')}
+            />}
+            {spec && spec.chartType !== 'liquidFill' && progress && <ProgressSection
+              title="进度条"
+              config={progress}
+              onChange={this.styleChange('progress')}
+            />}
+            {spec && spec.chartType === 'liquidFill' && liquidFill && <LiquidFillSection
+              title="水波图"
+              config={liquidFill}
+              onChange={this.styleChange('liquidFill')}
+            />}
           </div>
         )
         break
       case 'setting':
         tabPane = (
           <div className={styles.paramsPane}>
+            <div className={styles.paneBlock}>
+              <Row gutter={8} type="flex" align="middle" className={styles.blockRow}>
+                <Col span={24}>
+                  <Checkbox
+                    checked={showHeader}
+                    onChange={onShowHeaderChange}
+                  >是否显示头部</Checkbox>
+                </Col>
+              </Row>
+            </div>
             {
               queryInfo.length
                 ? <div className={styles.paneBlock}>

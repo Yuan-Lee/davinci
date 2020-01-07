@@ -41,6 +41,17 @@ const pie: IChartInfo = {
     // }
   },
   style: {
+    title: {
+      show: false,
+      text: '总数',
+      textFontSize: 18,
+      textFontFamily: PIVOT_CHART_FONT_FAMILIES[0].value,
+      textColor: PIVOT_DEFAULT_FONT_COLOR,
+      subtext: '',
+      subtextFontSize: 14,
+      subtextFontFamily: PIVOT_CHART_FONT_FAMILIES[0].value,
+      subtextColor: PIVOT_DEFAULT_FONT_COLOR
+    },
     label: {
       showLabel: false,
       pieLabelPosition: CHART_PIE_LABEL_POSITIONS[0].value,
@@ -53,6 +64,8 @@ const pie: IChartInfo = {
       showLegend: true,
       legendPosition: 'right',
       selectAll: true,
+      isShowLegendValue: false,
+      isShowLegendPercent: false,
       fontFamily: PIVOT_CHART_FONT_FAMILIES[0].value,
       fontSize: '12',
       color: PIVOT_DEFAULT_FONT_COLOR

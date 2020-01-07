@@ -15,7 +15,6 @@ module.exports = {
     '@babel/plugin-syntax-dynamic-import',
     ["import", {
       "libraryName": "antd",
-      "libraryDirectory": "es",
       "style": true
     }],
     ["transform-imports", {

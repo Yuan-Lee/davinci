@@ -18,9 +18,12 @@ export interface ISpecConfig {
 
   // for sankey
   nodeWidth: number
-  nodeGap: number,
+  nodeGap: number
   orient: 'horizontal' | 'vertical'
   draggable: boolean
   symbol?: boolean
   label?: boolean
+
+  // for progress
+  chartType?: string
 }

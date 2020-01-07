@@ -21,6 +21,16 @@
 import produce from 'immer'
 
 import {
+  LOAD_DASHBOARDS_SUCCESS,
+  LOAD_DASHBOARDS_FAILURE,
+  ADD_DASHBOARD,
+  ADD_DASHBOARD_SUCCESS,
+  ADD_DASHBOARD_FAILURE,
+  EDIT_DASHBOARD_SUCCESS,
+  EDIT_CURRENT_DASHBOARD,
+  EDIT_CURRENT_DASHBOARD_SUCCESS,
+  EDIT_CURRENT_DASHBOARD_FAILURE,
+  DELETE_DASHBOARD_SUCCESS,
   LOAD_DASHBOARD_DETAIL,
   LOAD_DASHBOARD_DETAIL_SUCCESS,
   LOAD_DASHBOARD_DETAIL_FAILURE,
@@ -59,10 +69,8 @@ import {
   INITIATE_DOWNLOAD_TASK_SUCCESS,
   INITIATE_DOWNLOAD_TASK_FAILURE
 } from '../App/constants'
-import { ActionTypes as VizActionTypes } from 'containers/Viz/constants'
 import { ActionTypes as ViewActionTypes } from '../View/constants'
 import { ViewActionType } from '../View/actions'
-import { VizActionType } from '../Viz/actions'
 
 import {
   IGlobalControl,
@@ -80,6 +88,7 @@ import { fieldGroupedSort } from 'containers/Widget/components/Config/Sort'
 import { globalControlMigrationRecorder } from 'app/utils/migrationRecorders'
 
 const initialState = {
+  dashboards: null,
   currentDashboard: null,
   currentDashboardLoading: false,
   currentDashboardShareInfo: '',
@@ -87,28 +96,68 @@ const initialState = {
   currentDashboardShareInfoLoading: false,
   currentDashboardSelectOptions: {},
   currentItems: null,
-  currentItemsInfo: null
+  currentItemsInfo: null,
+  modalLoading: false
 }
 
-const dashboardReducer = (state = initialState, action: ViewActionType | VizActionType | any) =>
+const dashboardReducer = (state = initialState, action: ViewActionType | any) =>
   produce(state, (draft) => {
     let drillHistory
     let targetItemInfo
 
     switch (action.type) {
+      case LOAD_DASHBOARDS_SUCCESS:
+        draft.dashboards = action.payload.dashboards
+        break
 
-      case VizActionTypes.EDIT_CURRENT_DASHBOARD:
+      case LOAD_DASHBOARDS_FAILURE:
+        break
+
+      case ADD_DASHBOARD:
+        draft.modalLoading = true
+        break
+
+      case ADD_DASHBOARD_SUCCESS:
+        if (draft.dashboards) {
+          draft.dashboards.push(action.payload.result)
+        } else {
+          draft.dashboards = [action.payload.result]
+        }
+        draft.modalLoading = false
+        break
+
+      case ADD_DASHBOARD_FAILURE:
+        draft.modalLoading = false
+        break
+
+      case EDIT_DASHBOARD_SUCCESS:
+        const { result, formType } = action.payload
+        if (formType === 'edit') {
+          result.forEach((r) => {
+            draft.dashboards.splice(draft.dashboards.findIndex((d) => d.id === r.id), 1, r)
+          })
+        } else if (formType === 'move') {
+          draft.dashboards = draft.dashboards.filter((d) => result.findIndex(({ id }) => id === d.id) < 0)
+          draft.dashboards = draft.dashboards.concat(result)
+        }
+        break
+
+      case EDIT_CURRENT_DASHBOARD:
         draft.currentDashboardLoading = true
         break
 
-      case VizActionTypes.EDIT_CURRENT_DASHBOARD_SUCCESS:
+      case EDIT_CURRENT_DASHBOARD_SUCCESS:
         draft.currentDashboard = action.payload.result
         draft.currentDashboardSelectOptions = {}
         draft.currentDashboardLoading = false
         break
 
-      case VizActionTypes.EDIT_CURRENT_DASHBOARD_FAILURE:
+      case EDIT_CURRENT_DASHBOARD_FAILURE:
         draft.currentDashboardLoading = false
+        break
+
+      case DELETE_DASHBOARD_SUCCESS:
+        draft.dashboards = draft.dashboards.filter((i) => i.id !== action.payload.id)
         break
 
       case LOAD_DASHBOARD_DETAIL:

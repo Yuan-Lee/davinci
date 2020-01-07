@@ -9,8 +9,6 @@ export interface ITableCellStyle {
   fontStyle: 'normal' | 'oblique'
   backgroundColor: string
   justifyContent: 'flex-start' | 'center' | 'flex-end'
-  inflexible: boolean
-  width: number
 }
 
 export interface ITableConfig {

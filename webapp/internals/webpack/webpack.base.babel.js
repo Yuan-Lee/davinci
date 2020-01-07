@@ -60,14 +60,9 @@ module.exports = options => ({
         use: [
           'style-loader',
           'css-loader',
-          {
-            loader: 'less-loader',
-            options: {
-              sourceMap: true,
-              javascriptEnabled: true,
-              modifyVars: overrideLessVariables
-            }
-          }
+          `less-loader?{"sourceMap": true, "modifyVars": ${JSON.stringify(
+            overrideLessVariables
+          )}}`
         ]
       },
       {
@@ -75,21 +70,9 @@ module.exports = options => ({
         exclude: /node_modules/,
         use: [
           'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1
-            }
-          },
+          'css-loader?modules&importLoaders=1',
           'postcss-loader',
-          {
-            loader: 'less-loader',
-            options: {
-              sourceMap: true,
-              javascriptEnabled: true
-            }
-          }
+          'less-loader'
         ]
       },
       {
@@ -196,7 +179,7 @@ module.exports = options => ({
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],
     alias: {
-      'react-resizable': path.resolve(process.cwd(), 'libs/react-resizable'),
+      'react-dom': '@hot-loader/react-dom', // https://github.com/gaearon/react-hot-loader/issues/1227
       app: path.resolve(process.cwd(), 'app'),
       share: path.resolve(process.cwd(), 'share'),
       libs: path.resolve(process.cwd(), 'libs'),

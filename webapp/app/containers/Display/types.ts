@@ -18,61 +18,31 @@
  * >>
  */
 
-import {
-  ILayerFormed,
-  IBaseline,
-  LayersOperationInfo
-} from './components/types'
-import { ISlideFormed } from 'containers/Viz/types'
+import { ISlideParams } from './components/types'
 
-import { ActionTypes as VizActionTypes } from 'containers/Viz/constants'
-import { ActionTypes } from './constants'
+export { ISlideParams } from './components/types'
 
-import { IQueryConditions } from 'containers/Dashboard/Grid'
-import { RenderType } from 'containers/Widget/components/Widget'
-import { IWidgetFormed } from 'containers/Widget/types'
-
-export interface ILayerInfo {
-  datasource: {
-    pageNo?: number
-    pageSize?: number
-    resultList: any[]
-    totalCount?: number
-  }
-  loading: boolean
-  queryConditions?: Partial<IQueryConditions>
-  interactId?: string
-  rendered?: boolean
-  renderType?: RenderType
+export interface IDisplay {
+  id: number
+  name: string
+  avatar: string
+  description: string
+  projectId: number
+  publish: boolean
 }
 
-interface IDisplayLoading {
-  shareInfo: boolean
-  slideLayers: boolean
+interface ISlideBase {
+  id: number
+  displayId: number
+  index: number
 }
 
-export interface IDisplayState {
-  currentDisplayShareInfo: string
-  currentDisplaySecretInfo: string
-  currentDisplaySelectOptions: object
+export interface ISlideRaw extends ISlideBase {
+  config: string
+}
 
-  currentSlideId: number
-
-  currentDisplayWidgets: { [widgetId: number]: IWidgetFormed }
-
-  slideLayers: { [slideId: number]: { [layerId: number]: ILayerFormed } }
-  slideLayersInfo: { [slideId: number]: { [layerId: number]: ILayerInfo } }
-  slideLayersOperationInfo: {
-    [slideId: number]: LayersOperationInfo
+export interface ISlide extends ISlideBase {
+  config: {
+    slideParams: ISlideParams
   }
-
-  clipboardSlides: ISlideFormed[]
-  clipboardLayers: ILayerFormed[]
-
-  lastOperationType: (keyof typeof ActionTypes) | (keyof typeof VizActionTypes)
-  lastLayers: ILayerFormed[]
-
-  editorBaselines: IBaseline[]
-
-  loading: IDisplayLoading
 }

@@ -712,7 +712,6 @@ export function getCorrectInputNumber (num: any): number {
       } else {
         return Number(num) || null
       }
-      return
     case 'number':
       return num
     default:

@@ -31,8 +31,8 @@ import reducer from './reducer'
 import saga from './sagas'
 import projectReducer from '../Projects/reducer'
 import projectSaga from '../Projects/sagas'
-import vizReducer from '../Viz/reducer'
-import vizSaga from '../Viz/sagas'
+import portalReducer from '../Portal/reducer'
+import portalSaga from '../Portal/sagas'
 import viewReducer from '../View/reducer'
 import viewSaga from '../View/sagas'
 
@@ -47,9 +47,14 @@ import AntdFormType from 'antd/lib/form/Form'
 
 const Search = Input.Search
 
-import { VizActions } from 'containers/Viz/actions'
-import { makeSelectCurrentDashboards, makeSelectCurrentPortal, makeSelectVizLoading } from 'containers/Viz/selectors'
-import { makeSelectCurrentDashboard } from './selectors'
+import {
+  loadDashboards,
+  addDashboard,
+  editDashboard,
+  deleteDashboard,
+  loadDashboardDetail
+} from './actions'
+import { makeSelectDashboards, makeSelectModalLoading } from './selectors'
 import {
   hideNavigator,
   checkNameUniqueAction,
@@ -60,16 +65,19 @@ import {
 import { makeSelectDownloadList, makeSelectDownloadListLoading } from '../App/selectors'
 import { DownloadTypes, IDownloadRecord } from '../App/types'
 import { listToTree, findFirstLeaf } from './components/localPositionUtil'
+import { loadPortals } from '../Portal/actions'
+import { makeSelectCurrentPortal } from '../Portal/selectors'
 import { ProjectActions } from '../Projects/actions'
 const { loadProjectDetail, excludeRoles } = ProjectActions
-import {IExludeRoles} from '../Viz/components/PortalList'
+import {IExludeRoles} from '../Portal/components/PortalList'
+const utilStyles = require('assets/less/util.less')
 const styles = require('./Dashboard.less')
+const widgetStyles = require('../Widget/Widget.less')
 import {makeSelectCurrentProject, makeSelectProjectRoles} from '../Projects/selectors'
 import ModulePermission from '../Account/components/checkModulePermission'
 import { initializePermission } from '../Account/components/checkUtilPermission'
 import { IProject } from '../Projects/types'
 import EditorHeader from 'components/EditorHeader'
-import 'assets/less/resizer.less'
 const SplitPane = React.lazy(() => import('react-split-pane'))
 import {IProjectRoles} from '../Organizations/component/ProjectRole'
 import { OrganizationActions } from '../Organizations/actions'
@@ -80,15 +88,8 @@ import { RouteComponentWithParams } from 'utils/types'
 import { Grid } from './Loadable'
 
 interface IDashboardProps {
-  modalLoading: {
-    portal: boolean
-    display: boolean
-    editing: boolean
-    dashboards: boolean
-    slides: boolean
-  }
+  modalLoading: boolean
   dashboards: IDashboard[]
-  currentDashboard: IDashboard,
   currentProject: IProject
   currentPortal: any
   projectRoles: IProjectRoles[]
@@ -96,10 +97,10 @@ interface IDashboardProps {
   onLoadDashboards: (portalId: number, resolve: any) => void
   onAddDashboard: (dashboard: IDashboard, resolve: any) => any
   onEditDashboard: (type: string, dashboard: IDashboard[], resolve: any) => void
-  onDeleteDashboard: (id: number, portalId: number, resolve: any) => void
+  onDeleteDashboard: (id: number, resolve: any) => void
   onHideNavigator: () => void
   onCheckUniqueName: (pathname: string, data: any, resolve: () => any, reject: (error: string) => any) => any
-  onLoadPortals: (projectId) => void
+  onLoadPortals: (projectId, portalId) => void
   onLoadProjectDetail: (id) => any
   onExcludeRoles: (type: string, id: number, resolve?: any) => any
   onLoadProjectRoles: (id: number) => any
@@ -178,9 +179,9 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
   }
 
   public componentWillMount () {
+    // this.props.onHideNavigator()
     const { match, history, dashboards, onLoadDashboards, onLoadPortals, onLoadProjectDetail, onLoadProjectRoles } = this.props
-    const { projectId, portalId } = match.params
-    const dashboardId = this.getDashboardIdFromLocation()
+    const { projectId, portalId, dashboardId } = match.params
 
     onLoadProjectRoles(Number(projectId))
     onLoadDashboards(+portalId, (result) => {
@@ -207,8 +208,28 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
       this.expandAll(result)
     })
 
-    onLoadPortals(projectId)
+    // .then(({result, defaultDashboardId}) => {
+    //   if (result.length !== 0 && defaultDashboardId !== -1) {
+    //     const { dashboardId } = params
+    //     const currentdashboardId = dashboardId ? Number(dashboardId) : defaultDashboardId
+    //     const selectedDashboard = (result as any).find((r) => r.id === currentdashboardId)
+    //     console.log(selectedDashboard)
+    //     this.props.onLoadDashboardDetail(selectedDashboard, params.projectId, params.portalId, currentdashboardId)
+    //   } else {
+    //     this.setState({
+    //       isGrid: false
+    //     })
+    //   }
+    // })
+    onLoadPortals(projectId, +portalId)
     onLoadProjectDetail(projectId)
+  }
+
+  private initalDashboardData (dashboards) {
+    this.setState({
+      dashboardData: listToTree(dashboards, 0)
+    })
+    this.expandAll(dashboards)
   }
 
   public componentWillReceiveProps (nextProps) {
@@ -217,29 +238,15 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
     }
   }
 
+
   public componentDidMount () {
     this.props.onHideNavigator()
   }
 
-  private initalDashboardData = (dashboards) => {
-    this.setState({
-      dashboardData: listToTree(dashboards, 0)
-    })
-    this.expandAll(dashboards)
-  }
-
-  private getDashboardIdFromLocation = () => {
-    const urlPieces = location.href.split('/')
-    const lastModuleName = urlPieces[urlPieces.length - 2]
-    const lastModuleId = urlPieces[urlPieces.length - 1]
-    return lastModuleName === 'dashboard' ? Number(lastModuleId) : 0
-  }
-
   private changeDashboard = (dashboardId) => (e) => {
     const { match, history } = this.props
-    const { projectId, portalId } = match.params
-    const currentDashboardId = this.getDashboardIdFromLocation()
-    if (currentDashboardId === dashboardId) {
+    const { projectId, portalId, dashboardId: currentDashboardId } = match.params
+    if (+currentDashboardId === dashboardId) {
       return
     }
 
@@ -552,6 +559,11 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
     })
   }
 
+  private backPortal = () => {
+    const { history, match } = this.props
+    history.replace(`/project/${match.params.projectId}/vizs`)
+  }
+
   private pickSearchDashboard = (dashboardId) => (e) => {
     const { dashboards } = this.props
     this.setState({
@@ -571,12 +583,11 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
   private confirmDeleteDashboard = (id) => {
     const { match, history, onDeleteDashboard, dashboards } = this.props
     const { dashboardData } = this.state
-    const dashboardId = this.getDashboardIdFromLocation()
 
-    onDeleteDashboard(id, +match.params.portalId, () => {
+    onDeleteDashboard(id, () => {
       const { projectId, portalId } = match.params
 
-      const paramsDashboard = dashboards.find((d) => d.id === dashboardId)
+      const paramsDashboard = dashboards.find((d) => d.id === Number(match.params.dashboardId))
       const noCurrentDashboards = dashboardData.filter((d) => d.id !== id)
       if (noCurrentDashboards.length !== 0 && paramsDashboard) {
         const remainDashboards = noCurrentDashboards.filter((r) => r.parentId !== id)
@@ -585,7 +596,7 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
           type: 2,
           children: remainDashboards
         }
-        if (dashboardId === id || paramsDashboard.parentId === id) {
+        if (Number(match.params.dashboardId) === id || paramsDashboard.parentId === id) {
           const defaultDashboardId = findFirstLeaf(treeData)
           history.replace(`/project/${projectId}/portal/${portalId}/dashboard/${defaultDashboardId}`)
         }
@@ -665,7 +676,6 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
   public render () {
     const {
       match,
-      currentDashboard,
       dashboards,
       modalLoading,
       currentProject,
@@ -690,8 +700,6 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
     const items = searchValue.map((s) => {
       return <li key={s.id} onClick={this.pickSearchDashboard(s.id)}>{s.name}</li>
     })
-
-    const dashboardId = this.getDashboardIdFromLocation().toString()
 
     let modalTitle = ''
     switch (formType) {
@@ -725,7 +733,7 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
         key="submit"
         size="large"
         type="primary"
-        loading={modalLoading.editing}
+        loading={modalLoading}
         onClick={this.onModalOk}
       >
         {formType === 'delete' ? '确 定' : '保 存'}
@@ -838,7 +846,7 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
                       onExpand={this.onExpand}
                       expandedKeys={this.state.expandedKeys}
                       autoExpandParent={this.state.autoExpandParent}
-                      selectedKeys={[dashboardId]}
+                      selectedKeys={[this.props.match.params.dashboardId]}
                       draggable={initializePermission(currentProject, 'vizPermission')}
                       onDrop={this.onDrop}
                       onSelect={this.handleTree}
@@ -875,7 +883,7 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
             type={formType}
             itemId={this.state.itemId}
             dashboards={dashboards}
-            portalId={Number(match.params.portalId)}
+            portalId={match.params.portalId}
             exludeRoles={this.state.exludeRoles}
             onCheckUniqueName={onCheckUniqueName}
             onChangePermission={this.changePermission}
@@ -888,9 +896,8 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
 }
 
 const mapStateToProps = createStructuredSelector({
-  dashboards: makeSelectCurrentDashboards(),
-  currentDashboard: makeSelectCurrentDashboard(),
-  modalLoading: makeSelectVizLoading(),
+  dashboards: makeSelectDashboards(),
+  modalLoading: makeSelectModalLoading(),
   currentProject: makeSelectCurrentProject(),
   currentPortal: makeSelectCurrentPortal(),
   projectRoles: makeSelectProjectRoles(),
@@ -899,13 +906,13 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps (dispatch) {
   return {
-    onLoadDashboards: (portalId, resolve) => dispatch(VizActions.loadPortalDashboards(portalId, resolve, false)),
-    onAddDashboard: (dashboard, resolve) => dispatch(VizActions.addDashboard(dashboard, resolve)),
-    onEditDashboard: (formType, dashboard, resolve) => dispatch(VizActions.editDashboard(formType, dashboard, resolve)),
-    onDeleteDashboard: (id, portalId, resolve) => dispatch(VizActions.deleteDashboard(id, portalId, resolve)),
+    onLoadDashboards: (portalId, resolve) => dispatch(loadDashboards(portalId, resolve)),
+    onAddDashboard: (dashboard, resolve) => dispatch(addDashboard(dashboard, resolve)),
+    onEditDashboard: (formType, dashboard, resolve) => dispatch(editDashboard(formType, dashboard, resolve)),
+    onDeleteDashboard: (id, resolve) => dispatch(deleteDashboard(id, resolve)),
     onHideNavigator: () => dispatch(hideNavigator()),
     onCheckUniqueName: (pathname, data, resolve, reject) => dispatch(checkNameUniqueAction(pathname, data, resolve, reject)),
-    onLoadPortals: (projectId) => dispatch(VizActions.loadPortals(projectId)),
+    onLoadPortals: (projectId, portalId) => dispatch(loadPortals(projectId, portalId)),
     onLoadProjectDetail: (id) => dispatch(loadProjectDetail(id)),
     onExcludeRoles: (type, id, resolve) => dispatch(excludeRoles(type, id, resolve)),
     onLoadProjectRoles: (id) => dispatch(loadProjectRoles(id)),
@@ -923,8 +930,8 @@ const withSaga = injectSaga({ key: 'dashboard', saga })
 const withProjectReducer = injectReducer({ key: 'project', reducer: projectReducer })
 const withProjectSaga = injectSaga({ key: 'project', saga: projectSaga })
 
-const withVizReducer = injectReducer({ key: 'viz', reducer: vizReducer })
-const withVizSaga = injectSaga({ key: 'viz', saga: vizSaga })
+const withPortalReducer = injectReducer({ key: 'portal', reducer: portalReducer })
+const withPortalSaga = injectSaga({ key: 'portal', saga: portalSaga })
 
 const withViewReducer = injectReducer({ key: 'view', reducer: viewReducer })
 const withViewSaga = injectSaga({ key: 'view', saga: viewSaga })
@@ -932,11 +939,11 @@ const withViewSaga = injectSaga({ key: 'view', saga: viewSaga })
 export default compose(
   withReducer,
   withProjectReducer,
-  withVizReducer,
+  withPortalReducer,
   withViewReducer,
   withSaga,
   withProjectSaga,
-  withVizSaga,
+  withPortalSaga,
   withViewSaga,
   withConnect
 )(Dashboard)

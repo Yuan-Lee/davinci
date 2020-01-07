@@ -24,24 +24,26 @@ import { Link } from 'react-router-dom'
 
 import styles from '../Sidebar/Sidebar.less'
 
+
 interface ISidebarOptionProps {
   indexRoute: string
   active: boolean
-  projectId: number
-  icon: React.ReactNode
+  projectId: string
 }
 
 const SidebarOption: React.FC<ISidebarOptionProps> = (props) => {
-  const { indexRoute, active, projectId, icon } = props
+  const { projectId, indexRoute } = props
   const optionClass = classnames(
     { [styles.option]: true },
-    { [styles.active]: active }
+    { [styles.active]: props.active }
   )
   const linkRoute = `/project/${projectId}/${indexRoute}`
 
   return (
     <div className={optionClass}>
-      <Link to={linkRoute}>{icon}</Link>
+      <Link to={linkRoute}>
+        {props.children}
+      </Link>
     </div>
   )
 }

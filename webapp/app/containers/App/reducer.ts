@@ -18,10 +18,7 @@
  * >>
  */
 
-import produce, { setAutoFreeze } from 'immer'
-
-// @FIXME temporary not Object.freeze from immer produce to avoid current bugs
-setAutoFreeze(false)
+import produce from 'immer'
 
 import {
   LOGIN,

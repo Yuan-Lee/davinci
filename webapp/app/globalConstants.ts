@@ -28,6 +28,9 @@ export const GRID_COLS = { lg: 12, md: 12, sm: 12, xs: 2, xxs: 2 }
 export const GRID_ITEM_MARGIN = 16
 export const GRID_ROW_HEIGHT = 30
 
+export const DEFAULT_BASELINE_THICKNESS = 1.5
+export const DEFAULT_BASELINE_COLOR = '#ecc302'
+
 export const TABLE_HEADER_HEIGHT = 50
 export const TABLE_PAGINATION_HEIGHT = 61
 export const COLUMN_WIDTH = 150
@@ -66,6 +69,9 @@ export const PIVOT_CHART_FONT_FAMILIES = [
   { name: '苹方', value: 'PingFang SC'},
   { name: '微软雅黑', value: 'Microsoft YaHei'},
   { name: '宋体', value: 'SimSun'},
+  { name: '仿宋', value: 'FangSong'},
+  { name: '楷体', value: 'KaiTi'},
+  { name: '幼圆', value: 'YouYuan'},
   { name: '黑体', value: 'SimHei'},
   { name: 'Helvetica Neue', value: '"Helvetica Neue"'},
   { name: 'Helvetica', value: 'Helvetica'},

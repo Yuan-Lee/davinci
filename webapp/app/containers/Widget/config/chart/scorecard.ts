@@ -87,7 +87,10 @@ const scorecard: IChartInfo = {
 
       fontSizeFixed: false,
       fontSizeMain: '48',
-      fontSizeSub: '18'
+      fontSizeSub: '18',
+
+      bgColor: '#fff',
+      textAlign: 'left'
     },
     spec: {
 

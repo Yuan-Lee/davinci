@@ -1,70 +1,49 @@
-import React, { ReactNode, SyntheticEvent } from 'react'
-import Resizable, { ResizableProps, ResizeCallbackData } from './Resizable'
+import * as React from 'react'
+import Resizable, {IResizableProps, IResizeCallbackData} from './Resizable'
 
-type ResizableBoxState = {
-  width: number
+interface IResizableBoxState {
+  width: number,
   height: number
-  propsWidth: number
-  propsHeight: number
 }
 
 // An example use of Resizable.
-export default class ResizableBox extends React.Component<
-  ResizableProps,
-  ResizableBoxState
-> {
-  public static defaultProps: Partial<ResizableProps> = {
+export default class ResizableBox extends React.Component<IResizableProps, IResizableBoxState> {
+
+  public static defaultProps = {
     handleSize: [20, 20]
   }
 
-  public state: Readonly<ResizableBoxState> = {
+  public state: IResizableBoxState = {
     width: this.props.width,
-    height: this.props.height,
-    propsWidth: this.props.width,
-    propsHeight: this.props.height
+    height: this.props.height
   }
 
-  static getDerivedStateFromProps(
-    props: ResizableProps,
-    state: ResizableBoxState
-  ) {
-    // If parent changes height/width, set that in our state.
-    if (
-      state.propsWidth !== props.width ||
-      state.propsHeight !== props.height
-    ) {
-      return {
-        width: props.width,
-        height: props.height,
-        propsWidth: props.width,
-        propsHeight: props.height
-      }
-    }
-    return {}
-  }
-
-  private onResize = (e: SyntheticEvent, data: ResizeCallbackData) => {
-    const { size } = data
+  private onResize = (e, data: IResizeCallbackData) => {
+    const {size} = data
+    const {width, height} = size
 
     if (this.props.onResize) {
-      if (e.persist) {
-        e.persist()
-      }
-      this.setState(
-        size,
-        () => this.props.onResize && this.props.onResize(e, data)
-      )
+      if (e.persist) { e.persist() }
+      this.setState(size, () => this.props.onResize && this.props.onResize(e, data))
     } else {
       this.setState(size)
     }
   }
 
-  public render() {
+  public componentWillReceiveProps (nextProps: IResizableProps) {
+    if (nextProps.width !== this.props.width || nextProps.height !== this.props.height) {
+      this.setState({
+        width: nextProps.width,
+        height: nextProps.height
+      })
+    }
+  }
+
+  public render () {
     // Basic wrapper around a Resizable instance.
     // If you use Resizable directly, you are responsible for updating the child component
     // with a new width and height.
     const {
-      handle,
       handleSize,
       onResize,
       onResizeStart,
@@ -77,13 +56,10 @@ export default class ResizableBox extends React.Component<
       width,
       height,
       scale,
-      resizeHandles,
-      ...props
-    } = this.props
+      ...props  } = this.props
 
     return (
       <Resizable
-        handle={handle}
         handleSize={handleSize}
         width={this.state.width}
         height={this.state.height}
@@ -96,15 +72,8 @@ export default class ResizableBox extends React.Component<
         maxConstraints={maxConstraints}
         lockAspectRatio={lockAspectRatio}
         axis={axis}
-        resizeHandles={resizeHandles}
       >
-        <div
-          style={{
-            width: this.state.width + 'px',
-            height: this.state.height + 'px'
-          }}
-          {...props}
-        />
+        <div style={{width: this.state.width + 'px', height: this.state.height + 'px'}} {...props} />
       </Resizable>
     )
   }
