@@ -89,6 +89,7 @@ CREATE TABLE `display`
     `project_id`  bigint(20)   NOT NULL,
     `avatar`      varchar(255) DEFAULT NULL,
     `publish`     tinyint(1)   NOT NULL,
+    `config`      text         NULL,
     `create_by`   bigint(20)   DEFAULT NULL,
     `create_time` datetime     DEFAULT NULL,
     `update_by`   bigint(20)   DEFAULT NULL,
@@ -427,6 +428,10 @@ CREATE TABLE `rel_user_organization`
     `org_id`  bigint(20)  NOT NULL,
     `user_id` bigint(20)  NOT NULL,
     `role`    smallint(1) NOT NULL DEFAULT '0',
+    `create_by`   bigint(20)   DEFAULT NULL,
+    `create_time` datetime     DEFAULT NULL,
+    `update_by`   bigint(20)   DEFAULT NULL,
+    `update_time` datetime     DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE KEY `idx_org_user` (`org_id`, `user_id`) USING BTREE
 ) ENGINE = InnoDB

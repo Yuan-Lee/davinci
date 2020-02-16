@@ -27,10 +27,9 @@ import {
   takeEvery
 } from 'redux-saga/effects'
 import produce from 'immer'
-import { push } from 'connected-react-router'
+import { push, replace } from 'connected-react-router'
 import { Location } from 'history'
-import history from 'utils/history'
-import { matchDisplayPreviewPath, matchDisplaySlidePath } from 'utils/router'
+import { matchDisplayPath, matchDisplaySlidePath } from 'utils/router'
 import { ActionTypes } from './constants'
 import { VizActions, VizActionType } from './actions'
 
@@ -267,25 +266,34 @@ export function* getDisplaySlides(action: VizActionType) {
     })
     rest.config = JSON.parse(rest.config || '{}')
     yield put(VizActions.displaySlidesLoaded(rest, slides))
+
     const location: Location = yield select(makeSelectLocation())
+    const matchDisplay = matchDisplayPath(location.pathname)
     const matchDisplaySlide = matchDisplaySlidePath(location.pathname)
+
+    let previewSubPath: string = ''
+    if (matchDisplay) {
+      previewSubPath = matchDisplay.params[0]
+      previewSubPath = previewSubPath ? `/${previewSubPath}` : ''
+    }
+
     let nextSlideId: number = slides[0].id
+    let paramSlideId: number
     if (matchDisplaySlide) {
-      const paramSlideId = +matchDisplaySlide.params.slideId
-      const slideExists = ~(slides as ISlideFormed[]).findIndex(
-        ({ id }) => id === paramSlideId
-      )
-      if (slideExists) {
-        nextSlideId = paramSlideId
+      paramSlideId = +matchDisplaySlide.params.slideId
+      if (paramSlideId) {
+        const slideExists = ~(slides as ISlideFormed[]).findIndex(
+          ({ id }) => id === paramSlideId
+        )
+        if (slideExists) {
+          nextSlideId = paramSlideId
+        }
       }
     }
     const { id: projectId } = yield select(makeSelectCurrentProject())
-    const matchDisplayPreview = matchDisplayPreviewPath(location.pathname)
 
-    const nextPath = `/project/${projectId}/display/${displayId}/slide/${nextSlideId}${
-      matchDisplayPreview ? '/preview' : ''
-    }`
-    yield put(push(nextPath))
+    const nextPath = `/project/${projectId}/display/${displayId}${previewSubPath}/slide/${nextSlideId}`
+    yield put(replace(nextPath))
     yield put(VizActions.updateCurrentDisplay(rest))
   } catch (err) {
     yield put(VizActions.loadDisplaySlidesFail(displayId))
@@ -419,9 +427,10 @@ export function* addSlide(action: VizActionType) {
     slideReponse.config = JSON.parse(slideReponse.config)
     yield put(VizActions.slideAdded(slideReponse, insertSlideIdx, afterSlides))
     const { id: projectId } = yield select(makeSelectCurrentProject())
-    history.push(
-      `/project/${projectId}/display/${displayId}/slide/${slideReponse.id}`
-    )
+    const nextPath = `/project/${projectId}/display/${displayId}/slide/${
+      slideReponse.id
+    }`
+    yield put(push(nextPath))
   } catch (err) {
     yield put(VizActions.addSlideFail())
     errorHandler(err)
@@ -505,7 +514,7 @@ export function* deleteSlides(action: VizActionType) {
       }
     }
     yield put(
-      push(`/project/${projectId}/display/${displayId}/slide/${nextSlideId}`)
+      replace(`/project/${projectId}/display/${displayId}/slide/${nextSlideId}`)
     )
     yield put(VizActions.slidesDeleted(displayId, slideIds))
   } catch (err) {
@@ -520,7 +529,7 @@ export default function* rootVizSaga(): IterableIterator<any> {
     takeEvery(ActionTypes.ADD_PORTAL, addPortal),
     takeEvery(ActionTypes.EDIT_PORTAL, editPortal),
     takeEvery(ActionTypes.DELETE_PORTAL, deletePortal),
-    takeLatest(ActionTypes.LOAD_PORTAL_DASHBOARDS, getPortalDashboards),
+    takeEvery(ActionTypes.LOAD_PORTAL_DASHBOARDS, getPortalDashboards),
 
     takeLatest(ActionTypes.LOAD_DISPLAYS, getDisplays),
     takeEvery(ActionTypes.ADD_DISPLAY, addDisplay),

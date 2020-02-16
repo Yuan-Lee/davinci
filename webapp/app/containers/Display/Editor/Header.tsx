@@ -138,9 +138,7 @@ const Header: React.FC = () => {
           dispatch(VizActions.addSlide())
           break
         case GraphTypes.Chart:
-          if (!widgets.length) {
-            dispatch(WidgetActions.loadWidgets(projectId))
-          }
+          dispatch(WidgetActions.loadWidgets(projectId))
           setWidgetSelectModalVisible(true)
           break
         case GraphTypes.Secondary:
@@ -218,7 +216,7 @@ const Header: React.FC = () => {
   const history = useHistory()
   const preview = useCallback(() => {
     const location: LocationDescriptorObject = {
-      pathname: `/project/${projectId}/display/${currentDisplayId}/slide/${slideId}/preview`
+      pathname: `/project/${projectId}/display/${currentDisplayId}/preview/slide/${slideId}`
     }
 
     const link = document.createElement('a')

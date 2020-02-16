@@ -31,6 +31,8 @@ public class Consts {
 
     public static final String SLASH = "/";
 
+    public static final String BACK_SLASH = "\\";
+
     public static final String DOUBLE_SLASH = "//";
 
     public static final String SPACE = " ";
@@ -171,7 +173,6 @@ public class Consts {
 
     public static final Pattern PATTERN_JDBC_TYPE = Pattern.compile("jdbc:\\w+");
 
-
     public static final String DIR_DOWNLOAD = File.separator + "download" + File.separator;
 
     public static final String DIR_SHARE_DOWNLOAD = File.separator + "share" + File.separator + "download" + File.separator;
@@ -198,5 +199,5 @@ public class Consts {
 
     public static final String JDBC_DATASOURCE_DEFAULT_VERSION = "Default";
 
-    public static final String PATH_EXT_FORMATER = "ext" + File.separator + "%s" + File.separator + "%s" + File.separator;
+    public static final String PATH_EXT_FORMATER = "lib" + File.separator  + "ext" + File.separator + "%s" + File.separator + "%s" + File.separator;
 }
