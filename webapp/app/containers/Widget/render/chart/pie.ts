@@ -21,7 +21,7 @@
 import { IChartProps } from '../../components/Chart'
 import { decodeMetricName, getTextWidth } from '../../components/util'
 import { getLegendOption, getLabelOption } from './util'
-import { EChartOption } from 'echarts'
+import { EChartOption, EChartTitleOption } from 'echarts'
 import { getFormattedValue } from '../../components/Config/Format'
 
 export default function (chartProps: IChartProps, drillOptions?: any) {
@@ -36,7 +36,7 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
     tip
   } = chartProps
 
-  const { label, legend, spec, toolbox } = chartStyles
+  const { title, label, legend, spec, toolbox } = chartStyles
 
   const { legendPosition, fontSize } = legend
 
@@ -54,6 +54,7 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
   let seriesObj = {}
   const seriesArr = []
   let legendData = []
+  let dataArr = []
   let grouped: { [key: string]: object[] } = {}
 
   if (metrics.length <= 1) {
@@ -150,6 +151,10 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
                   }
                 }
               : {}
+          dataArr.push({
+            ...data,
+            ...itemStyleObj
+          })
           return {
             ...data,
             ...itemStyleObj
@@ -195,6 +200,11 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
               }
             : {}
 
+        dataArr.push({
+          name: decodedMetricName,
+          value: data.reduce((sum, record) => sum + record[`${metric.agg}(${decodedMetricName})`], 0),
+        })
+
         return {
           name: decodedMetricName,
           value: data.reduce((sum, record) => sum + record[`${metric.agg}(${decodedMetricName})`], 0),
@@ -218,6 +228,65 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
     seriesArr.push(seriesObj)
   }
 
+  let otherOptions = null
+  let dataObj = {}
+  let sum = 0
+  if (title) {
+    const {
+      show,
+      text,
+      textFontFamily,
+      textFontSize,
+      textColor,
+      subtext,
+      subtextFontFamily,
+      subtextFontSize,
+      subtextColor
+    } = title
+
+    if (dataArr && dataArr.length > 0) {
+      dataArr.forEach((item) => {
+        sum += item.value
+        dataObj[item.name] = item.value
+      })
+    }
+    otherOptions = {
+      show: title.show,
+      text: title.text,
+      textStyle: {
+        fontFamily: title.textFontFamily,
+        fontWeight: 'normal',
+        fontSize: title.textFontSize,
+        color: title.textColor
+      },
+      subtext: sum,
+      subtextStyle: {
+        fontFamily: title.subtextFontFamily,
+        fontSize: title.subtextFontSize,
+        color: title.subtextColor
+      }
+    }
+  }
+
+  let legendOptions = getLegendOption(legend, legendData)
+  legendOptions.formatter = (name) => {
+    let str = name
+    if (legend.isShowLegendValue && !legend.isShowLegendPercent) {
+      str = name + ' ' + dataObj[name]
+    } else if (!legend.isShowLegendValue && legend.isShowLegendPercent) {
+      str = name + ' （' + (dataObj[name] / sum * 100).toFixed(2) + '%）'
+    } else if (legend.isShowLegendValue && legend.isShowLegendPercent) {
+      str = name + ' ' + dataObj[name] + ' （' + (dataObj[name] / sum * 100).toFixed(2) + '%）'
+    }
+    return str
+  }
+
+  const pieTitle: EChartTitleOption = {
+    ...otherOptions,
+    left: 'center',
+    top: 'middle'
+  }
+
   const tooltip: EChartOption.Tooltip = {
     trigger: 'item',
     formatter (params: EChartOption.Tooltip.Format) {
@@ -239,8 +308,9 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
   }
 
   return {
+    title: pieTitle,
     tooltip,
-    legend: getLegendOption(legend, legendData),
+    legend: legendOptions,
     series: seriesArr
   }
 }

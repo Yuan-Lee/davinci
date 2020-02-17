@@ -32,6 +32,7 @@ export interface IControlBase {
   interactionType: InteractionType
   operator: OperatorTypes
   dateFormat?: DatePickerFormats
+  isShow?: boolean
   multiple?: boolean
   cache: boolean
   expired: number

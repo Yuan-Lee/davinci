@@ -23,8 +23,8 @@ export const DEFAULT_ECHARTS_THEME = defaultEchartsTheme.theme
 export const DEFAULT_PRIMARY_COLOR = '#1B98E0'
 export const DEFAULT_SECONDARY_COLOR = '#223151'
 
-export const GRID_BREAKPOINTS = { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }
-export const GRID_COLS = { lg: 12, md: 12, sm: 12, xs: 2, xxs: 2 }
+export const GRID_BREAKPOINTS = { lg: 1200, md: 996, sm: 768, xs: 370, xxs: 0 }
+export const GRID_COLS = { lg: 12, md: 12, sm: 12, xs: 6, xxs: 2 }
 export const GRID_ITEM_MARGIN = 16
 export const GRID_ROW_HEIGHT = 30
 
@@ -66,6 +66,9 @@ export const PIVOT_CHART_FONT_FAMILIES = [
   { name: '苹方', value: 'PingFang SC'},
   { name: '微软雅黑', value: 'Microsoft YaHei'},
   { name: '宋体', value: 'SimSun'},
+  { name: '仿宋', value: 'FangSong'},
+  { name: '楷体', value: 'KaiTi'},
+  { name: '幼圆', value: 'YouYuan'},
   { name: '黑体', value: 'SimHei'},
   { name: 'Helvetica Neue', value: '"Helvetica Neue"'},
   { name: 'Helvetica', value: 'Helvetica'},

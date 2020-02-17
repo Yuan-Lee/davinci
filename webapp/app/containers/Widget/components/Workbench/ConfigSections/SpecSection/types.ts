@@ -23,4 +23,7 @@ export interface ISpecConfig {
   draggable: boolean
   symbol?: boolean
   label?: boolean
+  
+  // for progress
+  chartType?: string
 }

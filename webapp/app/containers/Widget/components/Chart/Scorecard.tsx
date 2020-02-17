@@ -41,8 +41,13 @@ export class Scorecard extends React.PureComponent<IChartProps, {}> {
     text: string,
     fontFamily: string, fontSize: number, color: string,
     prefix: string, prefixFontFamily: string, prefixFontSize: number, prefixColor: string,
-    suffix: string, suffixFontFamily: string, suffixFontSize: number, suffixColor: string
+    suffix: string, suffixFontFamily: string, suffixFontSize: number, suffixColor: string,
+    textAlign: string
   ) => {
+    
+    const align: React.CSSProperties = {
+      textAlign: textAlign as React.CSSProperties['textAlign']
+    }
 
     const style: React.CSSProperties = {
       fontFamily,
@@ -63,6 +68,7 @@ export class Scorecard extends React.PureComponent<IChartProps, {}> {
     return (
       <p
         className={styles.scorecardTitle}
+        style={align}
       >
         <span style={stylePrefix}>{prefix}</span>
         <span style={style}>{text}</span>
@@ -131,7 +137,8 @@ export class Scorecard extends React.PureComponent<IChartProps, {}> {
       prefixFooter, prefixFooterFontFamily, prefixFooterColor,
       suffixFooter, suffixFooterFontFamily, suffixFooterColor,
 
-      fontSizeFixed, fontSizeMain, fontSizeSub
+      fontSizeFixed, fontSizeMain, fontSizeSub,
+      bgColor, textAlign
     } = scorecard
 
     const headerText = this.getMetricText(metricHeader, headerVisible)
@@ -148,18 +155,23 @@ export class Scorecard extends React.PureComponent<IChartProps, {}> {
       ))
     }
 
+    const bgStyle: React.CSSProperties = {
+      backgroundColor: bgColor,
+      margin: '-16px'
+    }
+
     return (
-      <div className={styles.scorecard}>
+      <div className={styles.scorecard} style={bgStyle}>
         <div className={styles.scorecardContainer}>
           {this.renderMetric(headerText,
             headerFontFamily, titleFontSize, headerColor, prefixHeader, prefixHeaderFontFamily, titleFontSize, prefixHeaderColor,
-            suffixHeader, suffixHeaderFontFamily, titleFontSize, suffixHeaderColor)}
+            suffixHeader, suffixHeaderFontFamily, titleFontSize, suffixHeaderColor, textAlign)}
           {this.renderMetric(contentText,
             contentFontFamily, contentFontSize, contentColor, prefixContent, prefixContentFontFamily, titleFontSize, prefixContentColor,
-            suffixContent, suffixContentFontFamily, titleFontSize, suffixContentColor)}
+            suffixContent, suffixContentFontFamily, titleFontSize, suffixContentColor, textAlign)}
           {this.renderMetric(footerText,
             footerFontFamily, titleFontSize, footerColor, prefixFooter, prefixFooterFontFamily, titleFontSize, prefixFooterColor,
-            suffixFooter, suffixFooterFontFamily, titleFontSize, suffixFooterColor)}
+            suffixFooter, suffixFooterFontFamily, titleFontSize, suffixFooterColor, textAlign)}
         </div>
       </div>
     )

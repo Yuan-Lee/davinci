@@ -8,6 +8,8 @@ const styles = require('../Workbench.less')
 export interface ILegendConfig {
   showLegend: boolean
   legendPosition: string
+  isShowLegendValue: boolean
+  isShowLegendPercent: boolean
   selectAll: boolean
   fontFamily: string
   fontSize: string
@@ -39,6 +41,8 @@ export class LegendSection extends React.PureComponent<ILegendSectionProps, {}> 
     const {
       showLegend,
       legendPosition,
+      isShowLegendValue,
+      isShowLegendPercent,
       selectAll,
       fontFamily,
       fontSize,
@@ -67,6 +71,20 @@ export class LegendSection extends React.PureComponent<ILegendSectionProps, {}> 
               >
                 显示图例
               </Checkbox>
+            </Col>
+          </Row>
+          <Row gutter={8} type="flex" align="middle" className={styles.blockRow}>
+            <Col span={12}>
+              <Checkbox
+                checked={isShowLegendValue}
+                onChange={this.checkboxChange('isShowLegendValue')}
+              >指标值</Checkbox>
+            </Col>
+            <Col span={12}>
+              <Checkbox
+                checked={isShowLegendPercent}
+                onChange={this.checkboxChange('isShowLegendPercent')}
+              >百分比</Checkbox>
             </Col>
           </Row>
           <Row gutter={8} type="flex" align="middle" className={styles.blockRow}>

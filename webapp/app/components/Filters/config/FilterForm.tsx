@@ -199,6 +199,17 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
         </div>
         <Row gutter={8} className={styles.formBody}>
           <Col span={8}>
+            <FormItem>
+              {getFieldDecorator('isShow', {
+                valuePropName: 'checked'
+              })(
+                <Checkbox>是否显示</Checkbox>
+              )}
+            </FormItem>
+          </Col>
+        </Row>
+        <Row gutter={8} className={styles.formBody}>
+          <Col span={8}>
             <FormItem className={utilStyles.hide}>
               {getFieldDecorator('key', {})(<Input />)}
             </FormItem>

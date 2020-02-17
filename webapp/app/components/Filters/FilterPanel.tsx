@@ -39,6 +39,7 @@ interface IFilterPanelProps {
 }
 
 interface IFilterPanelStates {
+  isRender: Boolean,
   renderTree: IRenderTreeItem[],
   flatTree: {
     [key: string]: IRenderTreeItem
@@ -54,6 +55,7 @@ export class FilterPanel extends Component<IFilterPanelProps & FormComponentProp
   public constructor (props: IFilterPanelProps & FormComponentProps) {
     super(props)
     this.state = {
+      isRender: false, // 用于判断是否渲染搜索栏
       renderTree: [],
       flatTree: {},
       controlValues: {},
@@ -120,9 +122,14 @@ export class FilterPanel extends Component<IFilterPanelProps & FormComponentProp
 
         return control
       })
-
+      this.setState({isRender: false})
       const { renderTree, flatTree } = getControlRenderTree<IGlobalControl, IRenderTreeItem>(controls)
       Object.values(flatTree).forEach((control) => {
+        if (control.isShow) {
+          this.setState({
+            isRender: true
+          })
+        }
         if (SHOULD_LOAD_OPTIONS[control.type]) {
           this.loadOptions(control, flatTree, controlValues)
         }
@@ -371,20 +378,24 @@ export class FilterPanel extends Component<IFilterPanelProps & FormComponentProp
       if (isFullScreen) {
         controlGridProps = fullScreenGlobalControlGridProps
       }
-      components = components.concat(
-        <Col
-          key={key}
-          {...controlGridProps}
-        >
-          <FilterControl
-            form={form}
-            control={control}
-            currentOptions={mapOptions[key] || []}
-            parentsInfo={parentsInfo}
-            onChange={this.change}
-          />
-        </Col>
-      )
+
+      if (control.isShow) {
+        components = components.concat(
+          <Col
+            key={key}
+            {...controlGridProps}
+          >
+            <FilterControl
+              form={form}
+              control={control}
+              currentOptions={mapOptions[key] || []}
+              parentsInfo={parentsInfo}
+              onChange={this.change}
+            />
+          </Col>
+        )
+      }
+
       if (children) {
         const controlWithOutChildren = { key, width, ...rest }
         components = components.concat(
@@ -396,7 +407,7 @@ export class FilterPanel extends Component<IFilterPanelProps & FormComponentProp
   }
 
   public render () {
-    const { renderTree, queryMode } = this.state
+    const { isRender, renderTree, queryMode } = this.state
     const { isFullScreen } = this.props
     const panelClass = classnames({
       [styles.controlPanel]: true,
@@ -416,7 +427,7 @@ export class FilterPanel extends Component<IFilterPanelProps & FormComponentProp
     })
 
     return (
-      <Form className={panelClass}>
+      isRender && <Form className={panelClass}>
         <div className={controlClass}>
           <Row gutter={8}>
             {this.renderFilterControls(renderTree)}

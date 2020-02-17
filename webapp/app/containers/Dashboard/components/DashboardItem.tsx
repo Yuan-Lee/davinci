@@ -927,7 +927,7 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
       </div>
     )
 
-    const { selectedChart, cols, rows, metrics } = widgetProps
+    const { selectedChart, cols, rows, metrics, showHeader } = widgetProps
     const hasDataConfig = !!(cols.length || rows.length || metrics.length)
     const empty = (
       <DashboardItemMask.Empty
@@ -938,66 +938,14 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
       />
     )
 
-
-    return (
-      <div className={gridItemClass} ref={(f) => this.container = f}>
-        <div className={styles.header}>
-          <div className={styles.title}>
-            {controlToggle}
-            <h4>{widget.name}</h4>
-            {loadingIcon}
-            {descToggle}
-            {errorToggle}
-            {}
-          </div>
-          <div className={styles.tools}>
-            <Tooltip title="同步数据">
-              {!loading && <Icon type="reload" onClick={this.onSyncBizdatas} />}
-            </Tooltip>
-            {widgetButton}
-            <Tooltip title="全屏">
-              <Icon type="fullscreen" onClick={this.onFullScreen} className={styles.fullScreen} />
-            </Tooltip>
-            {shareButton}
-            {downloadButton}
-            {dropdownMenu}
-          </div>
-        </div>
-
-        {/* <div className={triggerClass}>
-          <i className="iconfont icon-icon_linkage"/>
-        </div> */}
-
-        <div className={styles.trigger}>
-          {drillInteractIcon}
-        </div>
-        <div
-          className={styles.offInteract}
-          onClick={this.turnOffInteract}
-        >
-          <i className="iconfont icon-unlink" />
-          <h3>点击取消联动</h3>
-        </div>
-        <Animate
-          showProp="show"
-          transitionName={controlPanelTransitionName}
-        >
-          <DashboardItemControlPanel
-            show={controlPanelVisible}
-            onClose={this.toggleControlPanel}
-          >
-            <DashboardItemControlForm
-              viewId={widget.viewId}
-              controls={controls}
-              mapOptions={controlSelectOptions}
-              onGetOptions={this.getControlSelectOptions}
-              onSearch={this.onControlSearch}
-              onHide={this.toggleControlPanel}
-            />
-          </DashboardItemControlPanel>
-        </Animate>
-        <Dropdown overlay={dataDrillPanel} placement="topCenter" trigger={['contextMenu']}>
-          <div className={styles.block}>
+    if (showHeader === false) {
+      const dragClass = classnames({
+        [styles.draghandle]: true,
+        [styles.block]: true
+      })
+      return (
+        <div className={gridItemClass} ref={(f) => this.container = f}>
+          <div className={dragClass}>
             <Widget
               {...widgetProps}
               renderType={loading ? 'loading' : renderType}
@@ -1017,11 +965,102 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
               selectedItems={this.props.selectedItems}
             //  onHideDrillPanel={this.onHideDrillPanel}
             />
-            {dataDrillHistory}
           </div>
-        </Dropdown>
-      </div>
-    )
+          <div className={styles.gridItemTextTools}>
+            {widgetButton}
+            {dropdownMenu}
+          </div>
+        </div>
+      )
+    } else {
+      const dragClass = classnames({
+        [styles.draghandle]: true,
+        [styles.title]: true
+      })
+      return (
+        <div className={gridItemClass} ref={(f) => this.container = f}>
+          <div className={styles.header}>
+            <div className={dragClass}>
+              {controlToggle}
+              <h4>{widget.name}</h4>
+              {loadingIcon}
+              {descToggle}
+              {errorToggle}
+              {}
+            </div>
+            <div className={styles.tools}>
+              <Tooltip title="同步数据">
+                {!loading && <Icon type="reload" onClick={this.onSyncBizdatas} />}
+              </Tooltip>
+              {widgetButton}
+              <Tooltip title="全屏">
+                <Icon type="fullscreen" onClick={this.onFullScreen} className={styles.fullScreen} />
+              </Tooltip>
+              {shareButton}
+              {downloadButton}
+              {dropdownMenu}
+            </div>
+          </div>
+
+          {/* <div className={triggerClass}>
+            <i className="iconfont icon-icon_linkage"/>
+          </div> */}
+
+          <div className={styles.trigger}>
+            {drillInteractIcon}
+          </div>
+          <div
+            className={styles.offInteract}
+            onClick={this.turnOffInteract}
+          >
+            <i className="iconfont icon-unlink" />
+            <h3>点击取消联动</h3>
+          </div>
+          <Animate
+            showProp="show"
+            transitionName={controlPanelTransitionName}
+          >
+            <DashboardItemControlPanel
+              show={controlPanelVisible}
+              onClose={this.toggleControlPanel}
+            >
+              <DashboardItemControlForm
+                viewId={widget.viewId}
+                controls={controls}
+                mapOptions={controlSelectOptions}
+                onGetOptions={this.getControlSelectOptions}
+                onSearch={this.onControlSearch}
+                onHide={this.toggleControlPanel}
+              />
+            </DashboardItemControlPanel>
+          </Animate>
+          <Dropdown overlay={dataDrillPanel} placement="topCenter" trigger={['contextMenu']}>
+            <div className={styles.block}>
+              <Widget
+                {...widgetProps}
+                renderType={loading ? 'loading' : renderType}
+                data={data}
+                interacting={this.props.interacting}
+                queryVariables={queryVariables}
+                pagination={pagination}
+                empty={empty}
+                model={model}
+                onCheckTableInteract={this.checkTableInteract}
+                onDoInteract={this.doInteract}
+                onPaginationChange={this.paginationChange}
+                getDataDrillDetail={this.getDataDrillDetail}
+                isDrilling={this.state.isDrilling}
+                whichDataDrillBrushed={this.state.whichDataDrillBrushed}
+                onSelectChartsItems={this.selectChartsItems}
+                selectedItems={this.props.selectedItems}
+              //  onHideDrillPanel={this.onHideDrillPanel}
+              />
+              {dataDrillHistory}
+            </div>
+          </Dropdown>
+        </div>
+      )
+    }
   }
 }
 

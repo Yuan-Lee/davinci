@@ -92,7 +92,17 @@ export enum ChartTypes {
   /**
    * 仪表盘
    */
-  Gauge = 17
+  Gauge = 17,
+
+  /**
+   * 文本
+   */
+  Text = 18,
+
+  /**
+   * 进度条
+   */
+  Progress = 19
 }
 
 export default ChartTypes

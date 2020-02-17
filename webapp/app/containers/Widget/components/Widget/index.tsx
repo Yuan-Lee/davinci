@@ -24,7 +24,11 @@ import { IAreaSelectConfig } from '../Workbench/ConfigSections/AreaSelectSection
 import { IScorecardConfig } from '../Workbench/ConfigSections/ScorecardSection'
 import { IGaugeConfig } from '../Workbench/ConfigSections/GaugeSection'
 import { IframeConfig } from '../Workbench/ConfigSections/IframeSection'
+import { TextConfig } from '../Workbench/ConfigSections/TextSection'
 import { ITableConfig } from '../Config/Table'
+import { ITitleConfig } from '../Workbench/ConfigSections/TitleSection'
+import { IProgressConfig } from '../Workbench/ConfigSections/ProgressSection'
+import { ILiquidFillConfig } from '../Workbench/ConfigSections/LiquidFillSection'
 import { IRichTextConfig, IBarConfig, IRadarConfig } from '../Workbench/ConfigSections'
 import { IDoubleYAxisConfig } from '../Workbench/ConfigSections/DoubleYAxisSection'
 import { IViewModel } from 'containers/View/types'
@@ -79,6 +83,7 @@ export interface IWidgetFilter {
 }
 
 export interface IChartStyles {
+  title?: ITitleConfig
   pivot?: IPivotConfig
   xAxis?: IAxisConfig
   yAxis?: IAxisConfig
@@ -95,9 +100,12 @@ export interface IChartStyles {
   iframe?: IframeConfig
   table?: ITableConfig
   richText?: IRichTextConfig
+  text?: TextConfig
   bar?: IBarConfig
   radar?: IRadarConfig
   doubleYAxis?: IDoubleYAxisConfig
+  progress?: IProgressConfig
+  liquidFill?: ILiquidFillConfig
 }
 
 export interface IChartRule {
@@ -110,6 +118,7 @@ export interface IChartInfo {
   name: string
   title: string
   icon: string
+  extensionIcon?: boolean
   coordinate: Coordinate
   rules: IChartRule[]
   dimetionAxis?: DimetionType
@@ -162,6 +171,7 @@ export interface IWidgetProps {
 }
 
 export interface IWidgetConfig extends IWidgetProps {
+  showHeader: boolean
   controls: any[]
   cache: boolean
   expired: number

@@ -5,6 +5,8 @@ import Scorecard from './Scorecard'
 import Iframe from './Iframe'
 import RichText from './RichText'
 import Chart from './Chart'
+import Text from './Text'
+import Progress from './progress'
 import ChartTypes from '../../config/chart/ChartTypes'
 
 export interface IChartProps extends IWidgetProps {
@@ -36,6 +38,14 @@ export class CombinedChart extends Component<IChartProps, {}> {
       case ChartTypes.RichText:
         return (
           <RichText {...this.props} />
+        )
+      case ChartTypes.Text:
+        return (
+          <Text {...this.props} />
+        )
+      case ChartTypes.Progress:
+        return (
+          <Progress {...this.props} />
         )
       default:
         return (
