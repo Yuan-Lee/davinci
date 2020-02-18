@@ -1746,7 +1746,7 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
           onDragStop={this.onDragStop}
           onResizeStop={this.onResizeStop}
           measureBeforeMount={false}
-          draggableHandle={`.${styles.title}`}
+          draggableHandle={`.${styles.draghandle}`}
           useCSSTransforms={mounted}
           isDraggable={gridEditable}
           isResizable={gridEditable}
