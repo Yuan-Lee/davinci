@@ -962,6 +962,7 @@ export class Share extends React.Component<IDashboardProps, IDashboardStates> {
   }
 
   public render () {
+    console.log('share.this.props', this.props)
     const {
       dashboard,
       title,
@@ -981,6 +982,10 @@ export class Share extends React.Component<IDashboardProps, IDashboardStates> {
       allowFullScreen,
       headlessBrowserRenderSign
     } = this.state
+    let tempConfig = null
+    if (dashboard) {
+      tempConfig = JSON.parse(dashboard.config)
+    }
 
     let grids = null
     let fullScreenComponent = null
@@ -1111,6 +1116,7 @@ export class Share extends React.Component<IDashboardProps, IDashboardStates> {
         <Container.Title>
           <Row>
             <Col span={24}>
+              { tempConfig && <a className={styles.shareLink} href={tempConfig.linkUrl}>{tempConfig.linkText}</a> }
               <h2 className={styles.shareTitle}>{title}</h2>
               <div className={styles.shareDownloadListToggle}>
                 <DownloadList

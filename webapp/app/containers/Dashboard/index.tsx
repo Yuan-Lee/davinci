@@ -269,7 +269,7 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
       this.dashboardForm.props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           const { dashboards, match, history, onEditDashboard, onAddDashboard } = this.props
-          const { id, name, folder, selectType, index, config } = values
+          const { id, name, folder, selectType, index, config, linkText, linkUrl } = values
 
           const dashArr = folder === '0'
             ? dashboards.filter((d) => d.parentId === 0)
@@ -277,7 +277,10 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
 
           const indexTemp = dashArr.length === 0 ? 0 : dashArr[dashArr.length - 1].index + 1
           const obj = {
-            config,
+            config: {
+              linkText,
+              linkUrl
+            },
             dashboardPortalId: +match.params.portalId,
             name,
            // type: selectType ? 1 : 0   // todo selectType 更改位置
