@@ -961,8 +961,10 @@ export class Share extends React.Component<IDashboardProps, IDashboardStates> {
     this.props.onDownloadFile(id, this.shareClientId, this.state.shareInfo)
   }
   private jump: Function = (url: string) => {
-    location.assign(url)
-    location.reload(true)
+    if (url) {
+      location.assign(url)
+      location.reload(true)
+    }
   }
 
   public render () {

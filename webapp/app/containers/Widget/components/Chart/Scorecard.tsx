@@ -111,8 +111,10 @@ export class Scorecard extends React.PureComponent<IChartProps, {}> {
   }
 
   private jump: Function = (url: string) => {
-    location.assign(url)
-    location.reload(true)
+    if (url) {
+      location.assign(url)
+      location.reload(true)
+    }
   }
 
   public render () {
