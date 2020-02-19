@@ -1116,7 +1116,7 @@ export class Share extends React.Component<IDashboardProps, IDashboardStates> {
         <Container.Title>
           <Row>
             <Col span={24}>
-              { tempConfig && <a className={styles.shareLink} href={tempConfig.linkUrl}>{tempConfig.linkText}</a> }
+              { tempConfig && <a className={styles.shareLink} href={tempConfig.linkUrl} target="_blank">{tempConfig.linkText}</a> }
               <h2 className={styles.shareTitle}>{title}</h2>
               <div className={styles.shareDownloadListToggle}>
                 <DownloadList

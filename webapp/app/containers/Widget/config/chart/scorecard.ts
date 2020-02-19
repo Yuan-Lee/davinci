@@ -90,7 +90,8 @@ const scorecard: IChartInfo = {
       fontSizeSub: '18',
 
       bgColor: '#fff',
-      textAlign: 'left'
+      textAlign: 'left',
+      url: ''
     },
     spec: {
 

@@ -84,13 +84,27 @@ export class DashboardForm extends React.PureComponent<IDashboardFormProps, {}> 
     const dashboardsArr = (dashboards as any[]).filter((d) => d.type === 0)
     const folderOptions = (dashboardsArr as any[]).map((s) => <Option key={`${s.id}`} value={`${s.id}`}>{s.name}</Option>)
 
-    const deleteItem = (dashboards as any[]).find((d) => d.id === Number(itemId))
-    console.log('deleteItem', deleteItem)
+    const currentItem = (dashboards as any[]).find((d) => d.id === Number(itemId))
+    console.log('currentItem', currentItem)
     let deleteType = ''
     let deleteName = ''
-    if (deleteItem) {
-      deleteType = deleteItem.type === 0 ? '文件夹' : 'Dashboard'
-      deleteName = deleteItem.name
+    let linkText = ''
+    let linkUrl = ''
+    let isNeedLink = false
+    if (currentItem) {
+      deleteType = currentItem.type === 0 ? '文件夹' : 'Dashboard'
+      deleteName = currentItem.name
+      if (currentItem.config ) {
+        if (typeof currentItem.config === 'string') {
+          isNeedLink = JSON.parse(currentItem.config).isNeedLink
+          linkText = JSON.parse(currentItem.config).linkText
+          linkUrl = JSON.parse(currentItem.config).linkUrl
+        } else {
+          isNeedLink = currentItem.config.isNeedLink
+          linkText = currentItem.config.linkText
+          linkUrl = currentItem.config.linkUrl
+        }
+      }
     }
 
     return (
@@ -186,28 +200,39 @@ export class DashboardForm extends React.PureComponent<IDashboardFormProps, {}> 
                     </RadioGroup>
                 )}
               </FormItem>
-              <FormItem
-                label="跳转链接文案"
+              {/* <FormItem
                 {...commonFormItemStyle}
-                className={type === 'edit' ? '' : utilStyles.hide}
+                className={(type === 'edit' || type === 'add') ? '' : utilStyles.hide}
+              >
+                {getFieldDecorator('isNeedLink', {
+                  valuePropName: 'checked',
+                  initialValue: isNeedLink
+                })(
+                  <Checkbox>是否需要添加跳转链接</Checkbox>
+                )}
+              </FormItem> */}
+              { (<FormItem
+                label="链接文案"
+                {...commonFormItemStyle}
+                className={(type === 'edit' || type === 'add') ? '' : utilStyles.hide}
               >
                 {getFieldDecorator('linkText', {
-                  initialValue: JSON.parse(deleteItem.config).linkText
+                  initialValue: linkText
                 })(
                   <Input />
                 )}
-              </FormItem>
-              <FormItem
-                label="跳转链接地址"
+              </FormItem>)}
+              { (<FormItem
+                label="链接地址"
                 {...commonFormItemStyle}
-                className={type === 'edit' ? '' : utilStyles.hide}
+                className={(type === 'edit' || type === 'add') ? '' : utilStyles.hide}
               >
                 {getFieldDecorator('linkUrl', {
-                  initialValue: JSON.parse(deleteItem.config).linkUrl
+                  initialValue: linkUrl
                 })(
                   <Input />
                 )}
-              </FormItem>
+              </FormItem>)}
             </Col>
           </TabPane>
           <TabPane tab="权限管理" key="dashboardControl">
