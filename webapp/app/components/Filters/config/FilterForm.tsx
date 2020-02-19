@@ -201,7 +201,8 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
           <Col span={8}>
             <FormItem>
               {getFieldDecorator('isShow', {
-                valuePropName: 'checked'
+                valuePropName: 'checked',
+                initialValue: true
               })(
                 <Checkbox>是否显示</Checkbox>
               )}
