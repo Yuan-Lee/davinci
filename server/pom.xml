@@ -490,6 +490,13 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 			</plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>edp.DavinciServerApplication</mainClass>
+                </configuration>
+            </plugin>
 
 
 			<!-- mybatis generator 自动生成代码插件 -->
