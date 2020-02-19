@@ -23,7 +23,6 @@ import { IChartProps } from './'
 import { IWidgetMetric } from 'containers/Widget/components/Widget'
 import { decodeMetricName, getTextWidth } from 'containers/Widget/components/util'
 import { getFormattedValue } from '../Config/Format'
-// import { Link, useHistory } from "react-router-dom"
 
 const styles = require('./Chart.less')
 
@@ -111,12 +110,10 @@ export class Scorecard extends React.PureComponent<IChartProps, {}> {
     }
   }
 
-  // private jump: Function = (src: string) => {
-  //   let history = useHistory()
-  //   if (src) {
-  //     history.push(src.split('#')[1])
-  //   }
-  // }
+  private jump: Function = (url: string) => {
+    location.assign(url)
+    location.reload(true)
+  }
 
   public render () {
     const {
@@ -166,42 +163,22 @@ export class Scorecard extends React.PureComponent<IChartProps, {}> {
       backgroundColor: bgColor,
       margin: '-16px'
     }
-    
-    if (url) {
-      return (
-        <div className={styles.scorecard} style={bgStyle}>
-          <a href={url} target="_blank">
-          <div className={styles.scorecardContainer}>
-            {this.renderMetric(headerText,
-              headerFontFamily, titleFontSize, headerColor, prefixHeader, prefixHeaderFontFamily, titleFontSize, prefixHeaderColor,
-              suffixHeader, suffixHeaderFontFamily, titleFontSize, suffixHeaderColor, textAlign)}
-            {this.renderMetric(contentText,
-              contentFontFamily, contentFontSize, contentColor, prefixContent, prefixContentFontFamily, titleFontSize, prefixContentColor,
-              suffixContent, suffixContentFontFamily, titleFontSize, suffixContentColor, textAlign)}
-            {this.renderMetric(footerText,
-              footerFontFamily, titleFontSize, footerColor, prefixFooter, prefixFooterFontFamily, titleFontSize, prefixFooterColor,
-              suffixFooter, suffixFooterFontFamily, titleFontSize, suffixFooterColor, textAlign)}
-          </div>
-          </a>
+
+    return (
+      <div className={styles.scorecard} style={bgStyle}>
+        <div className={styles.scorecardContainer} onClick={(e) => {this.jump(url, e)}}>
+          {this.renderMetric(headerText,
+            headerFontFamily, titleFontSize, headerColor, prefixHeader, prefixHeaderFontFamily, titleFontSize, prefixHeaderColor,
+            suffixHeader, suffixHeaderFontFamily, titleFontSize, suffixHeaderColor, textAlign)}
+          {this.renderMetric(contentText,
+            contentFontFamily, contentFontSize, contentColor, prefixContent, prefixContentFontFamily, titleFontSize, prefixContentColor,
+            suffixContent, suffixContentFontFamily, titleFontSize, suffixContentColor, textAlign)}
+          {this.renderMetric(footerText,
+            footerFontFamily, titleFontSize, footerColor, prefixFooter, prefixFooterFontFamily, titleFontSize, prefixFooterColor,
+            suffixFooter, suffixFooterFontFamily, titleFontSize, suffixFooterColor, textAlign)}
         </div>
-      )
-    } else {
-      return (
-        <div className={styles.scorecard} style={bgStyle}>
-          <div className={styles.scorecardContainer}>
-            {this.renderMetric(headerText,
-              headerFontFamily, titleFontSize, headerColor, prefixHeader, prefixHeaderFontFamily, titleFontSize, prefixHeaderColor,
-              suffixHeader, suffixHeaderFontFamily, titleFontSize, suffixHeaderColor, textAlign)}
-            {this.renderMetric(contentText,
-              contentFontFamily, contentFontSize, contentColor, prefixContent, prefixContentFontFamily, titleFontSize, prefixContentColor,
-              suffixContent, suffixContentFontFamily, titleFontSize, suffixContentColor, textAlign)}
-            {this.renderMetric(footerText,
-              footerFontFamily, titleFontSize, footerColor, prefixFooter, prefixFooterFontFamily, titleFontSize, prefixFooterColor,
-              suffixFooter, suffixFooterFontFamily, titleFontSize, suffixFooterColor, textAlign)}
-          </div>
-        </div>
-      )
-    }
+      </div>
+    )
 
   }
 }
