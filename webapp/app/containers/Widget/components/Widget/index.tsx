@@ -24,7 +24,6 @@ import { IAreaSelectConfig } from '../Workbench/ConfigSections/AreaSelectSection
 import { IScorecardConfig } from '../Workbench/ConfigSections/ScorecardSection'
 import { IGaugeConfig } from '../Workbench/ConfigSections/GaugeSection'
 import { IframeConfig } from '../Workbench/ConfigSections/IframeSection'
-import { TextConfig } from '../Workbench/ConfigSections/TextSection'
 import { ITableConfig } from '../Config/Table'
 import { ITitleConfig } from '../Workbench/ConfigSections/TitleSection'
 import { IProgressConfig } from '../Workbench/ConfigSections/ProgressSection'
@@ -100,7 +99,6 @@ export interface IChartStyles {
   iframe?: IframeConfig
   table?: ITableConfig
   richText?: IRichTextConfig
-  text?: TextConfig
   bar?: IBarConfig
   radar?: IRadarConfig
   doubleYAxis?: IDoubleYAxisConfig

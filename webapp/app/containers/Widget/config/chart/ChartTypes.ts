@@ -95,11 +95,6 @@ export enum ChartTypes {
   Gauge = 17,
 
   /**
-   * 文本
-   */
-  Text = 18,
-
-  /**
    * 进度条
    */
   Progress = 19

@@ -37,7 +37,6 @@ import gauge from './gauge'
 import iframe from './iframe'
 import richText from './richText'
 import doubleYAxis from './doubleYAxis'
-import text from './text'
 import progress from './progress'
 
 const widgetlibs: IChartInfo[] = [
@@ -58,7 +57,6 @@ const widgetlibs: IChartInfo[] = [
   richText,
   doubleYAxis,
   gauge,
-  text,
   progress
 ]
 

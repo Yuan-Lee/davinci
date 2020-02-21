@@ -30,7 +30,6 @@ import DoubleYAxisSection, { IDoubleYAxisConfig } from './ConfigSections/DoubleY
 import AreaSelectSection, { IAreaSelectConfig } from './ConfigSections/AreaSelectSection'
 import ScorecardSection, { IScorecardConfig } from './ConfigSections/ScorecardSection'
 import IframeSection, { IframeConfig } from './ConfigSections/IframeSection'
-import ITextSection, { TextConfig } from './ConfigSections/TextSection'
 import TitleSection, { ITitleConfig } from './ConfigSections/TitleSection'
 import TableSection from './ConfigSections/TableSection'
 import GaugeSection from './ConfigSections/GaugeSection'
@@ -1775,11 +1774,6 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
               title="透视表"
               config={pivotConfig}
               onChange={this.styleChange('pivot')}
-            />}
-            {text && <ITextSection
-              title="内容"
-              config={text}
-              onChange={this.styleChange('text')}
             />}
             {spec && spec.chartType !== 'liquidFill' && progress && <ProgressSection
               title="进度条"
