@@ -5,7 +5,7 @@ const { HashedModuleIdsPlugin } = require('webpack')
 const TerserPlugin = require('terser-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = require('./webpack.base.babel')({
   mode: 'production',
@@ -135,18 +135,18 @@ module.exports = require('./webpack.base.babel')({
 
     new CaseSensitivePathsPlugin(),
 
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'server',
-      analyzerHost: 'localhost',
-      analyzerPort: 5000,
-      reportFilename: 'report.html',
-      defaultSizes: 'parsed',
-      openAnalyzer: true,
-      generateStatsFile: true,
-      statsFilename: '../stats.json',
-      statsOptions: null,
-      logLevel: 'info'
-    })
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: 'server',
+    //   analyzerHost: 'localhost',
+    //   analyzerPort: 5000,
+    //   reportFilename: 'report.html',
+    //   defaultSizes: 'parsed',
+    //   openAnalyzer: true,
+    //   generateStatsFile: true,
+    //   statsFilename: '../stats.json',
+    //   statsOptions: null,
+    //   logLevel: 'info'
+    // })
   ],
 
   performance: {
