@@ -110,14 +110,6 @@ export class Scorecard extends React.PureComponent<IChartProps, {}> {
     }
   }
 
-  private jump: Function = (url: string) => {
-    if (url) {
-      // location.assign(url)
-      // location.reload(true)
-      window.open(url, '_blank')
-    }
-  }
-
   public render () {
     const {
       metrics,
@@ -146,7 +138,7 @@ export class Scorecard extends React.PureComponent<IChartProps, {}> {
       suffixFooter, suffixFooterFontFamily, suffixFooterColor,
 
       fontSizeFixed, fontSizeMain, fontSizeSub,
-      bgColor, textAlign, url
+      bgColor, textAlign
     } = scorecard
 
     const headerText = this.getMetricText(metricHeader, headerVisible)
@@ -162,6 +154,7 @@ export class Scorecard extends React.PureComponent<IChartProps, {}> {
         prefixFooter || '', footerText, suffixFooter || ''
       ))
     }
+
     const bgStyle: React.CSSProperties = {
       backgroundColor: bgColor,
       margin: '-16px'
@@ -169,7 +162,7 @@ export class Scorecard extends React.PureComponent<IChartProps, {}> {
 
     return (
       <div className={styles.scorecard} style={bgStyle}>
-        <div className={styles.scorecardContainer} onClick={(e) => {this.jump(url, e)}}>
+        <div className={styles.scorecardContainer}>
           {this.renderMetric(headerText,
             headerFontFamily, titleFontSize, headerColor, prefixHeader, prefixHeaderFontFamily, titleFontSize, prefixHeaderColor,
             suffixHeader, suffixHeaderFontFamily, titleFontSize, suffixHeaderColor, textAlign)}
@@ -182,7 +175,6 @@ export class Scorecard extends React.PureComponent<IChartProps, {}> {
         </div>
       </div>
     )
-
   }
 }
 

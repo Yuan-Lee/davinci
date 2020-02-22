@@ -1,4 +1,3 @@
-
 import * as React from 'react'
 import { Row, Col, Input, Checkbox, Select, Radio } from 'antd'
 const Option = Select.Option
@@ -49,8 +48,7 @@ export interface IScorecardConfig {
   fontSizeSub: string
 
   bgColor: string
-  textAlign: string,
-  url?: string
+  textAlign: string
 }
 
 interface IScorecardSectionProps {
@@ -127,8 +125,7 @@ export class ScorecardSection extends React.PureComponent<IScorecardSectionProps
       fontSizeMain,
       fontSizeSub,
       bgColor,
-      textAlign,
-      url
+      textAlign
     } = config
 
     return (
@@ -402,14 +399,6 @@ export class ScorecardSection extends React.PureComponent<IScorecardSectionProps
                 <Radio value='center'>中</Radio>
                 <Radio value='right'>右</Radio>
               </Radio.Group>
-            </Col>
-          </Row>
-        </div>
-        <div className={styles.blockBody}>
-          <Row gutter={8} type="flex" align="middle" className={styles.blockRow}>
-            <Col span={6}>跳转链接</Col>
-            <Col span={18}>
-              <Input onChange={this.inputChange('url')} value={url} />
             </Col>
           </Row>
         </div>

@@ -69,7 +69,6 @@ export class DashboardForm extends React.PureComponent<IDashboardFormProps, {}> 
   public render () {
     const { getFieldDecorator } = this.props.form
     const { dashboards, type, itemId, exludeRoles } = this.props
-    console.log('dashboards', dashboards)
     const commonFormItemStyle = {
       labelCol: { span: 6 },
       wrapperCol: { span: 16 }
@@ -84,27 +83,12 @@ export class DashboardForm extends React.PureComponent<IDashboardFormProps, {}> 
     const dashboardsArr = (dashboards as any[]).filter((d) => d.type === 0)
     const folderOptions = (dashboardsArr as any[]).map((s) => <Option key={`${s.id}`} value={`${s.id}`}>{s.name}</Option>)
 
-    const currentItem = (dashboards as any[]).find((d) => d.id === Number(itemId))
-    console.log('currentItem', currentItem)
+    const deleteItem = (dashboards as any[]).find((d) => d.id === Number(itemId))
     let deleteType = ''
     let deleteName = ''
-    let linkText = ''
-    let linkUrl = ''
-    let isNeedLink = false
-    if (currentItem) {
-      deleteType = currentItem.type === 0 ? '文件夹' : 'Dashboard'
-      deleteName = currentItem.name
-      if (currentItem.config ) {
-        if (typeof currentItem.config === 'string') {
-          isNeedLink = JSON.parse(currentItem.config).isNeedLink
-          linkText = JSON.parse(currentItem.config).linkText
-          linkUrl = JSON.parse(currentItem.config).linkUrl
-        } else {
-          isNeedLink = currentItem.config.isNeedLink
-          linkText = currentItem.config.linkText
-          linkUrl = currentItem.config.linkUrl
-        }
-      }
+    if (deleteItem) {
+      deleteType = deleteItem.type === 0 ? '文件夹' : 'Dashboard'
+      deleteName = deleteItem.name
     }
 
     return (
@@ -137,103 +121,70 @@ export class DashboardForm extends React.PureComponent<IDashboardFormProps, {}> 
         <Row gutter={8} className={type === 'delete' || type === 'move' ? utilStyles.hide : ''}>
         <Tabs defaultActiveKey="dashboardInfo">
           <TabPane tab="基本信息" key="dashboardInfo">
-            <Col span={24}>
-              <FormItem label="所属文件夹" {...commonFormItemStyle}>
-                {getFieldDecorator('folder', {
-                  rules: [{
-                    required: true,
-                    message: '请选择所属文件夹'
-                  }],
-                  // initialValue: (folderOptions as any[]).length ? `${dashboardsArr[0].name}` : ''
-                  initialValue: '0'
-                })(
-                  <Select>
-                    <Option key="0" value="0">根目录</Option>
-                    {folderOptions}
-                  </Select>
-                )}
-              </FormItem>
-              <FormItem className={utilStyles.hide}>
-                {getFieldDecorator('config', {})(
-                  <Input />
-                )}
-              </FormItem>
-              <FormItem className={utilStyles.hide}>
-                {getFieldDecorator('index', {})(
-                  <Input />
-                )}
-              </FormItem>
-              <FormItem
-                label={type === 'copy' ? '重命名' : '名称'}
-                {...commonFormItemStyle}
-                hasFeedback
-                className={type === 'move' ? utilStyles.hide : ''}
-              >
-                {getFieldDecorator('name', {
-                  rules: [{
-                    required: true,
-                    message: 'Name 不能为空'
-                  }, {
-                    validator: this.checkNameUnique
-                  }]
-                })(
-                  <Input placeholder="Name" />
-                )}
-              </FormItem>
-              <FormItem
-                label="选择类型"
-                {...commonFormItemStyle}
-                className={type === 'move' ? utilStyles.hide : ''}
-              >
-                {getFieldDecorator('selectType', {
-                  initialValue: 1
-                })(
-                  <RadioGroup disabled={type === 'edit' || type === 'copy' || type === 'move'}>
-                      <Radio value={0}>文件夹</Radio>
-                      <Radio value={1}>Dashboard</Radio>
-                      {/* <Radio value={2}>Report</Radio> */}
-                      {/* <Select disabled={type === 'edit' || type === 'copy' || type === 'move'}>
-                        <Option key="0" value="0">文件夹</Option>
-                        <Option key="Dashboard" value="1">Dashboard</Option>
-                        <Option key="Report" value="2">Report</Option>
-                      </Select> */}
-                    </RadioGroup>
-                )}
-              </FormItem>
-              {/* <FormItem
-                {...commonFormItemStyle}
-                className={(type === 'edit' || type === 'add') ? '' : utilStyles.hide}
-              >
-                {getFieldDecorator('isNeedLink', {
-                  valuePropName: 'checked',
-                  initialValue: isNeedLink
-                })(
-                  <Checkbox>是否需要添加跳转链接</Checkbox>
-                )}
-              </FormItem> */}
-              { (<FormItem
-                label="链接文案"
-                {...commonFormItemStyle}
-                className={(type === 'edit' || type === 'add') ? '' : utilStyles.hide}
-              >
-                {getFieldDecorator('linkText', {
-                  initialValue: linkText
-                })(
-                  <Input />
-                )}
-              </FormItem>)}
-              { (<FormItem
-                label="链接地址"
-                {...commonFormItemStyle}
-                className={(type === 'edit' || type === 'add') ? '' : utilStyles.hide}
-              >
-                {getFieldDecorator('linkUrl', {
-                  initialValue: linkUrl
-                })(
-                  <Input />
-                )}
-              </FormItem>)}
-            </Col>
+          <Col span={24}>
+            <FormItem label="所属文件夹" {...commonFormItemStyle}>
+              {getFieldDecorator('folder', {
+                rules: [{
+                  required: true,
+                  message: '请选择所属文件夹'
+                }],
+                // initialValue: (folderOptions as any[]).length ? `${dashboardsArr[0].name}` : ''
+                initialValue: '0'
+              })(
+                <Select>
+                  <Option key="0" value="0">根目录</Option>
+                  {folderOptions}
+                </Select>
+              )}
+            </FormItem>
+            <FormItem className={utilStyles.hide}>
+              {getFieldDecorator('config', {})(
+                <Input />
+              )}
+            </FormItem>
+            <FormItem className={utilStyles.hide}>
+              {getFieldDecorator('index', {})(
+                <Input />
+              )}
+            </FormItem>
+            <FormItem
+              label={type === 'copy' ? '重命名' : '名称'}
+              {...commonFormItemStyle}
+              hasFeedback
+              className={type === 'move' ? utilStyles.hide : ''}
+            >
+              {getFieldDecorator('name', {
+                rules: [{
+                  required: true,
+                  message: 'Name 不能为空'
+                }, {
+                  validator: this.checkNameUnique
+                }]
+              })(
+                <Input placeholder="Name" />
+              )}
+            </FormItem>
+            <FormItem
+              label="选择类型"
+              {...commonFormItemStyle}
+              className={type === 'move' ? utilStyles.hide : ''}
+            >
+              {getFieldDecorator('selectType', {
+                initialValue: 1
+              })(
+                 <RadioGroup disabled={type === 'edit' || type === 'copy' || type === 'move'}>
+                    <Radio value={0}>文件夹</Radio>
+                    <Radio value={1}>Dashboard</Radio>
+                    {/* <Radio value={2}>Report</Radio> */}
+                    {/* <Select disabled={type === 'edit' || type === 'copy' || type === 'move'}>
+                      <Option key="0" value="0">文件夹</Option>
+                      <Option key="Dashboard" value="1">Dashboard</Option>
+                      <Option key="Report" value="2">Report</Option>
+                    </Select> */}
+                  </RadioGroup>
+              )}
+            </FormItem>
+          </Col>
           </TabPane>
           <TabPane tab="权限管理" key="dashboardControl">
             {
@@ -251,4 +202,3 @@ export class DashboardForm extends React.PureComponent<IDashboardFormProps, {}> 
 }
 
 export default Form.create<IDashboardFormProps>()(DashboardForm)
-

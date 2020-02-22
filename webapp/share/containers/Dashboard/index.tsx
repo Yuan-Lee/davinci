@@ -960,12 +960,6 @@ export class Share extends React.Component<IDashboardProps, IDashboardStates> {
   private downloadFile = (id) => {
     this.props.onDownloadFile(id, this.shareClientId, this.state.shareInfo)
   }
-  private jump: Function = (url: string) => {
-    if (url) {
-      location.assign(url)
-      location.reload(true)
-    }
-  }
 
   public render () {
     const {
@@ -987,10 +981,6 @@ export class Share extends React.Component<IDashboardProps, IDashboardStates> {
       allowFullScreen,
       headlessBrowserRenderSign
     } = this.state
-    let tempConfig = null
-    if (dashboard) {
-      tempConfig = JSON.parse(dashboard.config)
-    }
 
     let grids = null
     let fullScreenComponent = null
@@ -1121,7 +1111,6 @@ export class Share extends React.Component<IDashboardProps, IDashboardStates> {
         <Container.Title>
           <Row>
             <Col span={24}>
-              { tempConfig && <a className={styles.shareLink} onClick={(e) => this.jump(tempConfig.linkUrl, e)} href="javascript: void(0);">{tempConfig.linkText}</a> }
               <h2 className={styles.shareTitle}>{title}</h2>
               <div className={styles.shareDownloadListToggle}>
                 <DownloadList
