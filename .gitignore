@@ -34,3 +34,4 @@ userfiles/
 bin/upgrade.go
 bin/upgrade
 davinci-ui.zip
+stats.json
