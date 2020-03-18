@@ -389,7 +389,7 @@ function getTableColumns (props: IChartProps) {
   let fixedTotalWidth = 0
 
   cols.concat(rows).forEach((dimension) => {
-    const { name, field, format } = dimension
+    const { name, field, format, visualType } = dimension
     const headerText = getFieldAlias(field, queryVariables || {}) || name
     const column: ColumnProps<any> = {
       key: name,
@@ -436,13 +436,14 @@ function getTableColumns (props: IChartProps) {
     column.onCell = (record) => ({
       config: columnConfigItem,
       format,
+      visualType,
       cellVal: record[name],
       cellValRange: null
     })
     tableColumns.push(column)
   })
   metrics.forEach((metric) => {
-    const { name, field, format, agg } = metric
+    const { name, field, format, agg, visualType } = metric
     let expression = decodeMetricName(name)
     if (!withNoAggregators) {
       expression = `${agg}(${expression})`
@@ -486,6 +487,7 @@ function getTableColumns (props: IChartProps) {
     column.onCell = (record) => ({
       config: columnConfigItem,
       format,
+      visualType,
       cellVal: record[expression],
       cellValRange: getTableCellValueRange(data, expression, columnConfigItem)
     })

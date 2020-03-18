@@ -139,6 +139,7 @@ export enum ViewModelVisualTypes {
   Number = 'number',
   String = 'string',
   Date = 'date',
+  RichText = 'richText',
   GeoCountry = 'geoCountry',
   GeoProvince = 'geoProvince',
   GeoCity = 'geoCity'
@@ -149,13 +150,15 @@ export const VisualTypeSqlTypeSetting = {
 
   // SQL_NUMBER_TYPES field can also take it as ViewModelVisualTypes.String
   [ViewModelVisualTypes.String]: SQL_STRING_TYPES.concat(SQL_NUMBER_TYPES),
-  [ViewModelVisualTypes.Date]: SQL_DATE_TYPES
+  [ViewModelVisualTypes.Date]: SQL_DATE_TYPES,
+  [ViewModelVisualTypes.RichText]: SQL_STRING_TYPES.concat(SQL_NUMBER_TYPES)
 }
 
 export const ViewModelVisualTypesLocale = {
   [ViewModelVisualTypes.Number]: '数字',
   [ViewModelVisualTypes.String]: '字符',
   [ViewModelVisualTypes.Date]: '日期',
+  [ViewModelVisualTypes.RichText]: '富文本',
   [ViewModelVisualTypes.GeoCountry]: '地理国家',
   [ViewModelVisualTypes.GeoProvince]: '地理省份',
   [ViewModelVisualTypes.GeoCity]: '地理城市'

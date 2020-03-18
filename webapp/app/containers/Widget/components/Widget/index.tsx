@@ -53,6 +53,7 @@ export interface IWidgetDimension {
   field: IFieldConfig
   format: IFieldFormatConfig
   sort: IFieldSortConfig
+  visualType?: string
 }
 
 export interface IWidgetMetric {
@@ -62,6 +63,7 @@ export interface IWidgetMetric {
   field: IFieldConfig
   format: IFieldFormatConfig
   sort?: IFieldSortConfig
+  visualType?: string
 }
 
 export interface IWidgetSecondaryMetric {

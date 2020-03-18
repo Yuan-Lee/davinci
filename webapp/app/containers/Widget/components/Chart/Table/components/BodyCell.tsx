@@ -28,19 +28,28 @@ import { textAlignAdapter } from '../util'
 interface IBodyCellProps {
   format: IFieldFormatConfig
   config: ITableColumnConfig
+  visualType: string
   cellVal: string | number
   cellValRange: [number, number]
   children: Array<string | number | boolean>
 }
 
 function BodyCell (props: IBodyCellProps) {
-  const { format, config, cellVal, cellValRange, ...rest } = props
+  const { format, config, cellVal, cellValRange, visualType, ...rest } = props
   const cellCssStyle = getBodyCellStyle(config, cellVal, cellValRange)
   if (format) {
     const formattedVal = getFormattedValue(cellVal, format)
-    return (
-      <td style={cellCssStyle} {...rest}>{formattedVal}</td>
-    )
+    if (visualType === 'richText') {
+      return (
+        <td style={cellCssStyle} {...rest}>
+          <span dangerouslySetInnerHTML = {{__html: formattedVal}}></span>
+        </td>
+      )
+    } else {
+      return (
+        <td style={cellCssStyle} {...rest} >{formattedVal}</td>
+      )
+    }
   }
   return (
     <td style={cellCssStyle} {...rest} />
