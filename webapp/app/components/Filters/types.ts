@@ -34,6 +34,7 @@ export interface IControlBase {
   dateFormat?: DatePickerFormats
   isShow?: boolean
   multiple?: boolean
+  api?: string
   cache: boolean
   expired: number
   customOptions?: boolean

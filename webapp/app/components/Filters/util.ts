@@ -109,6 +109,9 @@ export function getVariableValue (filter: IControlBase, fields: IControlRelatedF
         return arr
       }, [])
       break
+    case FilterTypes.Select2:
+      variable.push({ name, value: getValidVariableValue(value, valueType) })
+      break
     // case FilterTypes.TreeSelect:
     //   if (value.length && value.length > 0) {
     //     variable.push({ name, value: value.map((val) => getValidVariableValue(val, valueType)).join(',') })
@@ -193,6 +196,9 @@ export function getModelValue (control: IControlBase, field: IControlRelatedFiel
         }
         filters.push(filterJson)
       }
+      break
+    case FilterTypes.Select2:
+      filters.push(commanFilterJson)
       break
     // case FilterTypes.TreeSelect:
     //   if (value.length && value.length > 0) {
