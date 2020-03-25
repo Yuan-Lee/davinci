@@ -33,8 +33,10 @@ export interface IControlBase {
   operator: OperatorTypes
   dateFormat?: DatePickerFormats
   isShow?: boolean
+  controlShowKey?: string
   multiple?: boolean
   api?: string
+  requestName?: string
   cache: boolean
   expired: number
   customOptions?: boolean

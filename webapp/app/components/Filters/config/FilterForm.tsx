@@ -338,6 +338,26 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
           )
         }
         {
+          type === FilterTypes.Select2 && (
+            <Row gutter={8} className={styles.formBody}>
+              <Col span={8}>
+                <FormItem label="请求参数">
+                  {getFieldDecorator('requestName', {})(
+                    <Input size="small" />
+                  )}
+                </FormItem>
+              </Col>
+              <Col span={8}>
+                <FormItem label="显隐控制参数">
+                  {getFieldDecorator('controlShowKey', {})(
+                    <Input size="small" />
+                  )}
+                </FormItem>
+              </Col>
+            </Row>
+          )
+        }
+        {
           customOptions && (
             <Table
               className={styles.optionList}

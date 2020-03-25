@@ -9,12 +9,14 @@ const { Option } = Select
 interface Select2Props {
   value?: string,
   url: string,
+  requestName: string,
   onChange?: any
 }
 
 interface Select2States {
   value: string,
   url: string,
+  requestName: string,
   options: Array<{
     id: string,
     name: string
@@ -28,20 +30,45 @@ class Select2 extends React.Component<Select2Props, Select2States> {
     this.state = {
       value: props.value,
       url: props.url,
+      requestName: props.requestName,
       options: []
     }
   }
 
-  private onSearch = async (value) => {
-    const { url } = this.state
-    const params = {
-      limitCnt: 20,
-      communityName: value
+  private deep_set (o, path, value) {
+    let i = 0
+    for (; i < path.length - 1; i++) {
+        if (o[path[i]] === undefined) {
+          o[decodeURIComponent(path[i])] = path[i + 1].match(/^\d+$/) ? [] : {}
+        }
+        o = o[decodeURIComponent(path[i])]
     }
+    o[decodeURIComponent(path[i])] = decodeURIComponent(value)
+  }
+
+  private querystring = (str) => {
+    return str.split('&').reduce((o, kv) => {
+      const [key, value] = kv.split('=')
+      if (!value) {
+          return o
+      }
+      this.deep_set(o, key.split(/[\[\]]/g).filter((x) => x), value)
+      return o
+    }, {})
+  }
+
+  private qs = this.querystring(location.href.substr(location.href.indexOf('?') + 1))
+
+  private onSearch = async (value) => {
+    const { url, requestName } = this.state
+    const params = {
+      [requestName]: value
+    }
+    const { token } = this.qs
     const res = await axios.get(url, {
       params,
       headers: {
-        token: '85EDCD4D8F37D9C91C3728BC63023673'
+        token
       }
     })
     const { status, data } = res.data

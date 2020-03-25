@@ -63,6 +63,30 @@ export class FilterPanel extends Component<IFilterPanelProps & FormComponentProp
     }
   }
 
+  private deep_set (o, path, value) {
+    let i = 0
+    for (; i < path.length - 1; i++) {
+        if (o[path[i]] === undefined) {
+          o[decodeURIComponent(path[i])] = path[i + 1].match(/^\d+$/) ? [] : {}
+        }
+        o = o[decodeURIComponent(path[i])]
+    }
+    o[decodeURIComponent(path[i])] = decodeURIComponent(value)
+  }
+
+  private querystring = (str) => {
+    return str.split('&').reduce((o, kv) => {
+      const [key, value] = kv.split('=')
+      if (!value) {
+          return o
+      }
+      this.deep_set(o, key.split(/[\[\]]/g).filter((x) => x), value)
+      return o
+    }, {})
+  }
+
+  private qs = this.querystring(location.href.substr(location.href.indexOf('?') + 1))
+
   private controlRequestParamsByItem: {
     [itemId: number]: {
       [filterKey: string]: IControlRequestParams
@@ -125,7 +149,14 @@ export class FilterPanel extends Component<IFilterPanelProps & FormComponentProp
       this.setState({isRender: false})
       const { renderTree, flatTree } = getControlRenderTree<IGlobalControl, IRenderTreeItem>(controls)
       Object.values(flatTree).forEach((control) => {
-        if (control.isShow) {
+        let controlShow = true
+        if (control.controlShowKey) {
+          const qs = this.qs
+          if (qs && qs[control.controlShowKey] == 0) {
+            controlShow = false
+          }
+        }
+        if (control.isShow && controlShow) {
           this.setState({
             isRender: true
           })
@@ -379,7 +410,14 @@ export class FilterPanel extends Component<IFilterPanelProps & FormComponentProp
         controlGridProps = fullScreenGlobalControlGridProps
       }
 
-      if (control.isShow) {
+      let controlShow = true
+      if (control.controlShowKey) {
+        const qs = this.qs
+        if (qs && qs[control.controlShowKey] == 0) {
+          controlShow = false
+        }
+      }
+      if (control.isShow && controlShow) {
         components = components.concat(
           <Col
             key={key}
