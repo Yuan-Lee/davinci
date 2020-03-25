@@ -17,7 +17,7 @@ export function renderInputText (onChange, onSearch) {
     <Search placeholder="请输入" onBlur={onChange} onSearch={onSearch} />
   )
 }
- 
+
 export function renderNumberRange (onChange, onSearch) {
   return (
     <NumberRange onChange={onChange} onSearch={onSearch} />
