@@ -45,11 +45,9 @@ export function renderSelect (control: IGlobalControl, onChange, options) {
 }
 
 export function renderSelect2 (control: IGlobalControl, onChange) {
-  const origin = '/manage'
   const { api, requestName } = control
-  const url = `${origin}${api}`
   return (
-    <Select2 url={url} requestName={requestName} onChange={onChange} />
+    <Select2 url={api} requestName={requestName} onChange={onChange} />
   )
 }
 
