@@ -7,7 +7,8 @@ export enum FilterTypes {
   Date = 'date',
   DateRange = 'dateRange',
   InputText = 'inputText',
-  NumberRange = 'numberRange'
+  NumberRange = 'numberRange',
+  Select2 = 'select2'
   // TreeSelect = 'treeSelect'
 }
 
@@ -16,7 +17,8 @@ export const FilterTypeList = [
   FilterTypes.Date,
   FilterTypes.DateRange,
   FilterTypes.InputText,
-  FilterTypes.NumberRange
+  FilterTypes.NumberRange,
+  FilterTypes.Select2
   // FilterTypes.TreeSelect
 ]
 
@@ -25,7 +27,8 @@ export const FilterTypesLocale = {
   [FilterTypes.Date]: '日期选择',
   [FilterTypes.DateRange]: '日期范围选择',
   [FilterTypes.InputText]: '文本输入框',
-  [FilterTypes.NumberRange]: '数字范围输入框'
+  [FilterTypes.NumberRange]: '数字范围输入框',
+  [FilterTypes.Select2]: '下拉搜索菜单'
   // [FilterTypes.TreeSelect]: '下拉树'
 }
 
@@ -34,7 +37,8 @@ export const SHOULD_LOAD_OPTIONS = {
   [FilterTypes.Date]: false,
   [FilterTypes.DateRange]: false,
   [FilterTypes.InputText]: false,
-  [FilterTypes.NumberRange]: false
+  [FilterTypes.NumberRange]: false,
+  [FilterTypes.Select2]: false
   // [FilterTypes.TreeSelect]: true
 }
 
@@ -43,7 +47,8 @@ export const IS_RANGE_TYPE = {
   [FilterTypes.Date]: false,
   [FilterTypes.DateRange]: true,
   [FilterTypes.InputText]: false,
-  [FilterTypes.NumberRange]: true
+  [FilterTypes.NumberRange]: true,
+  [FilterTypes.Select2]: false
   // [FilterTypes.TreeSelect]: false
 }
 
@@ -58,7 +63,8 @@ export const FilterTypesOperatorSetting = {
   },
   [FilterTypes.DateRange]: [],
   [FilterTypes.InputText]: [OperatorTypes.Equal, OperatorTypes.NotEqual],
-  [FilterTypes.NumberRange]: []
+  [FilterTypes.NumberRange]: [],
+  [FilterTypes.Select2]: []
   // [FilterTypes.TreeSelect]: [OperatorTypes.In, OperatorTypes.NotIn]
 }
 
@@ -86,7 +92,8 @@ export const FilterTypesDynamicDefaultValueSetting = {
 }
 
 export const CascadeFilterTypes = [
-  FilterTypes.Select
+  FilterTypes.Select,
+  FilterTypes.Select2
   // FilterTypes.TreeSelect
 ]
 

@@ -3,6 +3,7 @@ import {
   renderInputText,
   renderNumberRange,
   renderSelect,
+  renderSelect2,
   renderDate,
   renderDateRange
 } from './'
@@ -45,6 +46,9 @@ export class FilterControl extends PureComponent<IFilterControlProps, {}> {
         break
       case FilterTypes.Select:
         component = renderSelect(filter, this.change, options)
+        break
+      case FilterTypes.Select2:
+        component = renderSelect2(filter, this.change)
         break
       // case FilterTypes.TreeSelect:
       //   component = renderTreeSelect(filter, this.change, options)

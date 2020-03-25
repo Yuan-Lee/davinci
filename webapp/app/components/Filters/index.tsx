@@ -10,6 +10,8 @@ const { WeekPicker, MonthPicker, RangePicker } = DatePicker
 
 const styles = require('./filter.less')
 
+import Select2 from './components/select2'
+
 export function renderInputText (onChange, onSearch) {
   return (
     <Search placeholder="请输入" onBlur={onChange} onSearch={onSearch} />
@@ -39,6 +41,15 @@ export function renderSelect (control: IGlobalControl, onChange, options) {
           : <Option key={o} value={o}>{o}</Option>
       })}
     </Select>
+  )
+}
+
+export function renderSelect2 (control: IGlobalControl, onChange) {
+  const origin = '/manage'
+  const { api, requestName } = control
+  const url = `${origin}${api}`
+  return (
+    <Select2 url={url} requestName={requestName} onChange={onChange} />
   )
 }
 
