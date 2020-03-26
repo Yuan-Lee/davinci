@@ -1,5 +1,5 @@
 import React from 'react'
-import { Select } from 'antd'
+import { Select, Spin } from 'antd'
 
 import axios from 'axios'
 import debounce from 'lodash/debounce'
@@ -15,6 +15,7 @@ interface Select2Props {
 
 interface Select2States {
   value: string,
+  fetching: boolean,
   url: string,
   requestName: string,
   options: Array<{
@@ -26,9 +27,10 @@ interface Select2States {
 class Select2 extends React.Component<Select2Props, Select2States> {
   constructor (props) {
     super(props)
-    this.onSearch = debounce(this.onSearch, 1000)
+    this.onSearch = debounce(this.onSearch, 800)
     this.state = {
       value: props.value,
+      fetching: false,
       url: props.url,
       requestName: props.requestName,
       options: []
@@ -61,10 +63,7 @@ class Select2 extends React.Component<Select2Props, Select2States> {
 
   private regURL = new RegExp('^((https|http)?://)')
 
-  private onSearch = async (value) => {
-    if (value === '') {
-      return
-    }
+  private search = async (value) => {
     const { url, requestName } = this.state
     const params = {
       [requestName]: value
@@ -76,6 +75,7 @@ class Select2 extends React.Component<Select2Props, Select2States> {
     } else {
       searchURL = `${base_url}${url}`
     }
+    this.setState({ fetching: true })
     const res = await axios.get(searchURL, {
       params,
       headers: {
@@ -86,10 +86,24 @@ class Select2 extends React.Component<Select2Props, Select2States> {
     if (status === 100) {
       this.setState({ options: data })
     }
+    this.setState({ fetching: false })
+  }
+
+  private onSearch = (value) => {
+    if (value === '') {
+      return
+    }
+    this.search(value)
+  }
+
+  private onDropdownVisibleChange = (visible) => {
+    if (visible) {
+      this.search('')
+    }
   }
 
   public render () {
-    const { options } = this.state
+    const { fetching, options } = this.state
     const { value } = this.props
     return (
       <Select
@@ -97,10 +111,12 @@ class Select2 extends React.Component<Select2Props, Select2States> {
         allowClear
         value={value}
         placeholder="请输入"
+        notFoundContent={fetching ? <Spin size="small" /> : '暂无数据'}
         filterOption={false}
         defaultActiveFirstOption={false}
         onChange={this.props.onChange}
         onSearch={this.onSearch}
+        onDropdownVisibleChange={this.onDropdownVisibleChange}
       >
         {options.map((o) => {
           return <Option key={o.id} value={o.id}>{o.name}</Option>

@@ -245,6 +245,9 @@ export class Share extends React.Component<IDashboardProps, IDashboardStates> {
       if (qs.token) {
         delete qs.token
       }
+      if (qs.base_url) {
+        delete qs.base_url
+      }
       if (qs.regionShow) {
         delete qs.regionShow
       }
