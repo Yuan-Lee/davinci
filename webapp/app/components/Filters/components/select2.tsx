@@ -59,13 +59,24 @@ class Select2 extends React.Component<Select2Props, Select2States> {
 
   private qs = this.querystring(location.href.substr(location.href.indexOf('?') + 1))
 
+  private regURL = new RegExp('^((https|http)?://)')
+
   private onSearch = async (value) => {
+    if (value === '') {
+      return
+    }
     const { url, requestName } = this.state
     const params = {
       [requestName]: value
     }
-    const { token } = this.qs
-    const res = await axios.get(url, {
+    const { token, base_url } = this.qs
+    let searchURL = ''
+    if (this.regURL.test(url)) {
+      searchURL = url
+    } else {
+      searchURL = `${base_url}${url}`
+    }
+    const res = await axios.get(searchURL, {
       params,
       headers: {
         token
