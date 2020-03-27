@@ -241,20 +241,6 @@ export class Share extends React.Component<IDashboardProps, IDashboardStates> {
   public componentWillMount () {
     // urlparse
     const qs = this.querystring(location.href.substr(location.href.indexOf('?') + 1))
-    if (qs) {
-      if (qs.token) {
-        delete qs.token
-      }
-      if (qs.base_url) {
-        delete qs.base_url
-      }
-      if (qs.regionShow) {
-        delete qs.regionShow
-      }
-      if (qs.communityShow) {
-        delete qs.communityShow
-      }
-    }
     this.setState({
       type: qs.type,
       shareInfo: qs.shareInfo
