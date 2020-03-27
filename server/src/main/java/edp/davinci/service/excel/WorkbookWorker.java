@@ -19,8 +19,19 @@
 
 package edp.davinci.service.excel;
 
+import java.io.FileOutputStream;
+import java.util.List;
+import java.util.concurrent.*;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
+
 import edp.core.utils.CollectionUtils;
 import edp.core.utils.FileUtils;
 import edp.core.utils.SqlUtils;
@@ -36,14 +47,6 @@ import edp.davinci.dto.viewDto.ViewExecuteParam;
 import edp.davinci.dto.viewDto.ViewWithProjectAndSource;
 import edp.davinci.service.ViewService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-
-import java.io.FileOutputStream;
-import java.util.List;
-import java.util.concurrent.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -55,6 +58,11 @@ import java.util.concurrent.*;
 @Slf4j
 public class WorkbookWorker<T> extends MsgNotifier implements Callable {
 
+    private static final String REG_A_LEFT = "<[a|A][^>]*>";
+    private static final String REG_A_MID = "([^<]*)";
+    private static final String REG_A_RIGHT = "</[a|A]>";
+    private static final String REG_A = REG_A_LEFT + REG_A_MID + REG_A_RIGHT;
+    private static Pattern patternA = Pattern.compile(REG_A);
 
     private WorkBookContext context;
 
@@ -195,6 +203,16 @@ public class WorkbookWorker<T> extends MsgNotifier implements Callable {
 
             SQLContext sqlContext = ((ViewService) SpringContextHolder.getBean(ViewService.class)).getSQLContext(context.getIsMaintainer(), viewWithProjectAndSource, executeParam, this.context.getUser());
 
+            // 2020年3月27日16:46:21 add by wxf 特殊处理 下载时对sql中有富文本的字段过滤掉。
+            List<String> querySqlList = sqlContext.getQuerySql();
+            if (!CollectionUtils.isEmpty(querySqlList)) {
+                List<String> newQuerySqlList = Lists.newArrayList();
+                querySqlList.stream().forEach(q -> {
+                    newQuerySqlList.add(replaceAHref(q));
+                });
+                sqlContext.setQuerySql(newQuerySqlList);
+            }
+
             SqlUtils sqlUtils = ((SqlUtils) SpringContextHolder.getBean(SqlUtils.class)).init(viewWithProjectAndSource.getSource());
 
             boolean isTable;
@@ -222,5 +240,17 @@ public class WorkbookWorker<T> extends MsgNotifier implements Callable {
             sheetContextList.add(sheetContext);
         }
         return sheetContextList;
+    }
+
+    // 替换字符串中的a标签相关信息
+    private String replaceAHref(String sqlStr){
+        if (StringUtils.isNotBlank(sqlStr)) {
+            if (patternA.matcher(sqlStr).find()) {
+                sqlStr = sqlStr.replaceAll(REG_A_LEFT, "");
+                sqlStr = sqlStr.replaceAll(REG_A_RIGHT, "");
+            }
+        }
+
+        return sqlStr;
     }
 }
