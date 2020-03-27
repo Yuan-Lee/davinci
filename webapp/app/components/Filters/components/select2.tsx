@@ -10,6 +10,8 @@ interface Select2Props {
   value?: string,
   url: string,
   requestName: string,
+  subjoin: string,
+  form: any,
   onChange?: any
 }
 
@@ -64,9 +66,21 @@ class Select2 extends React.Component<Select2Props, Select2States> {
   private regURL = new RegExp('^((https|http)?://)')
 
   private search = async (value) => {
+    const { subjoin, form } = this.props
+    let subjoinParams = {}
+    if (subjoin) {
+      const subjoinArr = subjoin.split(' ')
+      if (subjoinArr && subjoinArr.length == 2) {
+        const values = form.getFieldsValue()
+        const searchKey = subjoinArr[0]
+        const controlKey = subjoinArr[1]
+        subjoinParams[searchKey] = values[controlKey]
+      }
+    }
     const { url, requestName } = this.state
     const params = {
-      [requestName]: value
+      [requestName]: value,
+      ...subjoinParams
     }
     const { token, base_url } = this.qs
     let searchURL = ''

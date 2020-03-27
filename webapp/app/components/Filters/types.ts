@@ -34,6 +34,7 @@ export interface IControlBase {
   dateFormat?: DatePickerFormats
   isShow?: boolean
   controlShowKey?: string
+  subjoin?: string
   multiple?: boolean
   api?: string
   requestName?: string
