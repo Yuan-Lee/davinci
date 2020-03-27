@@ -33,7 +33,7 @@ interface IFilterControlProps {
 
 export class FilterControl extends PureComponent<IFilterControlProps, {}> {
 
-  private renderControl = (filter) => {
+  private renderControl = (filter, form) => {
     const { currentOptions } = this.props
     const options = currentOptions || []
     let component
@@ -48,7 +48,7 @@ export class FilterControl extends PureComponent<IFilterControlProps, {}> {
         component = renderSelect(filter, this.change, options)
         break
       case FilterTypes.Select2:
-        component = renderSelect2(filter, this.change)
+        component = renderSelect2(filter, form, this.change)
         break
       // case FilterTypes.TreeSelect:
       //   component = renderTreeSelect(filter, this.change, options)
@@ -90,10 +90,10 @@ export class FilterControl extends PureComponent<IFilterControlProps, {}> {
   }
 
   public render () {
-    const { control } = this.props
+    const { control, form } = this.props
     return (
       <Suspense fallback={null}>
-        {this.renderControl(control)}
+        {this.renderControl(control, form)}
       </Suspense>
     )
   }

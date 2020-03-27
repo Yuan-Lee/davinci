@@ -167,16 +167,6 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
         </Col>
       )
 
-      const apiFormComponent = (
-        <Col key="api" span={8}>
-          <FormItem label="接口地址">
-            {getFieldDecorator('api', {})(
-              <Input size="small" />
-            )}
-          </FormItem>
-        </Col>
-      )
-
       switch (type) {
         case FilterTypes.Date:
           filterTypeRelatedInput.push(dateFormatFormComponent)
@@ -188,8 +178,6 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
         case FilterTypes.Select:
           filterTypeRelatedInput.push(multipleFormComponent)
           break
-        case FilterTypes.Select2:
-          filterTypeRelatedInput.push(apiFormComponent)
         default:
           break
       }
@@ -224,9 +212,13 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
         </Row>
         <Row gutter={8} className={styles.formBody}>
           <Col span={8}>
-            <FormItem className={utilStyles.hide}>
-              {getFieldDecorator('key', {})(<Input />)}
+            <FormItem label="key">
+              {getFieldDecorator('key', {})(<Input disabled={true} />)}
             </FormItem>
+          </Col>
+        </Row>
+        <Row gutter={8} className={styles.formBody}>
+          <Col span={8}>
             <FormItem label="类型">
               {getFieldDecorator('type', {})(
                 <Select size="small">
@@ -341,15 +333,35 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
           type === FilterTypes.Select2 && (
             <Row gutter={8} className={styles.formBody}>
               <Col span={8}>
+                <FormItem label="接口地址">
+                  {getFieldDecorator('api', {})(
+                    <Input size="small" />
+                  )}
+                </FormItem>
+              </Col>
+              <Col span={8}>
                 <FormItem label="请求参数">
                   {getFieldDecorator('requestName', {})(
                     <Input size="small" />
                   )}
                 </FormItem>
               </Col>
+            </Row>
+          )
+        }
+        {
+          type === FilterTypes.Select2 && (
+            <Row gutter={8} className={styles.formBody}>
               <Col span={8}>
                 <FormItem label="显隐控制参数">
                   {getFieldDecorator('controlShowKey', {})(
+                    <Input size="small" />
+                  )}
+                </FormItem>
+              </Col>
+              <Col span={8}>
+                <FormItem label="联动参数">
+                  {getFieldDecorator('subjoin', {})(
                     <Input size="small" />
                   )}
                 </FormItem>
