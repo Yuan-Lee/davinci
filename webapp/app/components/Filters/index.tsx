@@ -45,9 +45,9 @@ export function renderSelect (control: IGlobalControl, onChange, options) {
 }
 
 export function renderSelect2 (control: IGlobalControl, form, onChange) {
-  const { api, requestName, subjoin } = control
+  const { name, api, requestName, subjoin } = control
   return (
-    <Select2 url={api} requestName={requestName} subjoin={subjoin} form={form} onChange={onChange} />
+    <Select2 name={name} url={api} requestName={requestName} subjoin={subjoin} form={form} onChange={onChange} />
   )
 }
 

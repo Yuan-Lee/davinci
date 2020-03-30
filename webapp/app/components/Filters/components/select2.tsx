@@ -7,6 +7,7 @@ import debounce from 'lodash/debounce'
 const { Option } = Select
 
 interface Select2Props {
+  name: string,
   value?: string,
   url: string,
   requestName: string,
@@ -30,12 +31,23 @@ class Select2 extends React.Component<Select2Props, Select2States> {
   constructor (props) {
     super(props)
     this.onSearch = debounce(this.onSearch, 800)
+    const id = this.qs[props.name]
+    const name = this.qs[`${props.name}_name`]
+    let options = []
+    if (id && name) {
+      options = [
+        {
+          id,
+          name
+        }
+      ]
+    }
     this.state = {
       value: props.value,
       fetching: false,
       url: props.url,
       requestName: props.requestName,
-      options: []
+      options
     }
   }
 
