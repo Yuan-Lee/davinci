@@ -41,6 +41,7 @@ class Select2 extends React.Component<Select2Props, Select2States> {
           name
         }
       ]
+      window[`select2_${props.id}`] = this.resetOptions.bind(this)
     }
     this.state = {
       value: props.value,
@@ -48,6 +49,20 @@ class Select2 extends React.Component<Select2Props, Select2States> {
       url: props.url,
       requestName: props.requestName,
       options
+    }
+  }
+
+  private resetOptions () {
+    const id = this.qs[this.props.name]
+    const name = this.qs[`${this.props.name}_name`]
+    if (id && name) {
+      const options = [
+        {
+          id,
+          name
+        }
+      ]
+      this.setState({ options })
     }
   }
 
