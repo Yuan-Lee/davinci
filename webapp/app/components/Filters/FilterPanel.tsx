@@ -374,6 +374,9 @@ export class FilterPanel extends Component<IFilterPanelProps & FormComponentProp
 
     Object.entries(formValues).forEach(([controlKey, value]) => {
       const control = flatTree[controlKey]
+      if (window[`select2_${control.key}`]) {
+        window[`select2_${control.key}`]()
+      }
       this.setControlRequestParams(control as IGlobalRenderTreeItem, value, currentItems)
     })
 
