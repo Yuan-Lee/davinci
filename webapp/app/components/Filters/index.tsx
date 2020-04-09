@@ -6,7 +6,7 @@ import NumberRange from '../NumberRange'
 const MultiDatePicker = React.lazy(() => import('../MultiDatePicker'))
 import DatePickerFormats from './datePickerFormats'
 import { IGlobalControl } from './types'
-const { WeekPicker, MonthPicker, RangePicker } = DatePicker
+const { WeekPicker, MonthPicker, YearPicker, RangePicker } = DatePicker
 
 const styles = require('./filter.less')
 
@@ -80,6 +80,7 @@ export function renderDate (filter: IGlobalControl, onChange, extraProps?) {
     Datetime,
     DatetimeMinute
   } = DatePickerFormats
+  debugger
   if (filter.multiple) {
     return (
       <MultiDatePicker
@@ -93,16 +94,24 @@ export function renderDate (filter: IGlobalControl, onChange, extraProps?) {
       case Week:
         return (
           <WeekPicker
-            className={styles.controlComponent}
             placeholder="请选择"
             {...onChange && {onChange}}
             {...extraProps}
           />
         )
       case Month:
-      case Year:
         return (
           <MonthPicker
+            className={styles.controlComponent}
+            placeholder="请选择"
+            format={filter.dateFormat}
+            {...onChange && {onChange}}
+            {...extraProps}
+          />
+        )
+      case Year:
+        return (
+          <YearPicker
             className={styles.controlComponent}
             placeholder="请选择"
             format={filter.dateFormat}
