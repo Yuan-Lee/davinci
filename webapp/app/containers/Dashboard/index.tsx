@@ -39,7 +39,7 @@ import viewSaga from '../View/sagas'
 import DashboardForm from './components/DashboardForm'
 import DashboardAction from './components/DashboardAction'
 
-import Icon, { EllipsisOutlined, SearchOutlined, SmileOutlined } from '@ant-design/icons'
+import Icon, { EllipsisOutlined, SearchOutlined, SmileOutlined, PlusOutlined } from '@ant-design/icons'
 import { Button, Tooltip, Popover, Modal, Input, Tree } from 'antd'
 const TreeNode = Tree.TreeNode
 
@@ -809,11 +809,7 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
                       </Tooltip>
                     </Popover>
                     <Tooltip placement="top" title="新增">
-                      <AdminIcon
-                        type="plus"
-                        className={styles.plus}
-                        onClick={this.onAddItem}
-                      />
+                       <PlusOutlined className={styles.plus}  onClick={this.onAddItem}/>
                     </Tooltip>
                     <Popover
                       placement="bottom"

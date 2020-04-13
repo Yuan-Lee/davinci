@@ -38,11 +38,11 @@ import { initializePermission } from 'containers/Account/components/checkUtilPer
 
 import { useTablePagination } from 'utils/hooks'
 
-import { BarsOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { BarsOutlined, InfoCircleOutlined, PlusOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons'
 
-import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Icon as LegacyIcon } from '@ant-design/compatible'
 
-import { Row, Col, Breadcrumb, Table, Button, Tooltip, Popconfirm } from 'antd';
+import { Row, Col, Breadcrumb, Table, Button, Tooltip, Popconfirm } from 'antd'
 import { ButtonProps } from 'antd/lib/button'
 import { ColumnProps } from 'antd/lib/table'
 import Container from 'components/Container'
@@ -97,7 +97,7 @@ const columns: Array<ColumnProps<ISchedule>> = [
         <Tooltip title={record.execLog}>
           <InfoCircleOutlined className={Styles.info} />
         </Tooltip>
-      </>;
+      </>
     }
   },
   {
@@ -215,7 +215,7 @@ const ScheduleList: React.FC<ScheduleListProps> = (props) => {
           </Tooltip>
           <Tooltip title="修改" trigger="hover">
             <EditButton
-              icon="edit"
+              icon={<EditOutlined />}
               shape="circle"
               type="ghost"
               onClick={editSchedule(record.id)}
@@ -227,7 +227,7 @@ const ScheduleList: React.FC<ScheduleListProps> = (props) => {
             onConfirm={deleteSchedule(record.id)}
           >
             <Tooltip title="删除">
-              <AdminButton icon="delete" shape="circle" type="ghost" />
+              <AdminButton  icon={<DeleteOutlined />} shape="circle" type="ghost" />
             </Tooltip>
           </Popconfirm>
         </span>
@@ -258,7 +258,7 @@ const ScheduleList: React.FC<ScheduleListProps> = (props) => {
             </Box.Title>
             <Box.Tools>
               <Tooltip placement="bottom" title="新增">
-                <AdminButton type="primary" icon="plus" onClick={addSchedule} />
+                <AdminButton type="primary" icon={<PlusOutlined />} onClick={addSchedule} />
               </Tooltip>
             </Box.Tools>
           </Box.Header>

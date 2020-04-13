@@ -5,7 +5,7 @@ import { ButtonProps } from 'antd/lib/button/button'
 
 import { IProject } from 'containers/Projects/types'
 import { ICurrentDashboard } from '../'
-
+import { PlusOutlined, ShareAltOutlined, DownloadOutlined, LinkOutlined, FilterOutlined  } from '@ant-design/icons'
 import ModulePermission from 'containers/Account/components/checkModulePermission'
 import ShareDownloadPermission from 'containers/Account/components/checkShareDownloadPermission'
 
@@ -64,7 +64,7 @@ export class DashboardToolbar extends React.PureComponent<IDashboardToolbarProps
       <Tooltip placement="bottom" title="新增">
         <AddButton
           type="primary"
-          icon="plus"
+          icon={<PlusOutlined />}
           style={{marginLeft: '8px'}}
           onClick={showAddDashboardItem}
         />
@@ -90,7 +90,7 @@ export class DashboardToolbar extends React.PureComponent<IDashboardToolbarProps
         <Tooltip placement="bottom" title="分享">
           <ShareButton
             type="primary"
-            icon="share-alt"
+            icon={<ShareAltOutlined />}
             style={{marginLeft: '8px'}}
             onClick={onChangeDashboardAuthorize(false)}
           />
@@ -106,7 +106,7 @@ export class DashboardToolbar extends React.PureComponent<IDashboardToolbarProps
         >
           <DownloadButton
             type="primary"
-            icon="download"
+            icon={<DownloadOutlined />}
             style={{marginLeft: '8px'}}
           />
         </Popconfirm>
@@ -116,7 +116,7 @@ export class DashboardToolbar extends React.PureComponent<IDashboardToolbarProps
       <Tooltip placement="bottom" title="联动关系配置">
         <LinkageButton
           type="primary"
-          icon="link"
+          icon={<LinkOutlined />}
           style={{marginLeft: '8px'}}
           onClick={onToggleLinkageVisibility(true)}
         />
@@ -126,7 +126,7 @@ export class DashboardToolbar extends React.PureComponent<IDashboardToolbarProps
       <Tooltip placement="bottomRight" title="全局控制器配置">
         <GlobalFilterButton
           type="primary"
-          icon="filter"
+          icon={<FilterOutlined />}
           style={{marginLeft: '8px'}}
           onClick={onToggleGlobalFilterVisibility(true)}
         />

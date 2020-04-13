@@ -387,3 +387,9 @@
   content: "\e7a1";
 }
 
+.icon-clock-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

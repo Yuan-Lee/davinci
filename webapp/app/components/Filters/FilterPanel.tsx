@@ -24,12 +24,12 @@ import { defaultFilterControlGridProps, SHOULD_LOAD_OPTIONS, fullScreenGlobalCon
 import FilterControl from './FilterControl'
 import { globalControlMigrationRecorder } from 'app/utils/migrationRecorders'
 
-import { ReloadOutlined, SearchOutlined } from '@ant-design/icons';
+import { ReloadOutlined, SearchOutlined } from '@ant-design/icons'
 
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
 
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button } from 'antd'
 
 const styles = require('./filter.less')
 

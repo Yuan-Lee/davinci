@@ -30,8 +30,8 @@ import { WidgetActions } from './actions'
 
 import Helmet from 'react-helmet'
 import { Link } from 'react-router-dom'
-import { BarsOutlined } from '@ant-design/icons';
-import { Row, Col, Breadcrumb, Button, Table, Tooltip, Popconfirm } from 'antd';
+import { BarsOutlined, PlusOutlined, DeleteOutlined, EditOutlined, CopyOutlined } from '@ant-design/icons'
+import { Row, Col, Breadcrumb, Button, Table, Tooltip, Popconfirm } from 'antd'
 import { ButtonProps } from 'antd/lib/button'
 import { ColumnProps, SorterResult } from 'antd/lib/table'
 import Container from 'components/Container'
@@ -216,7 +216,7 @@ const WidgetList: React.FC<RouteComponentWithParams> = (props) => {
         <span className="ant-table-action-column">
           <Tooltip title="复制">
             <EditButton
-              icon="copy"
+              icon={<CopyOutlined />}
               shape="circle"
               type="ghost"
               onClick={openCopyModal(record)}
@@ -224,7 +224,7 @@ const WidgetList: React.FC<RouteComponentWithParams> = (props) => {
           </Tooltip>
           <Tooltip title="修改" trigger="hover">
             <EditButton
-              icon="edit"
+              icon={<EditOutlined />}
               shape="circle"
               type="ghost"
               onClick={toWorkbench(record.id)}
@@ -236,7 +236,11 @@ const WidgetList: React.FC<RouteComponentWithParams> = (props) => {
             onConfirm={onDeleteWidget(record.id)}
           >
             <Tooltip title="删除">
-              <AdminButton icon="delete" shape="circle" type="ghost" />
+              <AdminButton
+                icon={<DeleteOutlined />}
+                shape="circle"
+                type="ghost"
+              />
             </Tooltip>
           </Popconfirm>
         </span>
@@ -276,7 +280,7 @@ const WidgetList: React.FC<RouteComponentWithParams> = (props) => {
               <Tooltip placement="bottom" title="新增">
                 <AdminButton
                   type="primary"
-                  icon="plus"
+                  icon={<PlusOutlined />}
                   onClick={toWorkbench()}
                 />
               </Tooltip>

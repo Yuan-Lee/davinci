@@ -41,9 +41,8 @@ import { makeSelectCurrentProject } from 'containers/Projects/selectors'
 import ModulePermission from '../Account/components/checkModulePermission'
 import { initializePermission } from '../Account/components/checkUtilPermission'
 
-import { BarsOutlined } from '@ant-design/icons';
-
-import { Table, Tooltip, Button, Row, Col, Breadcrumb, Popconfirm, message } from 'antd';
+import { BarsOutlined, DeleteOutlined, EditOutlined, CopyOutlined, PlusOutlined  } from '@ant-design/icons'
+import { Table, Tooltip, Button, Row, Col, Breadcrumb, Popconfirm, message } from 'antd'
 import { ColumnProps, PaginationConfig, SorterResult } from 'antd/lib/table'
 import { ButtonProps } from 'antd/lib/button'
 import Container from 'components/Container'
@@ -184,10 +183,10 @@ export class ViewList extends React.PureComponent<IViewListProps, IViewListState
         render: (_, record) => (
           <span className="ant-table-action-column">
             <Tooltip title="复制">
-              <EditButton icon="copy" shape="circle" type="ghost" onClick={this.copyView(record)} />
+              <EditButton icon={<CopyOutlined />} shape="circle" type="ghost" onClick={this.copyView(record)} />
             </Tooltip>
             <Tooltip title="修改">
-              <EditButton icon="edit" shape="circle" type="ghost" onClick={this.editView(record.id)} />
+              <EditButton icon={<EditOutlined />} shape="circle" type="ghost" onClick={this.editView(record.id)} />
             </Tooltip>
             <Popconfirm
               title="确定删除？"
@@ -195,7 +194,7 @@ export class ViewList extends React.PureComponent<IViewListProps, IViewListState
               onConfirm={this.deleteView(record.id)}
             >
               <Tooltip title="删除">
-                <AdminButton icon="delete" shape="circle" type="ghost" />
+                <AdminButton icon={<DeleteOutlined />} shape="circle" type="ghost" />
               </Tooltip>
             </Popconfirm>
           </span>
@@ -309,7 +308,7 @@ export class ViewList extends React.PureComponent<IViewListProps, IViewListState
               </Box.Title>
               <Box.Tools>
                 <Tooltip placement="bottom" title="新增">
-                  <AdminButton type="primary" icon="plus" onClick={this.addView} />
+                  <AdminButton type="primary" icon={<PlusOutlined />} onClick={this.addView} />
                 </Tooltip>
               </Box.Tools>
             </Box.Header>
