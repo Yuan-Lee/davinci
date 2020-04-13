@@ -20,7 +20,9 @@
 
 import React, { useContext } from 'react'
 
-import { Button, Popover, Icon } from 'antd'
+import { ShareAltOutlined } from '@ant-design/icons';
+
+import { Button, Popover } from 'antd';
 const ButtonGroup = Button.Group
 
 import { DisplayToolbarContext } from './util'
@@ -40,11 +42,11 @@ const Share: React.FC<IShareProps> = (props) => {
         trigger='click'
       >
         <Button type="ghost">
-          <Icon type="share-alt" />
+          <ShareAltOutlined />
           {comment && '分享'}
         </Button>
       </Popover>
     </ButtonGroup>
-  )
+  );
 }
 export default Share

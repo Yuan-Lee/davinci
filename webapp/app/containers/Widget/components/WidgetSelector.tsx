@@ -4,7 +4,9 @@ import { iconMapping } from './util'
 
 import { IWidgetRaw } from '../types'
 
-import { Icon, Row, Col, Checkbox, Pagination, Input } from 'antd'
+import { CheckOutlined } from '@ant-design/icons';
+
+import { Row, Col, Checkbox, Pagination, Input } from 'antd';
 const Search = Input.Search
 const styles = require('../Widget.less')
 
@@ -160,7 +162,7 @@ export class WidgetSelector extends React.Component<IWidgetSelectorProps, IWidge
       const checkmark = widgetsSelected.findIndex((ws) => ws.id === w.id) >= 0
         ? (
           <div className={styles.checkmark}>
-            <Icon type="check" />
+            <CheckOutlined />
           </div>
         )
         : ''

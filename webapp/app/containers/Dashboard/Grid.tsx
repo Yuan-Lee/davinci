@@ -52,7 +52,7 @@ import { hasVizEditPermission } from '../Account/components/checkUtilPermission'
 
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import AntdFormType from 'antd/lib/form/Form'
-import { Row, Col, Button, Modal, Breadcrumb, Icon, Dropdown, Menu, message } from 'antd'
+import { Row, Col, Button, Modal, Breadcrumb, Dropdown, Menu, message } from 'antd';
 import { uuid } from 'utils/util'
 import FullScreenPanel, { ICurrentDataInFullScreenProps } from './components/fullScreenPanel/FullScreenPanel'
 import { decodeMetricName, getTable } from 'containers/Widget/components/util'
@@ -1197,8 +1197,8 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
         if (controlRequestParamsByItem && controlRequestParamsByItem[itemId]) {
           const { filters: globalFilters, variables: globalVariables } = controlRequestParamsByItem[itemId]
           queryConditions = {
-            ...globalFilters && { globalFilters },
-            ...globalVariables && { globalVariables }
+            ...(globalFilters && { globalFilters }),
+            ...(globalVariables && { globalVariables })
           }
         }
 

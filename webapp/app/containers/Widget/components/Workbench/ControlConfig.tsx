@@ -40,7 +40,9 @@ import { localControlMigrationRecorder } from 'app/utils/migrationRecorders'
 import FilterList from 'app/components/Filters/config/FilterList'
 import FilterFormWithRedux, { FilterForm } from 'app/components/Filters/config/FilterForm'
 import OptionSettingFormWithModal, { OptionSettingForm } from 'app/components/Filters/config/OptionSettingForm'
-import { Form, Row, Col, Button, Modal, Radio, Select, Checkbox } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row, Col, Button, Modal, Radio, Select, Checkbox } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio'
 import { setControlFormValues } from 'app/containers/Dashboard/actions'
 import { IViewVariable, IFormedView, IViewModelProps } from 'app/containers/View/types'
@@ -333,7 +335,7 @@ export class LocalControlConfig extends React.Component<ILocalControlConfigProps
       } else {
         detail = variables.find((m) => m.name === value)
         fields = {
-          ...selected.type === FilterTypes.Select && relatedFields.fields,
+          ...(selected.type === FilterTypes.Select && relatedFields.fields),
           name: detail.name,
           type: detail.valueType
         }

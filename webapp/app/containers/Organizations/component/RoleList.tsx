@@ -1,5 +1,5 @@
 import React from 'react'
-import { WrappedFormUtils } from 'antd/lib/form/Form'
+import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
 import { createStructuredSelector } from 'reselect'
 import RoleForm from './RoleForm'
 import RelRoleMember from './RelRoleMember'

@@ -19,9 +19,11 @@
  */
 
 import React, { PureComponent, Suspense } from 'react'
-import { Form, Button, Row, Col } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Row, Col } from 'antd';
 import classnames from 'classnames'
-import { FormComponentProps } from 'antd/lib/form/Form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form/Form';
 import { IQueryConditions } from '../Grid'
 import {
   IRenderTreeItem,

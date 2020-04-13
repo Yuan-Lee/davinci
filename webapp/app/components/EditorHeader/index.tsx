@@ -20,7 +20,8 @@
 
 import React from 'react'
 import DownloadList from '../DownloadList'
-import { Icon, Button } from 'antd'
+import { LeftOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import { IDownloadRecord } from 'app/containers/App/types'
 const styles = require('./EditorHeader.less')
 const utilStyles = require('assets/less/util.less')
@@ -69,7 +70,7 @@ export function EditorHeader (props: IEditorHeaderProps) {
 
   return (
     <div className={`${styles.editorHeader} ${className}`}>
-      <Icon type="left" className={styles.back} onClick={onCancel} />
+      <LeftOutlined className={styles.back} onClick={onCancel} />
       <div className={styles.title}>
         <div className={styles.name}>
           <input
@@ -120,7 +121,7 @@ export function EditorHeader (props: IEditorHeaderProps) {
           )
       }
     </div>
-  )
+  );
 }
 
 export default EditorHeader

@@ -19,7 +19,8 @@
  */
 
 import React, { useContext, useMemo } from 'react'
-import { Icon, Tooltip, Slider } from 'antd'
+import { MinusCircleOutlined, PictureOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { Tooltip, Slider } from 'antd';
 import { ContainerContext } from './ContainerContext'
 
 interface IDisplayBottomProps {
@@ -46,21 +47,21 @@ const DisplayBottom: React.FC<IDisplayBottomProps> = (props) => {
     <div className="display-bottom">
       <div className="display-bottom-screenshot">
         <Tooltip title="点击生成截图封面">
-          <Icon type="picture" onClick={onCreateCover} />
+          <PictureOutlined onClick={onCreateCover} />
         </Tooltip>
       </div>
       <div className="display-bottom-slider-wrapper">
         <label>{percentage}</label>
-        <Icon type="minus-circle-o" onClick={zoomIn} />
+        <MinusCircleOutlined onClick={zoomIn} />
         <Slider
           className="display-bottom-slider"
           value={sliderValue}
           onChange={sliderChange}
         />
-        <Icon type="plus-circle-o" onClick={zoomOut} />
+        <PlusCircleOutlined onClick={zoomOut} />
       </div>
     </div>
-  )
+  );
 }
 
 export default DisplayBottom

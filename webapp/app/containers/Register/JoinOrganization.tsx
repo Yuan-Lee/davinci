@@ -2,7 +2,7 @@ import * as React from 'react'
 import { compose } from 'redux'
 import Helmet from 'react-helmet'
 
-import { Icon } from 'antd'
+import { LoadingOutlined, UnlockOutlined, UserOutlined } from '@ant-design/icons';
 
 import { connect } from 'react-redux'
 import { joinOrganization, login } from '../App/actions'
@@ -132,7 +132,7 @@ export class JoinOrganization extends React.PureComponent <IJoinOrganizationProp
           <Helmet title="Login - Join Organization" />
           <div className={styles.form}>
             <div className={styles.input}>
-              <Icon type="user"/>
+              <UserOutlined />
               <input
                 placeholder="用户名"
                 value={username}
@@ -142,7 +142,7 @@ export class JoinOrganization extends React.PureComponent <IJoinOrganizationProp
               />
             </div>
             <div className={styles.input}>
-              <Icon type="unlock"/>
+              <UnlockOutlined />
               <input
                 placeholder="密码"
                 type="password"
@@ -159,7 +159,7 @@ export class JoinOrganization extends React.PureComponent <IJoinOrganizationProp
           >
             {
               loginLoading
-                ? <Icon type="loading"/>
+                ? <LoadingOutlined />
                 : ''
             }
             登 录
@@ -173,7 +173,7 @@ export class JoinOrganization extends React.PureComponent <IJoinOrganizationProp
             {this.state.needLogin ? '加入组织中，请稍候…' : ''}
           </h1>
         </div>
-      )
+      );
   }
 }
 

@@ -28,7 +28,9 @@ import React, {
 } from 'react'
 import debounce from 'lodash/debounce'
 
-import { Tag, AutoComplete, Input, Icon } from 'antd'
+import { SearchOutlined } from '@ant-design/icons';
+
+import { Tag, AutoComplete, Input } from 'antd';
 const { Option } = AutoComplete
 import { SelectValue } from 'antd/lib/select'
 import Avatar from 'components/Avatar'
@@ -132,28 +134,26 @@ const MailTag: React.FC<IMailTagProps> = (props, ref) => {
 
   useImperativeHandle(ref, () => ({}))
 
-  return (
-    <>
-      {emails.map((email) => (
-        <Tag closable key={email} color="blue" onClose={removeEmail(email)}>
-          {email}
-        </Tag>
-      ))}
-      <AutoComplete
-        placeholder="输入邮箱或姓名关键字查找..."
-        value={keyword}
-        dataSource={autoCompleteOptions}
-        optionLabelProp=""
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onChange={setKeyword}
-        onSearch={loadDataSource}
-        onSelect={selectEmail}
-      >
-        <Input suffix={<Icon type="search" />} />
-      </AutoComplete>
-    </>
-  )
+  return <>
+    {emails.map((email) => (
+      <Tag closable key={email} color="blue" onClose={removeEmail(email)}>
+        {email}
+      </Tag>
+    ))}
+    <AutoComplete
+      placeholder="输入邮箱或姓名关键字查找..."
+      value={keyword}
+      dataSource={autoCompleteOptions}
+      optionLabelProp=""
+      onFocus={onFocus}
+      onBlur={onBlur}
+      onChange={setKeyword}
+      onSearch={loadDataSource}
+      onSelect={selectEmail}
+    >
+      <Input suffix={<SearchOutlined />} />
+    </AutoComplete>
+  </>;
 }
 
 export default forwardRef(MailTag)

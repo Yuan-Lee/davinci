@@ -21,7 +21,10 @@
 import * as React from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { Button, Row, Col, Input, Tooltip, Popconfirm, Table, Modal, Form, Divider } from 'antd'
+import { PlusOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Row, Col, Input, Tooltip, Popconfirm, Table, Modal, Divider } from 'antd';
 import RoleForm from './Transfer'
 import Auth from './ProjectAuth'
 import AntdFormType from 'antd/lib/form/Form'
@@ -227,7 +230,7 @@ export class ProjectRole extends React.Component<IRoleProps, IRoleStates> {
       <Tooltip placement="bottom" title="关联">
         <Button
           type="primary"
-          icon="plus"
+          icon={<PlusOutlined />}
           onClick={this.toggleModal('relationRoleVisible')}
         >
           关联角色

@@ -2,9 +2,14 @@ import React from 'react'
 import classnames from 'classnames'
 import { findDOMNode } from 'react-dom'
 
-import { Icon, Row, Col, Form, Input, Checkbox, Select, Button, Popover, Modal, message } from 'antd'
-import { FormComponentProps } from 'antd/lib/form'
-import { WrappedFormUtils } from 'antd/lib/form/Form'
+import { CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
+
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Row, Col, Input, Checkbox, Select, Button, Popover, Modal, message } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 const FormItem = Form.Item
 const { TextArea } = Input
@@ -298,7 +303,7 @@ class FieldConfig extends React.PureComponent<IFieldConfigProps, IFieldConfigSta
                   readOnly
                   placeholder="别名结果"
                   value={testResult}
-                  addonAfter={<Icon type="close" onClick={this.clearExpressionResult} title="清除结果" />}
+                  addonAfter={<CloseOutlined onClick={this.clearExpressionResult} title="清除结果" />}
                 />
               </FormItem>
             </Col>
@@ -314,7 +319,7 @@ class FieldConfig extends React.PureComponent<IFieldConfigProps, IFieldConfigSta
                   title="动态别名使用说明"
                   content={this.useExprInstr}
                 >
-                  <Icon type="info-circle" />
+                  <InfoCircleOutlined />
                 </Popover>
               </FormItem>
             </Col>
@@ -332,7 +337,7 @@ class FieldConfig extends React.PureComponent<IFieldConfigProps, IFieldConfigSta
           onTest={this.testExpressionResult}
         />
       </Modal>
-    )
+    );
   }
 }
 

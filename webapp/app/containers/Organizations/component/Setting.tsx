@@ -1,6 +1,8 @@
 import React from 'react'
 const styles = require('../Organization.less')
-import { Button, Input, Form, Row, Col, Radio, Modal } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Input, Row, Col, Radio, Modal } from 'antd';
 const FormItem = Form.Item
 const RadioButton = Radio.Button
 import UploadAvatar from 'components/UploadAvatar'

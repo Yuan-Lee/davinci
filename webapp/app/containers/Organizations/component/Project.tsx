@@ -20,7 +20,22 @@
 
 import * as React from 'react'
 import * as classnames from 'classnames'
-import { Form, Row, Col, Input, Tag, Button, Select, Menu, Icon, Tooltip, Popconfirm, Table, Modal} from 'antd'
+import { SettingOutlined, TrademarkOutlined, UserOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import {
+  Row,
+  Col,
+  Input,
+  Tag,
+  Button,
+  Select,
+  Menu,
+  Tooltip,
+  Popconfirm,
+  Table,
+  Modal,
+} from 'antd';
 const TextArea = Input.TextArea
 const Option = Select.Option
 const FormItem = Form.Item
@@ -281,31 +296,31 @@ export class ProjectsForm extends React.PureComponent<IProjectsFormProps, IProje
     }
 
     return (
-        <div className={styles.filterConfig}>
-          <div className={styles.left}>
-          <Menu
-            defaultSelectedKeys={['basic']}
-            onClick={this.checkout}
-          >
-            <Menu.Item key="basic">
-              <Icon type="setting" />
-              基础设置
-            </Menu.Item>
-            <Menu.Item key="role">
-              <Icon type="trademark" />
-              角色管理
-            </Menu.Item>
-            <Menu.Item key="admin">
-              <Icon type="user" />
-              管理员设置
-            </Menu.Item>
-          </Menu>
-          </div>
-          <div className={styles.center}>
-            {mode}
-          </div>
+      <div className={styles.filterConfig}>
+        <div className={styles.left}>
+        <Menu
+          defaultSelectedKeys={['basic']}
+          onClick={this.checkout}
+        >
+          <Menu.Item key="basic">
+            <SettingOutlined />
+            基础设置
+          </Menu.Item>
+          <Menu.Item key="role">
+            <TrademarkOutlined />
+            角色管理
+          </Menu.Item>
+          <Menu.Item key="admin">
+            <UserOutlined />
+            管理员设置
+          </Menu.Item>
+        </Menu>
         </div>
-      )
+        <div className={styles.center}>
+          {mode}
+        </div>
+      </div>
+    );
   }
 }
 

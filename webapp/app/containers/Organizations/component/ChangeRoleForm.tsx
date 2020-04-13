@@ -1,5 +1,7 @@
 import React from 'react'
-import { Form, Input, Radio, Button } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Radio, Button } from 'antd';
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
 const styles = require('../Organization.less')

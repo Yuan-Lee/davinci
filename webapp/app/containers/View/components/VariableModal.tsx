@@ -1,10 +1,12 @@
 import React from 'react'
-import { Modal, Form, Input, Select, Checkbox, Button, Row, Col } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Modal, Input, Select, Checkbox, Button, Row, Col } from 'antd'
 const FormItem = Form.Item
 const TextArea = Input.TextArea
 const { Option } = Select
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'
-import { FormComponentProps } from 'antd/lib/form/Form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form/Form'
 import ConditionValuesControl, { ConditionValueTypes } from 'components/ConditionValuesControl'
 import {
   IViewVariable,

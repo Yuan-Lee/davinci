@@ -5,8 +5,10 @@ import { getDefaultFieldFormatConfig } from './util'
 import { ViewModelVisualTypes } from 'containers/View/constants'
 import { NumericUnitList, FieldFormatTypes, FieldFormatTypesLocale, FieldFormatTypesSetting, defaultFormatConfig } from './constants'
 
-import { FormComponentProps } from 'antd/lib/form/Form'
-import { Form, Input, InputNumber, Radio, Checkbox, Select, Button, Modal } from 'antd'
+import { FormComponentProps } from '@ant-design/compatible/lib/form/Form';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, InputNumber, Radio, Checkbox, Select, Button, Modal } from 'antd';
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
 const { Option } = Select

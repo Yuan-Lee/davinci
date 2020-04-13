@@ -22,21 +22,16 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import pick from 'lodash/pick'
 import { ISourceFormValues, IDatasourceInfo } from '../types'
 
-import {
-  Modal,
-  Form,
-  Row,
-  Col,
-  Button,
-  Input,
-  Select,
-  Icon,
-  Cascader
-} from 'antd'
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Modal, Row, Col, Button, Input, Select, Cascader } from 'antd';
 const FormItem = Form.Item
 const TextArea = Input.TextArea
 const Option = Select.Option
-import { FormComponentProps } from 'antd/lib/form/Form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form/Form';
 import { CascaderOptionType } from 'antd/lib/cascader'
 import { SourceProperty } from './types'
 import {
@@ -363,7 +358,7 @@ const SourceConfigModal: React.FC<ISourceConfigModalProps> = (props) => {
               autoComplete="off"
               addonAfter={
                 testLoading ? (
-                  <Icon type="loading" />
+                  <LoadingOutlined />
                 ) : (
                   <span
                     onClick={testSourceConnection}
@@ -392,7 +387,7 @@ const SourceConfigModal: React.FC<ISourceConfigModalProps> = (props) => {
           type="primary"
           size="small"
           shape="circle"
-          icon="plus"
+          icon={<PlusOutlined />}
           onClick={addProperty}
         />
         <EditableFormTable
@@ -403,7 +398,7 @@ const SourceConfigModal: React.FC<ISourceConfigModalProps> = (props) => {
         />
       </FormItem>
     </Modal>
-  )
+  );
 }
 
 export default Form.create<ISourceConfigModalProps>()(SourceConfigModal)

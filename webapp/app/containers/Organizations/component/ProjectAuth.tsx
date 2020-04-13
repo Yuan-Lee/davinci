@@ -20,7 +20,9 @@
 
 import * as React from 'react'
 import * as classnames from 'classnames'
-import { Icon, Button, Row, Col, Input, Select, Popconfirm, Table, Modal, Form, Radio } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Row, Col, Input, Select, Popconfirm, Table, Modal, Radio } from 'antd';
 const FormItem = Form.Item
 const InputGroup = Input.Group
 const RadioGroup = Radio.Group

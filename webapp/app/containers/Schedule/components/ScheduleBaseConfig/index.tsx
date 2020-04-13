@@ -27,13 +27,15 @@ import React, {
   forwardRef
 } from 'react'
 import moment, { Moment } from 'moment'
-import { Form, Row, Col, Input, Select, DatePicker, Spin } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row, Col, Input, Select, DatePicker, Spin } from 'antd';
 const FormItem = Form.Item
 const { TextArea } = Input
 const { Option } = Select
 const { RangePicker } = DatePicker
 
-import { FormComponentProps } from 'antd/lib/form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import {
   SchedulePeriodUnit,
   ISchedule,

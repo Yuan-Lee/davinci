@@ -19,7 +19,7 @@
  */
 
 import * as React from 'react'
-import { Icon } from 'antd'
+import { Icon as LegacyIcon } from '@ant-design/compatible';
 
 export interface IDownloadCsvProps {
   id?: number
@@ -34,9 +34,7 @@ export interface IDownloadCsvProps {
 export function DownloadCsv (props: IDownloadCsvProps) {
   const { shareInfoLoading, downloadCsvLoading } = props
   const iconType = shareInfoLoading || downloadCsvLoading ? 'loading' : 'download'
-  return (
-    <Icon type={iconType} onClick={getShareInfo(props)} />
-  )
+  return <LegacyIcon type={iconType} onClick={getShareInfo(props)} />;
 }
 
 function getShareInfo (props) {

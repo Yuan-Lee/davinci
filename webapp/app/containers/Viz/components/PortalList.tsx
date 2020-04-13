@@ -3,7 +3,9 @@ import classnames from 'classnames'
 import { createStructuredSelector } from 'reselect'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { Icon, Col, Button, Tooltip, Popconfirm, Modal, Row } from 'antd'
+import { PlusCircleOutlined } from '@ant-design/icons'
+import { Icon } from '@ant-design/compatible'
+import { Col, Button, Tooltip, Popconfirm, Modal, Row } from 'antd'
 import { IconProps } from 'antd/lib/icon'
 import AntdFormType from 'antd/lib/form/Form'
 const styles = require('../Viz.less')
@@ -172,12 +174,12 @@ export class PortalList extends React.Component<IPortalListProps, IPortalListSta
       >
         <div className={styles.unit} onClick={this.showPortalForm('add')}>
             <div className={styles.central}>
-              <div className={`${styles.item} ${styles.add}`}><Icon type="plus-circle-o" /></div>
+              <div className={`${styles.item} ${styles.add}`}><PlusCircleOutlined /></div>
               <div className={`${styles.item} ${styles.text}`}>创建新 Dashboard</div>
             </div>
         </div>
       </Col>
-    )
+    );
   }
 
   private renderPortal = (portal: any) => {

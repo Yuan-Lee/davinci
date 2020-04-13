@@ -20,7 +20,9 @@
 
 import * as React from 'react'
 import * as classnames from 'classnames'
-import { Form, Row, Col, Input, Tag, Button, Select } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Row, Col, Input, Tag, Button, Select } from 'antd'
 const TextArea = Input.TextArea
 const Option = Select.Option
 const FormItem = Form.Item

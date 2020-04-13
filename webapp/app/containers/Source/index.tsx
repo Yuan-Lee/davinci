@@ -39,7 +39,9 @@ import SourceConfigModal from './components/SourceConfigModal'
 import UploadCsvModal from './components/UploadCsvModal'
 import ResetConnectionModal from './components/ResetConnectionModal'
 
-import { message, Row, Col, Table, Button, Tooltip, Icon, Popconfirm, Breadcrumb } from 'antd'
+import { BarsOutlined } from '@ant-design/icons';
+
+import { message, Row, Col, Table, Button, Tooltip, Popconfirm, Breadcrumb } from 'antd';
 import { ButtonProps } from 'antd/lib/button/button'
 import { ColumnProps, PaginationConfig, SorterResult } from 'antd/lib/table'
 import { UploadProps, UploadChangeParam } from 'antd/lib/upload'
@@ -543,7 +545,7 @@ export class SourceList extends React.PureComponent<ISourceListProps, ISourceLis
           <Box>
             <Box.Header>
               <Box.Title>
-                <Icon type="bars" />Source List
+                <BarsOutlined />Source List
               </Box.Title>
               <Box.Tools>
                 <Tooltip placement="bottom" title="新增">
@@ -596,7 +598,7 @@ export class SourceList extends React.PureComponent<ISourceListProps, ISourceLis
           </Box>
         </Container.Body>
       </Container>
-    )
+    );
   }
 }
 

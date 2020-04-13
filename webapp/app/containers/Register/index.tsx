@@ -29,7 +29,9 @@ import injectSaga from 'utils/injectSaga'
 import reducer from './reducer'
 import saga from './sagas'
 
-import { Icon, message } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons';
+
+import { message } from 'antd';
 import RegisterForm from './RegisterForm'
 import SendEmailTips from './SendEmailTips'
 const styles = require('../Login/Login.less')
@@ -158,7 +160,7 @@ export class Register extends React.PureComponent<IRegisterProps & RouteComponen
           >
             {
               signupLoading
-                ? <Icon type="loading" />
+                ? <LoadingOutlined />
                 : ''
             }
             注册

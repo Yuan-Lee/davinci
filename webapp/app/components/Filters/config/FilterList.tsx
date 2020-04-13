@@ -15,7 +15,9 @@ import FilterListItem from './FilterListItem'
 
 const styles = require('../filter.less')
 
-import { Icon, Tree } from 'antd'
+import { PlusOutlined } from '@ant-design/icons';
+
+import { Tree } from 'antd';
 const { TreeNode } = Tree
 
 interface IFilterListProps {
@@ -182,7 +184,7 @@ class FilterList extends Component<IFilterListProps, IFilterListStates> {
       <div className={styles.filterList}>
         <div className={styles.title}>
           <h2>控制器列表</h2>
-          <Icon type="plus" onClick={this.onAddFilterClick} />
+          <PlusOutlined onClick={this.onAddFilterClick} />
         </div>
         <div className={styles.treeContainer}>
           <Tree
@@ -199,7 +201,7 @@ class FilterList extends Component<IFilterListProps, IFilterListStates> {
           </Tree>
         </div>
       </div>
-    )
+    );
   }
 }
 

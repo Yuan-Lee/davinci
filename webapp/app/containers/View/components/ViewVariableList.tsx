@@ -1,5 +1,6 @@
 import React from 'react'
-import { List, Icon, Tooltip, Popconfirm, Tag } from 'antd'
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { List, Tooltip, Popconfirm, Tag } from 'antd';
 
 import { IViewVariable } from 'containers/View/types'
 import { ViewVariableTypes } from '../constants'
@@ -28,7 +29,7 @@ export class ViewVariableList extends React.Component<IViewVariableListProps> {
     const icons = [
       (
         <Tooltip key="edit" title="修改">
-          <Icon onClick={this.editItem(item)} type="edit" />
+          <EditOutlined onClick={this.editItem(item)} />
         </Tooltip>
       ),
       (
@@ -39,7 +40,7 @@ export class ViewVariableList extends React.Component<IViewVariableListProps> {
           onConfirm={this.deleteItem(item.key)}
         >
           <Tooltip title="删除">
-            <Icon type="delete" />
+            <DeleteOutlined />
           </Tooltip>
         </Popconfirm>
       )
@@ -64,12 +65,12 @@ export class ViewVariableList extends React.Component<IViewVariableListProps> {
       <List
         className={className}
         size="small"
-        header={<div className={Styles.viewVariableHeader}><h4>变量</h4><Icon type="plus" onClick={onAdd} title="添加" /></div>}
+        header={<div className={Styles.viewVariableHeader}><h4>变量</h4><PlusOutlined onClick={onAdd} title="添加" /></div>}
         locale={{ emptyText: '暂无变量' }}
         dataSource={variables}
         renderItem={this.renderItem}
       />
-    )
+    );
   }
 
 }

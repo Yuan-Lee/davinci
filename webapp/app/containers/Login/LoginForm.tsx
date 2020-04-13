@@ -20,7 +20,7 @@
 
 import React from 'react'
 
-import { Icon } from 'antd'
+import { UnlockOutlined, UserOutlined } from '@ant-design/icons'
 
 const styles = require('./Login.less')
 
@@ -69,7 +69,7 @@ export class LoginForm extends React.PureComponent<ILoginFormProps, {}> {
     return (
       <div className={styles.form}>
         <div className={styles.input}>
-          <Icon type="user" />
+          <UserOutlined style={{ color: 'white' , fontSize: '30px' }}/>
           <input
             placeholder="用户名"
             value={username}
@@ -79,7 +79,7 @@ export class LoginForm extends React.PureComponent<ILoginFormProps, {}> {
           />
         </div>
         <div className={styles.input}>
-          <Icon type="unlock" />
+          <UnlockOutlined style={{ color: 'white' , fontSize: '30px' }}/>
           <input
             placeholder="密码"
             type="password"
@@ -90,7 +90,7 @@ export class LoginForm extends React.PureComponent<ILoginFormProps, {}> {
           />
         </div>
       </div>
-    )
+    );
   }
 }
 

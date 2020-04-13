@@ -23,8 +23,13 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import classnames from 'classnames'
 
-import { Form, Row, Col, Input, InputNumber, Radio, Checkbox, Select, Button, Table } from 'antd'
-import { FormComponentProps } from 'antd/lib/form/Form'
+import { PlusOutlined } from '@ant-design/icons';
+
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Row, Col, Input, InputNumber, Radio, Checkbox, Select, Button, Table } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form/Form';
 const FormItem = Form.Item
 const Option = Select.Option
 const RadioGroup = Radio.Group
@@ -315,7 +320,7 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
                       <Button
                         size="small"
                         type="primary"
-                        icon="plus"
+                        icon={<PlusOutlined />}
                         shape="circle"
                         onClick={onOpenOptionModal}
                       />
@@ -382,7 +387,7 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
           )
         }
       </Form>
-    )
+    );
   }
 }
 

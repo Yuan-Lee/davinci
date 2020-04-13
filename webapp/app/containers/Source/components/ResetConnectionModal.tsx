@@ -19,9 +19,11 @@
  */
 
 import React, { useCallback, useRef, useEffect } from 'react'
-import { Modal, Form, Input } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Input } from 'antd';
 const FormItem = Form.Item
-import { FormComponentProps } from 'antd/lib/form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 
 import { SourceResetConnectionProperties } from './types'
 import { ISource } from '../types'

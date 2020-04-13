@@ -19,8 +19,10 @@
  */
 
 import * as React from 'react'
-import { FormComponentProps } from 'antd/lib/form'
-import { Form, Input, Select, Button, Row, Col, Menu, Tabs } from 'antd'
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Select, Button, Row, Col, Menu, Tabs } from 'antd';
 const FormItem = Form.Item
 const Option = Select.Option
 const Search = Input.Search
@@ -118,7 +120,7 @@ export class ComputedConfigForm extends React.Component<IComputedConfigFormProps
             return "number";
           t.eatWhile(/^[_\w\d]/);
           const h = t.current().toLowerCase();
-          return f.hasOwnProperty(h) && (t.match(/^( )+'[^']*'/) || t.match(/^( )+"[^"]*"/)) ? "number" : l.hasOwnProperty(h) ? "atom" : u.hasOwnProperty(h) ? "keyword" : c.hasOwnProperty(h) ? "builtin" : s.hasOwnProperty(h) ? "string-2" : null
+          return f.hasOwnProperty(h) && (t.match(/^( )+'[^']*'/) || t.match(/^( )+"[^"]*"/)) ? "number" : l.hasOwnProperty(h) ? "atom" : u.hasOwnProperty(h) ? "keyword" : c.hasOwnProperty(h) ? "builtin" : s.hasOwnProperty(h) ? "string-2" : null;
         }
       }
       function o(e, t, r) {

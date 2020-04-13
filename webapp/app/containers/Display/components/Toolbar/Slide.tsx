@@ -20,7 +20,9 @@
 
 import React, { useContext, useCallback } from 'react'
 
-import { Button, Icon } from 'antd'
+import { PlusOutlined } from '@ant-design/icons';
+
+import { Button } from 'antd';
 const ButtonGroup = Button.Group
 
 import { DisplayToolbarContext } from './util'
@@ -39,9 +41,9 @@ const Slide: React.FC<IToolbarSlideProps> = (props) => {
   return (
     <ButtonGroup size={size}>
       <Button type="ghost" onClick={addSlide}>
-        <Icon type="plus" /> {comment && '添加大屏页'}
+        <PlusOutlined /> {comment && '添加大屏页'}
       </Button>
     </ButtonGroup>
-  )
+  );
 }
 export default Slide

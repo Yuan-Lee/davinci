@@ -40,16 +40,7 @@ import { VizActions } from './actions'
 import { Route } from 'react-router-dom'
 import { RouteComponentWithParams } from 'utils/types'
 
-import {
-  Layout,
-  Result,
-  PageHeader,
-  Tree,
-  Icon,
-  Button,
-  Menu,
-  Dropdown
-} from 'antd'
+import { Layout, Result, PageHeader, Tree, Button, Menu, Dropdown } from 'antd';
 const { Header, Sider, Content } = Layout
 const { DirectoryTree } = Tree
 import SplitPane from 'components/SplitPane'

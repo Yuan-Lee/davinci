@@ -22,7 +22,8 @@ import React, { PureComponent } from 'react'
 import classnames from 'classnames'
 
 import { ButtonSize } from 'antd/lib/button'
-import { Button, Select, Input, Icon } from 'antd'
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { Button, Select, Input } from 'antd';
 const Option = Select.Option
 
 const styles = require('./PaginationWithoutTotal.less')
@@ -133,7 +134,7 @@ export class PaginationWithoutTotal extends PureComponent<IPaginationWithoutTota
           disabled={current === 1}
           onClick={this.change('prev')}
         >
-          <Icon type="left" />上一页
+          <LeftOutlined />上一页
         </Button>
         <Button
           loading={loading}
@@ -141,7 +142,7 @@ export class PaginationWithoutTotal extends PureComponent<IPaginationWithoutTota
           disabled={dataLength < pageSize}
           onClick={this.change('next')}
         >
-          下一页<Icon type="right" />
+          下一页<RightOutlined />
         </Button>
         {showSizeChanger && (
           <Select
@@ -170,7 +171,7 @@ export class PaginationWithoutTotal extends PureComponent<IPaginationWithoutTota
           </div>
         )}
       </div>
-    )
+    );
   }
 }
 

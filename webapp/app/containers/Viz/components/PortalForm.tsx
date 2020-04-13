@@ -20,7 +20,10 @@
 
 import React from 'react'
 
-import { Form, Row, Col, Input, Radio, Tabs, Tree, Checkbox } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Row, Col, Input, Radio, Tabs, Tree, Checkbox } from 'antd';
 const TreeNode = Tree.TreeNode
 const FormItem = Form.Item
 const TextArea = Input.TextArea

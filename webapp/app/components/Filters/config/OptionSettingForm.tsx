@@ -20,8 +20,11 @@
 
 import React, { PureComponent } from 'react'
 
-import { Form, Input, Modal, Icon } from 'antd'
-import { FormComponentProps } from 'antd/lib/form/Form'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Input, Modal } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form/Form';
 const FormItem = Form.Item
 const TextArea = Input.TextArea
 

@@ -20,7 +20,9 @@
 import * as React from 'react'
 import * as classnames from 'classnames'
 import { connect } from 'react-redux'
-import { Form, Row, Col, Input, Radio, Steps, Transfer } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row, Col, Input, Radio, Steps, Transfer } from 'antd';
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
 const Step = Steps.Step

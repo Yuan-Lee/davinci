@@ -2,7 +2,8 @@ import React, { useCallback } from 'react'
 import produce from 'immer'
 import { DndProvider } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import { Icon, Tooltip } from 'antd'
+import { PlusOutlined } from '@ant-design/icons';
+import { Tooltip } from 'antd';
 
 import { StackGroup, IStackMetrics } from './types'
 import MetricItem from './MetricItem'
@@ -103,12 +104,12 @@ const StackContainer: React.FC<IStackContainerProps> = (props) => {
         {stackGroups}
         <div className={`${Styles.stackItem} ${Styles.add}`}>
           <Tooltip title="点击添加堆叠分组">
-            <Icon onClick={addStackGroup} type="plus" />
+            <PlusOutlined onClick={addStackGroup} />
           </Tooltip>
         </div>
       </div>
     </DndProvider>
-  )
+  );
 }
 
 export default StackContainer

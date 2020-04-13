@@ -1,5 +1,6 @@
 import React from 'react'
-import { Row, Col, Modal, Icon, InputNumber, Select, Checkbox } from 'antd'
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Row, Col, Modal, InputNumber, Select, Checkbox } from 'antd';
 const Option = Select.Option
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import ColorPicker from 'components/ColorPicker'
@@ -101,121 +102,119 @@ export class BarSection extends React.PureComponent<
     const { color, width, type, radius } = border
     const { stackConfigVisible, stackMetrics } = this.state
 
-    return (
-      <>
-        <div className={styles.paneBlock}>
-          <h4>
-            <span>堆叠</span>
-            <Icon type="delete" onClick={this.deleteStackConfig} />
-            <Icon type="edit" onClick={this.showStackConfig} />
-          </h4>
+    return <>
+      <div className={styles.paneBlock}>
+        <h4>
+          <span>堆叠</span>
+          <DeleteOutlined onClick={this.deleteStackConfig} />
+          <EditOutlined onClick={this.showStackConfig} />
+        </h4>
+      </div>
+      <div className={styles.paneBlock}>
+        <div className={styles.blockBody}>
+          <Row
+            gutter={8}
+            type="flex"
+            align="middle"
+            className={styles.blockRow}
+          >
+            <Col span={24}>
+              <Checkbox
+                checked={barChart}
+                onChange={this.propChange('barChart')}
+              >
+                条形图
+              </Checkbox>
+            </Col>
+          </Row>
+          <Row
+            gutter={8}
+            type="flex"
+            align="middle"
+            className={styles.blockRow}
+          >
+            <Col span={10}>
+              <Select
+                placeholder="样式"
+                className={styles.blockElm}
+                value={type}
+                onChange={this.propChange('type', 'border')}
+              >
+                {this.lineStyles}
+              </Select>
+            </Col>
+            <Col span={10}>
+              <InputNumber
+                placeholder="粗细"
+                className={styles.blockElm}
+                value={width}
+                min={0}
+                onChange={this.propChange('width', 'border')}
+              />
+            </Col>
+            <Col span={4}>
+              <ColorPicker
+                value={color}
+                onChange={this.propChange('color', 'border')}
+              />
+            </Col>
+          </Row>
+          <Row
+            gutter={8}
+            type="flex"
+            align="middle"
+            className={styles.blockRow}
+          >
+            <Col span={14}>边框圆角</Col>
+            <Col span={10}>
+              <InputNumber
+                className={styles.blockElm}
+                value={radius}
+                min={0}
+                onChange={this.propChange('radius', 'border')}
+              />
+            </Col>
+          </Row>
+          <Row
+            gutter={8}
+            type="flex"
+            align="middle"
+            className={styles.blockRow}
+          >
+            <Col span={14}>柱条宽度</Col>
+            <Col span={10}>
+              <InputNumber
+                className={styles.blockElm}
+                value={gapWidth}
+                onChange={this.propChange('width')}
+              />
+            </Col>
+          </Row>
+          <Row
+            gutter={8}
+            type="flex"
+            align="middle"
+            className={styles.blockRow}
+          >
+            <Col span={14}>不同系列间柱条间隔</Col>
+            <Col span={10}>
+              <InputNumber
+                className={styles.blockElm}
+                value={gap}
+                onChange={this.propChange('gap')}
+              />
+            </Col>
+          </Row>
         </div>
-        <div className={styles.paneBlock}>
-          <div className={styles.blockBody}>
-            <Row
-              gutter={8}
-              type="flex"
-              align="middle"
-              className={styles.blockRow}
-            >
-              <Col span={24}>
-                <Checkbox
-                  checked={barChart}
-                  onChange={this.propChange('barChart')}
-                >
-                  条形图
-                </Checkbox>
-              </Col>
-            </Row>
-            <Row
-              gutter={8}
-              type="flex"
-              align="middle"
-              className={styles.blockRow}
-            >
-              <Col span={10}>
-                <Select
-                  placeholder="样式"
-                  className={styles.blockElm}
-                  value={type}
-                  onChange={this.propChange('type', 'border')}
-                >
-                  {this.lineStyles}
-                </Select>
-              </Col>
-              <Col span={10}>
-                <InputNumber
-                  placeholder="粗细"
-                  className={styles.blockElm}
-                  value={width}
-                  min={0}
-                  onChange={this.propChange('width', 'border')}
-                />
-              </Col>
-              <Col span={4}>
-                <ColorPicker
-                  value={color}
-                  onChange={this.propChange('color', 'border')}
-                />
-              </Col>
-            </Row>
-            <Row
-              gutter={8}
-              type="flex"
-              align="middle"
-              className={styles.blockRow}
-            >
-              <Col span={14}>边框圆角</Col>
-              <Col span={10}>
-                <InputNumber
-                  className={styles.blockElm}
-                  value={radius}
-                  min={0}
-                  onChange={this.propChange('radius', 'border')}
-                />
-              </Col>
-            </Row>
-            <Row
-              gutter={8}
-              type="flex"
-              align="middle"
-              className={styles.blockRow}
-            >
-              <Col span={14}>柱条宽度</Col>
-              <Col span={10}>
-                <InputNumber
-                  className={styles.blockElm}
-                  value={gapWidth}
-                  onChange={this.propChange('width')}
-                />
-              </Col>
-            </Row>
-            <Row
-              gutter={8}
-              type="flex"
-              align="middle"
-              className={styles.blockRow}
-            >
-              <Col span={14}>不同系列间柱条间隔</Col>
-              <Col span={10}>
-                <InputNumber
-                  className={styles.blockElm}
-                  value={gap}
-                  onChange={this.propChange('gap')}
-                />
-              </Col>
-            </Row>
-          </div>
-        </div>
-        <StackConfigModal
-          visible={stackConfigVisible}
-          stack={stack}
-          metrics={stackMetrics}
-          onCancel={this.cancelStackConfig}
-          onSave={this.saveStackConfig}
-        />
-      </>
-    )
+      </div>
+      <StackConfigModal
+        visible={stackConfigVisible}
+        stack={stack}
+        metrics={stackMetrics}
+        onCancel={this.cancelStackConfig}
+        onSave={this.saveStackConfig}
+      />
+    </>;
   }
 }
 

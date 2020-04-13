@@ -19,7 +19,8 @@
  */
 
 import * as React from 'react'
-import { Icon, Breadcrumb } from 'antd'
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Breadcrumb } from 'antd';
 
 export interface IDataDrillHistoryProps {
   itemId?: number
@@ -36,12 +37,12 @@ export function DataDrillHistory (props: IDataDrillHistoryProps) {
       {
         drillHistory && drillHistory.length ? drillHistory.map((history, index) => (
           <Breadcrumb.Item onClick={drill(history, index)} key={`dh${index}`}>
-            {history.name}<Icon type={`${history.type === 'up' ? 'arrow-up' : 'arrow-down'}`} />
+            {history.name}<LegacyIcon type={`${history.type === 'up' ? 'arrow-up' : 'arrow-down'}`} />
           </Breadcrumb.Item>
         )) : ''
       }
     </Breadcrumb>
-  )
+  );
   function drill (history, item) {
     return function () {
       if (item === drillHistory.length - 1) {

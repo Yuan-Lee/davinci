@@ -20,7 +20,9 @@
 
 import React, { useContext, useCallback, useMemo } from 'react'
 
-import { Button, Icon, Dropdown, Menu } from 'antd'
+import { AppstoreOutlined, BarChartOutlined } from '@ant-design/icons';
+
+import { Button, Dropdown, Menu } from 'antd';
 const ButtonGroup = Button.Group
 import IconFont from 'components/IconFont'
 
@@ -83,16 +85,16 @@ const Chart: React.FC<IChartProps> = (props) => {
   return (
     <ButtonGroup size={size}>
       <Button type="ghost" onClick={addChart}>
-        <Icon type="bar-chart" />
+        <BarChartOutlined />
         {comment && '图表'}
       </Button>
       <Dropdown overlay={overlay} placement="bottomRight" trigger={['click']}>
         <Button type="ghost">
-          <Icon type="appstore" />
+          <AppstoreOutlined />
           {comment && '辅助图形'}
         </Button>
       </Dropdown>
     </ButtonGroup>
-  )
+  );
 }
 export default Chart

@@ -1,7 +1,16 @@
 import React from 'react'
 import memoizeOne from 'memoize-one'
 
-import { Input, Select, Row, Col, Tree, Icon } from 'antd'
+import {
+  CalculatorOutlined,
+  CalendarOutlined,
+  DatabaseOutlined,
+  FontSizeOutlined,
+  KeyOutlined,
+  TableOutlined,
+} from '@ant-design/icons';
+
+import { Input, Select, Row, Col, Tree } from 'antd';
 import { AntTreeNode, AntTreeNodeSelectedEvent, AntTreeNodeExpandedEvent } from 'antd/lib/tree/Tree'
 const { Search } = Input
 const { Option } = Select
@@ -56,12 +65,12 @@ export class SourceTable extends React.Component<ISourceTableProps, ISourceTable
   private filterSource: SelectProps['filterOption'] = (input, option) =>
     (option.props.children as string).toLowerCase().includes(input.toLowerCase())
 
-  private iconDatabase = <Icon key="iconDatabase" title="数据库" type="database" />
-  private iconTable = <Icon key="iconTable" title="数据表" type="table" />
-  private iconDate = <Icon key="iconDate" title="日期" type="calendar" />
-  private iconKey = <Icon key="iconKey" title="主键" type="key" />
-  private iconText = <Icon key="iconText" title="文本" type="font-size" />
-  private iconValue = <Icon key="iconValue" title="数值" type="calculator" />
+  private iconDatabase = <DatabaseOutlined key="iconDatabase" title="数据库" />
+  private iconTable = <TableOutlined key="iconTable" title="数据表" />
+  private iconDate = <CalendarOutlined key="iconDate" title="日期" />
+  private iconKey = <KeyOutlined key="iconKey" title="主键" />
+  private iconText = <FontSizeOutlined key="iconText" title="文本" />
+  private iconValue = <CalculatorOutlined key="iconValue" title="数值" />
   private getColumnIcons (col: IColumn, primaryKeys: string[]) {
     const { type: sqlType, name } = col
     if (primaryKeys.includes(name)) { return this.iconKey }

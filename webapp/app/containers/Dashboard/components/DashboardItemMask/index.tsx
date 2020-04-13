@@ -1,6 +1,6 @@
 import React from 'react'
 import ChartTypes from 'containers/Widget/config/chart/ChartTypes'
-import { Icon } from 'antd'
+import { InboxOutlined, LoadingOutlined } from '@ant-design/icons';
 import styles from './style.less'
 
 export interface IDashboardItemMaskProps {
@@ -29,11 +29,11 @@ function Loading (props: IDashboardItemMaskProps) {
   return (
     <Mask {...props}>
       <div className={styles.mask}>
-        <Icon type="loading" />
+        <LoadingOutlined />
         <p>加载中…</p>
       </div>
     </Mask>
-  )
+  );
 }
 
 function Empty (props: IDashboardItemMaskProps) {
@@ -42,11 +42,11 @@ function Empty (props: IDashboardItemMaskProps) {
   return (
     <Mask {...props}>
       <div className={styles.mask}>
-        <Icon type="inbox" className={styles.emptyIcon} />
+        <InboxOutlined className={styles.emptyIcon} />
         <p>暂无数据</p>
       </div>
     </Mask>
-  )
+  );
 }
 
 const DashboardItemMask = { Loading, Empty }

@@ -21,8 +21,11 @@
 import * as React from 'react'
 import * as classnames from 'classnames'
 
-import { Form, Row, Col, Table, Input, InputNumber, Select, Steps } from 'antd'
-import { FormComponentProps } from 'antd/lib/form/Form'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Row, Col, Table, Input, InputNumber, Select, Steps } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form/Form';
 import { SortOrder } from 'antd/lib/table'
 const FormItem = Form.Item
 const Option = Select.Option

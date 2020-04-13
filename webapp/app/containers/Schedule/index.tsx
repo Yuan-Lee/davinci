@@ -38,16 +38,11 @@ import { initializePermission } from 'containers/Account/components/checkUtilPer
 
 import { useTablePagination } from 'utils/hooks'
 
-import {
-  Row,
-  Col,
-  Breadcrumb,
-  Table,
-  Icon,
-  Button,
-  Tooltip,
-  Popconfirm
-} from 'antd'
+import { BarsOutlined, InfoCircleOutlined } from '@ant-design/icons';
+
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+
+import { Row, Col, Breadcrumb, Table, Button, Tooltip, Popconfirm } from 'antd';
 import { ButtonProps } from 'antd/lib/button'
 import { ColumnProps } from 'antd/lib/table'
 import Container from 'components/Container'
@@ -97,14 +92,12 @@ const columns: Array<ColumnProps<ISchedule>> = [
       if (!record.execLog) {
         return name
       }
-      return (
-        <>
-          <span>{name}</span>
-          <Tooltip title={record.execLog}>
-            <Icon className={Styles.info} type="info-circle" />
-          </Tooltip>
-        </>
-      )
+      return <>
+        <span>{name}</span>
+        <Tooltip title={record.execLog}>
+          <InfoCircleOutlined className={Styles.info} />
+        </Tooltip>
+      </>;
     }
   },
   {
@@ -214,7 +207,7 @@ const ScheduleList: React.FC<ScheduleListProps> = (props) => {
         <span className="ant-table-action-column">
           <Tooltip title={JobStatusNextOperations[record.jobStatus]}>
             <Button
-              icon={JobStatusIcons[record.jobStatus]}
+              icon={<LegacyIcon type={JobStatusIcons[record.jobStatus]} />}
               shape="circle"
               type="ghost"
               onClick={changeJobStatus(record)}
@@ -260,7 +253,7 @@ const ScheduleList: React.FC<ScheduleListProps> = (props) => {
         <Box>
           <Box.Header>
             <Box.Title>
-              <Icon type="bars" />
+              <BarsOutlined />
               Schedule List
             </Box.Title>
             <Box.Tools>
@@ -286,7 +279,7 @@ const ScheduleList: React.FC<ScheduleListProps> = (props) => {
         </Box>
       </Container.Body>
     </Container>
-  )
+  );
 }
 
 const mapStateToProps = createStructuredSelector({

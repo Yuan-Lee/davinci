@@ -12,8 +12,9 @@ import {
   deserializeDefaultValue
 } from './util'
 import { FilterTypes } from './filterTypes'
-import { Form } from 'antd'
-import { WrappedFormUtils } from 'antd/lib/form/Form'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
 const FormItem = Form.Item
 
 const styles = require('./filter.less')

@@ -1,7 +1,8 @@
 import React from 'react'
 import classnames from 'classnames'
 import memoizeOne from 'memoize-one'
-import { Table, Tabs, Radio, Checkbox, Select, Row, Col, Button, Tag, Tooltip, Icon } from 'antd'
+import { InfoCircleOutlined } from '@ant-design/icons';
+import { Table, Tabs, Radio, Checkbox, Select, Row, Col, Button, Tag, Tooltip } from 'antd';
 const { Column } = Table
 const { TabPane } = Tabs
 const RadioGroup = Radio.Group
@@ -187,7 +188,7 @@ export class ModelAuth extends React.PureComponent<IModelAuthProps, IModelAuthSt
           {roleName}
           {record.roleDesc && (
             <Tooltip title={record.roleDesc}>
-              <Icon className={Styles.cellIcon} type="info-circle" />
+              <InfoCircleOutlined className={Styles.cellIcon} />
             </Tooltip>
           )}
         </span>

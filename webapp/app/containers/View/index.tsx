@@ -41,7 +41,9 @@ import { makeSelectCurrentProject } from 'containers/Projects/selectors'
 import ModulePermission from '../Account/components/checkModulePermission'
 import { initializePermission } from '../Account/components/checkUtilPermission'
 
-import { Table, Tooltip, Button, Row, Col, Breadcrumb, Icon, Popconfirm, message } from 'antd'
+import { BarsOutlined } from '@ant-design/icons';
+
+import { Table, Tooltip, Button, Row, Col, Breadcrumb, Popconfirm, message } from 'antd';
 import { ColumnProps, PaginationConfig, SorterResult } from 'antd/lib/table'
 import { ButtonProps } from 'antd/lib/button'
 import Container from 'components/Container'
@@ -284,62 +286,60 @@ export class ViewList extends React.PureComponent<IViewListProps, IViewListState
 
     const { copyModalVisible, copyFromView } = this.state
 
-    return (
-      <>
-        <Container>
-          <Helmet title="View" />
-          <Container.Title>
-            <Row>
-              <Col span={24}>
-                <Breadcrumb className={utilStyles.breadcrumb}>
-                  <Breadcrumb.Item>
-                    <Link to="">View</Link>
-                  </Breadcrumb.Item>
-                </Breadcrumb>
-              </Col>
-            </Row>
-          </Container.Title>
-          <Container.Body>
-            <Box>
-              <Box.Header>
-                <Box.Title>
-                  <Icon type="bars" />
-                  View List
-                </Box.Title>
-                <Box.Tools>
-                  <Tooltip placement="bottom" title="新增">
-                    <AdminButton type="primary" icon="plus" onClick={this.addView} />
-                  </Tooltip>
-                </Box.Tools>
-              </Box.Header>
-              <Box.Body>
-                <Row>
-                  <Col span={24}>
-                    <Table
-                      bordered
-                      rowKey="id"
-                      loading={loading.view}
-                      dataSource={filterViews}
-                      columns={tableColumns}
-                      pagination={tablePagination}
-                      onChange={this.tableChange}
-                    />
-                  </Col>
-                </Row>
-              </Box.Body>
-            </Box>
-          </Container.Body>
-        </Container>
-        <CopyModal
-          visible={copyModalVisible}
-          loading={loading.copy}
-          fromView={copyFromView}
-          onCheckUniqueName={this.checkViewUniqueName}
-          onCopy={this.copy}
-          onCancel={this.cancelCopy}
-        />
-      </>
-    )
+    return <>
+      <Container>
+        <Helmet title="View" />
+        <Container.Title>
+          <Row>
+            <Col span={24}>
+              <Breadcrumb className={utilStyles.breadcrumb}>
+                <Breadcrumb.Item>
+                  <Link to="">View</Link>
+                </Breadcrumb.Item>
+              </Breadcrumb>
+            </Col>
+          </Row>
+        </Container.Title>
+        <Container.Body>
+          <Box>
+            <Box.Header>
+              <Box.Title>
+                <BarsOutlined />
+                View List
+              </Box.Title>
+              <Box.Tools>
+                <Tooltip placement="bottom" title="新增">
+                  <AdminButton type="primary" icon="plus" onClick={this.addView} />
+                </Tooltip>
+              </Box.Tools>
+            </Box.Header>
+            <Box.Body>
+              <Row>
+                <Col span={24}>
+                  <Table
+                    bordered
+                    rowKey="id"
+                    loading={loading.view}
+                    dataSource={filterViews}
+                    columns={tableColumns}
+                    pagination={tablePagination}
+                    onChange={this.tableChange}
+                  />
+                </Col>
+              </Row>
+            </Box.Body>
+          </Box>
+        </Container.Body>
+      </Container>
+      <CopyModal
+        visible={copyModalVisible}
+        loading={loading.copy}
+        fromView={copyFromView}
+        onCheckUniqueName={this.checkViewUniqueName}
+        onCopy={this.copy}
+        onCancel={this.cancelCopy}
+      />
+    </>;
   }
 
 }

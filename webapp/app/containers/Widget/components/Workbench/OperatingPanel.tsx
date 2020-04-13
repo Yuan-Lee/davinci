@@ -44,7 +44,30 @@ import PivotTypes from '../../config/pivot/PivotTypes'
 import { uuid } from 'utils/util'
 
 import { RadioChangeEvent } from 'antd/lib/radio'
-import { Row, Col, Icon, Menu, Radio, InputNumber, Dropdown, Modal, Popconfirm, Checkbox, notification, Tooltip, Select } from 'antd'
+
+import {
+  CaretRightOutlined,
+  EditOutlined,
+  EllipsisOutlined,
+  RetweetOutlined,
+  StopOutlined,
+  SwapOutlined,
+} from '@ant-design/icons';
+
+import {
+  Row,
+  Col,
+  Menu,
+  Radio,
+  InputNumber,
+  Dropdown,
+  Modal,
+  Popconfirm,
+  Checkbox,
+  notification,
+  Tooltip,
+  Select,
+} from 'antd';
 import { IDistinctValueReqeustParams } from 'app/components/Filters/types'
 import { WorkbenchQueryMode } from './types'
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'
@@ -312,16 +335,16 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
 
       const mergedDataParams = {
         ...dataParams,
-        ...color && {color},
-        ...label && {label},
-        ...size && {size},
-        ...xAxis && {xAxis},
-        ...tip && {tip}
+        ...(color && {color}),
+        ...(label && {label}),
+        ...(size && {size}),
+        ...(xAxis && {xAxis}),
+        ...(tip && {tip})
       }
       this.setState({
         mode: mode || 'pivot', // FIXME 兼容 0.3.0-beta.1 之前版本
         currentWidgetlibs,
-        ...selectedChart && {chartModeSelectedChart: widgetlibs['chart'].find((wl) => wl.id === selectedChart)},
+        ...(selectedChart && {chartModeSelectedChart: widgetlibs['chart'].find((wl) => wl.id === selectedChart)}),
         dataParams: mergedDataParams,
         styleParams: chartStyles,
         showColsAndRows: !!rows.length
@@ -366,7 +389,7 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
           }
           dataConfig[key] = {
             ...prop,
-            ...value && {value},
+            ...(value && {value}),
             items: dataParams[key] ? dataParams[key].items : []
           }
         }
@@ -1018,7 +1041,7 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
             field: item.field || getDefaultFieldConfig(),
             format: item.format || getDefaultFieldFormatConfig()
           })),
-          ...secondaryMetrics && {
+          ...(secondaryMetrics && {
             secondaryMetrics: secondaryMetrics.items.map((item) => ({
               ...item,
               agg: item.agg || 'sum',
@@ -1026,14 +1049,14 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
               field: item.field || getDefaultFieldConfig(),
               format: item.format || getDefaultFieldFormatConfig()
             }))
-          },
+          }),
           filters: filters.items.map(({name, type, config}) => ({ name, type, config })),
-          ...color && {color},
-          ...label && {label},
-          ...size && {size},
-          ...xAxis && {xAxis},
-          ...tip && {tip},
-          ...yAxis && {yAxis},
+          ...(color && {color}),
+          ...(label && {label}),
+          ...(size && {size}),
+          ...(xAxis && {xAxis}),
+          ...(tip && {tip}),
+          ...(yAxis && {yAxis}),
           chartStyles: mergedStyleParams,
           selectedChart: mode === 'pivot' ? chartModeSelectedChart.id : selectedCharts[0].id,
           data,
@@ -1089,7 +1112,7 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
           field: item.field || getDefaultFieldConfig(),
           format: item.format || getDefaultFieldFormatConfig()
         })),
-        ...secondaryMetrics && {
+        ...(secondaryMetrics && {
           secondaryMetrics: secondaryMetrics.items.map((item) => ({
             ...item,
             agg: item.agg || 'sum',
@@ -1097,14 +1120,14 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
             field: item.field || getDefaultFieldConfig(),
             format: item.format || getDefaultFieldFormatConfig()
           }))
-        },
+        }),
         filters: filters.items.map(({name, type, config}) => ({ name, type, config })),
-        ...color && {color},
-        ...label && {label},
-        ...size && {size},
-        ...xAxis && {xAxis},
-        ...tip && {tip},
-        ...yAxis && {yAxis},
+        ...(color && {color}),
+        ...(label && {label}),
+        ...(size && {size}),
+        ...(xAxis && {xAxis}),
+        ...(tip && {tip}),
+        ...(yAxis && {yAxis}),
         chartStyles: mergedStyleParams,
         selectedChart: mode === 'pivot' ? chartModeSelectedChart.id : selectedCharts[0].id,
         pagination: updatedPagination,
@@ -1491,10 +1514,10 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
     return (
       <span className={styles.more}>
         <Dropdown overlay={columnMenu} placement="bottomRight" trigger={['click']}>
-          <Icon type="ellipsis" />
+          <EllipsisOutlined />
         </Dropdown>
       </span>
-    )
+    );
   }
 
   public render () {
@@ -1659,11 +1682,11 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
         tabPane = (
           <div className={`${styles.paramsPane} ${styles.dropPane}`}>
             <div className={rowsColsToggleClass} onClick={this.toggleRowsAndCols}>
-              <Icon type="swap" />
+              <SwapOutlined />
               {showColsAndRows ? ' 使用维度' : ' 使用行列'}
             </div>
             <div className={rowsColsSwitchClass} onClick={this.switchRowsAndCols}>
-              <Icon type="retweet" /> 行列切换
+              <RetweetOutlined /> 行列切换
             </div>
             {dropboxes}
           </div>
@@ -1810,7 +1833,7 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
                         className={styles.addVariable}
                         onClick={this.showControlConfig}
                       >
-                        <Icon type="edit" /> 点击配置
+                        <EditOutlined /> 点击配置
                       </span>
                     </h4>
                   </div>
@@ -1823,7 +1846,7 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
                       align="middle"
                       className={`${styles.blockRow} ${styles.noVariable}`}
                     >
-                      <Icon type="stop" /> 没有变量可以设置
+                      <StopOutlined /> 没有变量可以设置
                     </Row>
                   </div>
             }
@@ -2045,7 +2068,7 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
           {
             queryMode === WorkbenchQueryMode.Manually && (
               <div className={styles.manualQuery} onClick={this.forceSetWidgetProps}>
-                <Icon type="caret-right" />查询
+                <CaretRightOutlined />查询
               </div>
             )
           }
@@ -2177,7 +2200,7 @@ export class OperatingPanel extends React.Component<IOperatingPanelProps, IOpera
           />
         </Modal>
       </div>
-    )
+    );
   }
 }
 

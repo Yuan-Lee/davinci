@@ -1,7 +1,10 @@
 import * as React from 'react'
 
-import { Input, Button, Form, Modal } from 'antd'
-import { FormComponentProps } from 'antd/lib/form'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Input, Button, Modal } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 const FormItem = Form.Item
 import { IQueryVariableMap } from 'app/containers/Dashboard/Grid'
 

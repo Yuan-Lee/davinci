@@ -20,9 +20,12 @@
 
 import React, { PureComponent } from 'react'
 
-import { Form, Modal, Row, Col, Radio, Button } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Modal, Row, Col, Radio, Button } from 'antd';
 import { IWorkbenchSettings, WorkbenchQueryMode } from './types'
-import { FormComponentProps } from 'antd/lib/form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
 

@@ -26,7 +26,8 @@ import { IChartStyles, IPaginationParams } from '../../Widget'
 import { ITableHeaderConfig } from 'containers/Widget/components/Config/Table'
 
 import { ResizeCallbackData } from 'libs/react-resizable'
-import { Table as AntTable, Tooltip, Icon } from 'antd'
+import { InfoCircleOutlined } from '@ant-design/icons'
+import { Table as AntTable, Tooltip } from 'antd'
 import { TableProps, ColumnProps, SorterResult } from 'antd/lib/table'
 import { PaginationConfig } from 'antd/lib/pagination/Pagination'
 import PaginationWithoutTotal from 'components/PaginationWithoutTotal'
@@ -145,7 +146,6 @@ export class Table extends React.PureComponent<IChartProps, ITableStates> {
   }
 
   private adjustTableCell (headerFixed: boolean, withPaging: boolean, dataTotal?: number) {
-    const tableDom = findDOMNode(this.table.current) as Element
     const excludeElems = []
     let paginationMargin = 0
     let paginationWithoutTotalHeight = 0
@@ -161,7 +161,7 @@ export class Table extends React.PureComponent<IChartProps, ITableStates> {
       }
     }
     const excludeElemsHeight = excludeElems.reduce((acc, exp) => {
-      const elem = tableDom.querySelector(exp)
+      const elem = document.querySelector(exp)
       return acc + (elem ? elem.getBoundingClientRect().height : 0)
     }, paginationMargin)
     const tableBodyHeight = this.props.height - excludeElemsHeight - paginationWithoutTotalHeight
@@ -351,7 +351,7 @@ export class Table extends React.PureComponent<IChartProps, ITableStates> {
           style={style}
           className={tableCls}
           ref={this.table}
-          size={size}
+          sizeType={size}
           dataSource={data}
           rowKey={this.getRowKey}
           components={tableComponents}
@@ -360,7 +360,13 @@ export class Table extends React.PureComponent<IChartProps, ITableStates> {
           scroll={scroll}
           bordered={bordered}
           rowClassName={this.setRowClassName}
-          onRowClick={this.rowClick}
+          onRow={(record, index) => {/* tslint:disable-next-line:jsx-no-lambda */
+            return {
+              onClick: (event) => {
+                this.rowClick(record, index, event)
+              }
+            }
+          }}
           onChange={this.tableChange}
         />
         {paginationWithoutTotal}
@@ -400,7 +406,7 @@ function getTableColumns (props: IChartProps) {
             title={field.desc}
             placement="top"
           >
-            <Icon className={Styles.headerIcon} type="info-circle" />
+            <InfoCircleOutlined className={Styles.headerIcon} />
           </Tooltip>
         </>
       ) : headerText,
@@ -458,7 +464,7 @@ function getTableColumns (props: IChartProps) {
             title={field.desc}
             placement="top"
           >
-            <Icon className={Styles.headerIcon} type="info-circle" />
+            <InfoCircleOutlined className={Styles.headerIcon} />
           </Tooltip>
         </>
       ) : headerText,

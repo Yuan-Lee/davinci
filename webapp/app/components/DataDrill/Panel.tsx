@@ -19,7 +19,8 @@
  */
 
 import * as React from 'react'
-import { Menu, Icon } from 'antd'
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Menu } from 'antd';
 import { getPivot } from 'containers/Widget/components/util'
 const styles = require('./datadrill.less')
 export interface IDataDrillProps {
@@ -138,7 +139,7 @@ export function DataDrill (props: IDataDrillProps) {
             <Menu.Item key={col.name}>
               <span className={styles.items}>
                 <span>{col.name}</span>
-                <span><Icon type={`${col.drillType === 'up' ? 'arrow-up' : 'arrow-down'}`} /></span>
+                <span><LegacyIcon type={`${col.drillType === 'up' ? 'arrow-up' : 'arrow-down'}`} /></span>
               </span>
             </Menu.Item>)
             : ''}

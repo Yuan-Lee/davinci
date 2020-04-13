@@ -7,7 +7,7 @@ import loginStyles from 'containers/Login/Login.less'
 
 import { login } from 'share/containers/App/actions'
 
-import { Icon } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons';
 
 interface ILoginProps {
   loginLoading?: boolean
@@ -74,14 +74,14 @@ class Login extends React.PureComponent<ILoginProps, ILoginStates> {
           >
             {
               loginLoading
-                ? <Icon type="loading" />
+                ? <LoadingOutlined />
                 : ''
             }
             登 录
           </button>
         </div>
       </div>
-    )
+    );
   }
 }
 

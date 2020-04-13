@@ -20,20 +20,14 @@
 
 import React, { useCallback } from 'react'
 
-import {
-  Modal,
-  Tabs,
-  Form,
-  Input,
-  Select,
-  TreeSelect,
-  Radio,
-  Checkbox
-} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Modal, Tabs, Input, Select, TreeSelect, Radio, Checkbox } from 'antd';
 const FormItem = Form.Item
 const { TreeNode } = TreeSelect
 const RadioGroup = Radio.Group
-import { FormComponentProps } from 'antd/lib/form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 
 import useDashboardTreeNodes from '../hooks/dashboardTreeNodes'
 

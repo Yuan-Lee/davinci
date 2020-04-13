@@ -20,7 +20,9 @@
 
 import React, { PureComponent } from 'react'
 import classnames from 'classnames'
-import { Form, Row, Col, Checkbox, Select, Radio, Empty } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row, Col, Checkbox, Select, Radio, Empty } from 'antd';
 import { InteractionType, IControlRelatedField } from '../types'
 import { RadioChangeEvent } from 'antd/lib/radio'
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'

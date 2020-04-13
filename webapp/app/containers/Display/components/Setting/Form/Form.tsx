@@ -21,8 +21,9 @@
 import React, { useImperativeHandle, forwardRef } from 'react'
 import debounce from 'lodash/debounce'
 
-import { Form } from 'antd'
-import { FormComponentProps } from 'antd/lib/form'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import ItemGroup from './ItemGroup'
 
 import { SlideLayerSetting } from './types'

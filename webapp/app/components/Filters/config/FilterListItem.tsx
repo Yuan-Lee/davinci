@@ -1,6 +1,7 @@
 import React, { PureComponent, createRef, RefObject } from 'react'
 import classnames from 'classnames'
-import { Icon, Input, message } from 'antd'
+import { CheckOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Input, message } from 'antd';
 const styles = require('../filter.less')
 
 interface IFilterListItemProps {
@@ -96,23 +97,11 @@ class FilterListItem extends PureComponent<IFilterListItemProps, IFilterListItem
           onChange={this.inputValueChange}
           ref={this.input}
         />
-        <Icon
-          className={styles.confirm}
-          type="check"
-          onClick={this.editFinish}
-        />
-        <Icon
-          type="edit"
-          className={styles.action}
-          onClick={this.editStart}
-        />
-        <Icon
-          type="delete"
-          className={styles.action}
-          onClick={onDelete}
-        />
+        <CheckOutlined className={styles.confirm} onClick={this.editFinish} />
+        <EditOutlined className={styles.action} onClick={this.editStart} />
+        <DeleteOutlined className={styles.action} onClick={onDelete} />
       </div>
-    )
+    );
   }
 }
 

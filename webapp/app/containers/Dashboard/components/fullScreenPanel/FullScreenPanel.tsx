@@ -21,7 +21,9 @@
 import React, { useState, useRef, useMemo, useCallback, useEffect } from 'react'
 const Memo = React.memo
 import classnames from 'classnames'
-import { Icon, Menu } from 'antd'
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { FilterOutlined, FullscreenExitOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
 const styles = require('./fullScreenPanel.less')
 import Widget from 'containers/Widget/components/Widget'
 import GlobalControlPanel from 'components/Filters/FilterPanel'
@@ -418,15 +420,15 @@ const FullScreenPanel: React.FC<IFullScreenPanelProps> = Memo(
         <div className={styles.container}>
           <nav className={styles.header}>
             <div className={styles.logo}>
-              <Icon type={ show ? 'menu-fold' : 'menu-unfold'} onClick={isShow} style={{marginRight: '32px'}} />
+              <LegacyIcon type={ show ? 'menu-fold' : 'menu-unfold'} onClick={isShow} style={{marginRight: '32px'}} />
               <span>{title}</span>
             </div>
             <ul className={styles.tools}>
               <li onClick={toggleControl} className={controlClass}>
-                <Icon type="filter" /><span>控制器</span>
+                <FilterOutlined /><span>控制器</span>
               </li>
               <li onClick={hide}>
-                <Icon type="fullscreen-exit" /><span>退出全屏</span>
+                <FullscreenExitOutlined /><span>退出全屏</span>
               </li>
             </ul>
           </nav>    
@@ -468,7 +470,7 @@ const FullScreenPanel: React.FC<IFullScreenPanelProps> = Memo(
           </div> 
         </div>
       </div>
-    )
+    );
   }
 )
 

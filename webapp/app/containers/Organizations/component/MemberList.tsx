@@ -1,5 +1,5 @@
 import React from 'react'
-import { WrappedFormUtils } from 'antd/lib/form/Form'
+import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
 import { Row, Col, Tooltip, Button, Input, Popconfirm, Modal, Table } from 'antd'
 const styles = require('../Organization.less')
 const utilStyles = require('assets/less/util.less')

@@ -1,8 +1,10 @@
 import * as React from 'react'
 import * as classnames from 'classnames'
 import { connect } from 'react-redux'
-import { Row, Col, Tooltip, Popconfirm, Icon, Modal, Button, Pagination } from 'antd'
-import { WrappedFormUtils } from 'antd/lib/form/Form'
+import { BarsOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import { Icon } from '@ant-design/compatible'
+import { Row, Col, Tooltip, Popconfirm, Modal, Button, Pagination } from 'antd'
+import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form'
 const styles = require('../Organizations/Project.less')
 
 import { ProjectActions } from './actions'
@@ -403,7 +405,7 @@ export class Projects extends React.PureComponent<IProjectsProps & RouteComponen
               >
                 <div className={styles.createNewWrapper}>
                   <div className={styles.createIcon}>
-                    <Icon type="plus-circle-o" />
+                    <PlusCircleOutlined />
                   </div>
                   <div className={styles.createText}>
                     创建新项目
@@ -859,7 +861,7 @@ export class Projects extends React.PureComponent<IProjectsProps & RouteComponen
               <Box.Title>
                 <Row>
                   <Col span={20}>
-                    <Icon type="bars" />搜索到的项目
+                    <BarsOutlined style={{ fontSize: '100px' }}/>搜索到的项目
                   </Col>
                 </Row>
               </Box.Title>
@@ -959,7 +961,7 @@ export class Projects extends React.PureComponent<IProjectsProps & RouteComponen
                     <Box.Title>
                       <Row>
                         <Col span={20}>
-                          <Icon type="bars" />浏览历史
+                          <BarsOutlined />浏览历史
                         </Col>
                       </Row>
                     </Box.Title>

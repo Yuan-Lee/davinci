@@ -21,7 +21,9 @@
 import React from 'react'
 import classnames from 'classnames'
 
-import { Radio, Select, Button, Icon, message } from 'antd'
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+
+import { Radio, Select, Button, message } from 'antd';
 const RadioGroup = Radio.Group
 const Option = Select.Option
 
@@ -332,76 +334,76 @@ export class DrillPathSetting extends React.PureComponent<IDrillPathSettingProps
       )})
       const relationOptions = this.generateFilterOperatorOptions(node.outType)
       return (
-      <div key={`pathnodes${index}`} className={styles.pathNodeWrap}>
-         <div className={styles.pathNode}>
-          <div className={styles.pathBox}>
-            <p className={styles.delete}>
-              {this.state.pathNodes.length > 1 ? <Icon type="delete" onClick={this.remove(index)}/> : null}
-            </p>
-            <h4 className={styles.title}>
-              {index + 1}
-            </h4>
-            <div
-              style={{...formItemStyle}}
-            >
-              <Select
-                defaultValue={`${node['widget']}`}
-                placeholder="初始widget"
-                style={{width: '100%'}}
-                onChange={this.changeWidget(index)}
+        <div key={`pathnodes${index}`} className={styles.pathNodeWrap}>
+           <div className={styles.pathNode}>
+            <div className={styles.pathBox}>
+              <p className={styles.delete}>
+                {this.state.pathNodes.length > 1 ? <DeleteOutlined onClick={this.remove(index)} /> : null}
+              </p>
+              <h4 className={styles.title}>
+                {index + 1}
+              </h4>
+              <div
+                style={{...formItemStyle}}
               >
-                {widgetOptions}
-              </Select>
-            </div>
-            <div
-              style={{...formItemStyle}}
-            >
-              <Select
-                placeholder="入参"
-                style={{width: '100%'}}
-                disabled={index === 0}
-                defaultValue={node.enter}
-                onChange={this.changeParams(index, 'enter', node.views)}
+                <Select
+                  defaultValue={`${node['widget']}`}
+                  placeholder="初始widget"
+                  style={{width: '100%'}}
+                  onChange={this.changeWidget(index)}
+                >
+                  {widgetOptions}
+                </Select>
+              </div>
+              <div
+                style={{...formItemStyle}}
               >
-                {paramOptions}
-              </Select>
-            </div>
-            <div className={styles.errorMessage}>
-              {node.enterErrorMessage && node.enterErrorMessage.length ? node.enterErrorMessage : ''}
-            </div>
-            <div
-              style={{...formItemStyle}}
-            >
-              <Select
-                placeholder="出参"
-                style={{width: '100%'}}
-                defaultValue={node.out}
-                disabled={pathNodes.length > 0 && index === (pathNodes.length - 1)}
-                onChange={this.changeParams(index, 'out', node.views)}
+                <Select
+                  placeholder="入参"
+                  style={{width: '100%'}}
+                  disabled={index === 0}
+                  defaultValue={node.enter}
+                  onChange={this.changeParams(index, 'enter', node.views)}
+                >
+                  {paramOptions}
+                </Select>
+              </div>
+              <div className={styles.errorMessage}>
+                {node.enterErrorMessage && node.enterErrorMessage.length ? node.enterErrorMessage : ''}
+              </div>
+              <div
+                style={{...formItemStyle}}
               >
-                {paramOptions}
-              </Select>
+                <Select
+                  placeholder="出参"
+                  style={{width: '100%'}}
+                  defaultValue={node.out}
+                  disabled={pathNodes.length > 0 && index === (pathNodes.length - 1)}
+                  onChange={this.changeParams(index, 'out', node.views)}
+                >
+                  {paramOptions}
+                </Select>
+              </div>
+              <div className={styles.errorMessage}>
+                {node.outErrorMessage && node.outErrorMessage.length ? node.outErrorMessage : ''}
+              </div>
             </div>
-            <div className={styles.errorMessage}>
-              {node.outErrorMessage && node.outErrorMessage.length ? node.outErrorMessage : ''}
-            </div>
-          </div>
-          <div className={styles.relation}>
-            <div
-              style={{margin: '0px'}}
-            >
-              <Select
-                defaultValue={`=`}
-                style={{width: '60px'}}
-                onChange={this.changeParams(index, 'nextRelation')}
+            <div className={styles.relation}>
+              <div
+                style={{margin: '0px'}}
               >
-                {relationOptions}
-              </Select>
+                <Select
+                  defaultValue={`=`}
+                  style={{width: '60px'}}
+                  onChange={this.changeParams(index, 'nextRelation')}
+                >
+                  {relationOptions}
+                </Select>
+              </div>
             </div>
-          </div>
-          </div>
-      </div>
-    )})
+            </div>
+        </div>
+      );})
     const pathStyle = classnames({
       [utilStyles.hide]: this.state.pathOrFree !== 'path'
     })
@@ -419,7 +421,7 @@ export class DrillPathSetting extends React.PureComponent<IDrillPathSettingProps
             {pathDrill}
             <div className={styles.add}>
               <Button type="dashed" onClick={this.add} style={{ width: '60px', height: '60px' }}>
-                <Icon type="plus"/>
+                <PlusOutlined />
               </Button>
             </div>
           </div>
@@ -432,7 +434,7 @@ export class DrillPathSetting extends React.PureComponent<IDrillPathSettingProps
             {drillSettingButtons}
           </div>
       </div>
-    )
+    );
   }
 }
 

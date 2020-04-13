@@ -21,8 +21,9 @@
 import React, { useState, useMemo, useCallback } from 'react'
 import { Table, Popconfirm, Button } from 'antd'
 import { TableComponents } from 'antd/lib/table'
-import { FormComponentProps } from 'antd/lib/form'
-import Form, { WrappedFormUtils } from 'antd/lib/form/Form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
+import Form from 'antd/lib/form/Form';
 import EditableCell from './Cell'
 import { IEditableColumnProps } from './types'
 import { EditableContext } from './util'

@@ -20,9 +20,12 @@
 
 import * as React from 'react'
 
-import { Form, Row, Col, Input, Radio, Select, Tabs, Checkbox} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Row, Col, Input, Radio, Select, Tabs, Checkbox } from 'antd';
 import { IExludeRoles } from 'containers/Viz/components/PortalList'
-import { FormComponentProps } from 'antd/lib/form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 const styles = require('containers/Viz/Viz.less')
 const TabPane = Tabs.TabPane
 const Option = Select.Option

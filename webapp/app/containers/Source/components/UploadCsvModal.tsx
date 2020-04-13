@@ -22,11 +22,16 @@ import React from 'react'
 import classnames from 'classnames'
 import { ICSVMetaInfo } from '../types'
 
-import { Modal, Form, Row, Col, Input, Radio, Upload, Icon, Popover, Button, Steps } from 'antd'
+import { QuestionCircleOutlined, UploadOutlined } from '@ant-design/icons';
+
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Modal, Row, Col, Input, Radio, Upload, Popover, Button, Steps } from 'antd';
 const RadioGroup = Radio.Group
 const Step = Steps.Step
 const FormItem = Form.Item
-import { FormComponentProps } from 'antd/lib/form/Form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form/Form';
 import { UploadProps } from 'antd/lib/upload/Upload'
 
 const styles = require('../Source.less')
@@ -189,7 +194,7 @@ export class UploadCsvForm extends React.PureComponent<IUploadCsvFormProps & For
                     <p>首次上传文件到新表请选择"新增"</p>
                   }
                 >
-                  <Icon type="question-circle-o" />
+                  <QuestionCircleOutlined />
                 </Popover>
               </FormItem>
             </Col>
@@ -202,7 +207,7 @@ export class UploadCsvForm extends React.PureComponent<IUploadCsvFormProps & For
               >
                 <Upload {...uploadProps} >
                   <Button>
-                    <Icon type="upload" />Click to Upload CSV
+                    <UploadOutlined />Click to Upload CSV
                   </Button>
                 </Upload>
               </FormItem>
@@ -210,7 +215,7 @@ export class UploadCsvForm extends React.PureComponent<IUploadCsvFormProps & For
           </Row>
         </Form>
       </Modal>
-    )
+    );
   }
 }
 

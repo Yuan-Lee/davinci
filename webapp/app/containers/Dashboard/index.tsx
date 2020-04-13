@@ -39,7 +39,8 @@ import viewSaga from '../View/sagas'
 import DashboardForm from './components/DashboardForm'
 import DashboardAction from './components/DashboardAction'
 
-import { Button, Icon, Tooltip, Popover, Modal, Input, Tree } from 'antd'
+import Icon, { EllipsisOutlined, SearchOutlined, SmileOutlined } from '@ant-design/icons'
+import { Button, Tooltip, Popover, Modal, Input, Tree } from 'antd'
 const TreeNode = Tree.TreeNode
 
 import { IconProps } from 'antd/lib/icon/index'
@@ -749,12 +750,12 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
 
       if (item.type === 0) {
         return (
-          <TreeNode icon={<Icon type="smile-o" />} key={item.id} title={dashboardAction} >
+          <TreeNode icon={<SmileOutlined />} key={item.id} title={dashboardAction} >
             {loop(item.children, depth + 1)}
           </TreeNode>
         )
       }
-      return <TreeNode icon={<Icon type="smile-o" />} key={item.id} title={dashboardAction} />
+      return <TreeNode icon={<SmileOutlined />} key={item.id} title={dashboardAction} />
     })
 
     const AdminIcon = ModulePermission<IconProps>(currentProject, 'viz', true)(Icon)
@@ -804,10 +805,7 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
                       onVisibleChange={this.searchVisibleChange}
                     >
                       <Tooltip placement="top" title="搜索">
-                        <Icon
-                          type="search"
-                          className={styles.search}
-                        />
+                        <SearchOutlined className={styles.search} />
                       </Tooltip>
                     </Popover>
                     <Tooltip placement="top" title="新增">
@@ -827,10 +825,7 @@ export class Dashboard extends React.Component<IDashboardProps & RouteComponentW
                       trigger="click"
                     >
                       <Tooltip placement="top" title="更多">
-                        <Icon
-                          type="ellipsis"
-                          className={styles.more}
-                        />
+                        <EllipsisOutlined className={styles.more} />
                       </Tooltip>
                     </Popover>
                   </span>

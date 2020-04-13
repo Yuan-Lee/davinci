@@ -4,7 +4,15 @@ import { uuid } from 'utils/util'
 import { fontWeightOptions, fontStyleOptions, fontFamilyOptions, fontSizeOptions, DefaultTableCellStyle } from '../constants'
 import { ITableHeaderConfig } from './types'
 
-import { Icon, Row, Col, Modal, Input, Button, Radio, Select, Table, message, Tooltip } from 'antd'
+import {
+  ArrowDownOutlined,
+  ArrowUpOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  InfoCircleOutlined,
+} from '@ant-design/icons';
+
+import { Row, Col, Modal, Input, Button, Radio, Select, Table, message, Tooltip } from 'antd';
 const ButtonGroup = Button.Group
 const RadioGroup = Radio.Group
 const RadioButton = Radio.Button
@@ -288,10 +296,10 @@ class HeaderConfigModal extends React.PureComponent<IHeaderConfigModalProps, IHe
         return isGroup ? (
           <span className={styles.tableEditCell}>
             <label>{alias || headerName}</label>
-            <Icon type="edit" onClick={this.editHeaderName(key)} />
-            <Icon type="delete" onClick={this.deleteHeader(key)} />
+            <EditOutlined onClick={this.editHeaderName(key)} />
+            <DeleteOutlined onClick={this.deleteHeader(key)} />
           </span>
-        ) : (<label>{alias || headerName}</label>)
+        ) : (<label>{alias || headerName}</label>);
       }
       const { headerName: currentEditingHeaderName } = currentEditingConfig
       return (
@@ -469,8 +477,8 @@ class HeaderConfigModal extends React.PureComponent<IHeaderConfigModalProps, IHe
             <Col span={19}>
               <Row gutter={8} type="flex" justify="end" align="middle">
                 <ButtonGroup>
-                  <Button onClick={this.moveUp}><Icon type="arrow-up" />上移</Button>
-                  <Button onClick={this.moveDown}>下移<Icon type="arrow-down" /></Button>
+                  <Button onClick={this.moveUp}><ArrowUpOutlined />上移</Button>
+                  <Button onClick={this.moveDown}>下移<ArrowDownOutlined /></Button>
                 </ButtonGroup>
               </Row>
             </Col>
@@ -479,7 +487,7 @@ class HeaderConfigModal extends React.PureComponent<IHeaderConfigModalProps, IHe
                 <Tooltip
                   title="表格数据列请在外部拖拽以更改顺序"
                 >
-                  <Icon type="info-circle" />
+                  <InfoCircleOutlined />
                 </Tooltip>
               </Row>
             </Col>
@@ -499,7 +507,7 @@ class HeaderConfigModal extends React.PureComponent<IHeaderConfigModalProps, IHe
           </Row>
         </div>
       </Modal>
-    )
+    );
   }
 }
 

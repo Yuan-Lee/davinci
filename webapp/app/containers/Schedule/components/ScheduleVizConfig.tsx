@@ -21,7 +21,10 @@
 import React, { useMemo, useCallback } from 'react'
 import { IPortal, IDisplayFormed } from 'containers/Viz/types'
 
-import { Row, Col, Card, Tree, Checkbox, Button, Icon, Popconfirm } from 'antd'
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { LayoutOutlined } from '@ant-design/icons';
+
+import { Row, Col, Card, Tree, Checkbox, Button, Popconfirm } from 'antd';
 const CheckboxGroup = Checkbox.Group
 const { TreeNode } = Tree
 import { CheckboxOptionType } from 'antd/lib/checkbox'
@@ -64,7 +67,7 @@ const getDashboardChildNodes = (
       <TreeNode
         title={child.name}
         icon={
-          <Icon type={mapDashboards[child.id] ? 'folder-open' : 'dot-chart'} />
+          <LegacyIcon type={mapDashboards[child.id] ? 'folder-open' : 'dot-chart'} />
         }
         key={`${dashboardNodeKeyPrefix}${child.id}`}
         isLeaf={!childNodes}
@@ -72,7 +75,7 @@ const getDashboardChildNodes = (
       >
         {childNodes}
       </TreeNode>
-    )
+    );
   })
   return [descendantNodes, descendantIds]
 }
@@ -260,7 +263,7 @@ const ScheduleVizConfig: React.FC<IScheduleVizConfigProps> = (props) => {
             {(portals || []).map(({ id, name }) => (
               <TreeNode
                 title={name}
-                icon={<Icon type="layout" />}
+                icon={<LayoutOutlined />}
                 key={`${portalNodeKeyPrefix}${id}`}
                 isLeaf={false}
               >
@@ -284,7 +287,7 @@ const ScheduleVizConfig: React.FC<IScheduleVizConfigProps> = (props) => {
         </Card>
       </Col>
     </Row>
-  )
+  );
 }
 
 export default ScheduleVizConfig

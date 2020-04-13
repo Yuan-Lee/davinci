@@ -30,16 +30,8 @@ import { WidgetActions } from './actions'
 
 import Helmet from 'react-helmet'
 import { Link } from 'react-router-dom'
-import {
-  Row,
-  Col,
-  Breadcrumb,
-  Icon,
-  Button,
-  Table,
-  Tooltip,
-  Popconfirm
-} from 'antd'
+import { BarsOutlined } from '@ant-design/icons';
+import { Row, Col, Breadcrumb, Button, Table, Tooltip, Popconfirm } from 'antd';
 import { ButtonProps } from 'antd/lib/button'
 import { ColumnProps, SorterResult } from 'antd/lib/table'
 import Container from 'components/Container'
@@ -259,66 +251,64 @@ const WidgetList: React.FC<RouteComponentWithParams> = (props) => {
     []
   )
 
-  return (
-    <>
-      <Container>
-        <Helmet title="Widget" />
-        <Container.Title>
-          <Row>
-            <Col xl={18} lg={16} md={12} sm={24}>
-              <Breadcrumb className={utilStyles.breadcrumb}>
-                <Breadcrumb.Item>
-                  <Link to="">Widget</Link>
-                </Breadcrumb.Item>
-              </Breadcrumb>
-            </Col>
-          </Row>
-        </Container.Title>
-        <Container.Body>
-          <Box>
-            <Box.Header>
-              <Box.Title>
-                <Icon type="bars" />
-                Widget List
-              </Box.Title>
-              <Box.Tools>
-                <Tooltip placement="bottom" title="新增">
-                  <AdminButton
-                    type="primary"
-                    icon="plus"
-                    onClick={toWorkbench()}
-                  />
-                </Tooltip>
-              </Box.Tools>
-            </Box.Header>
-            <Box.Body>
-              <Row>
-                <Col span={24}>
-                  <Table
-                    rowKey="id"
-                    bordered
-                    dataSource={filterWidgets}
-                    columns={tableColumns}
-                    pagination={tablePagination}
-                    loading={loading}
-                    onChange={tableChange}
-                  />
-                </Col>
-              </Row>
-            </Box.Body>
-          </Box>
-        </Container.Body>
-      </Container>
-      <CopyModal
-        visible={copyModalVisible}
-        loading={false}
-        fromWidget={copyFromWidget}
-        onCheckUniqueName={onCheckName}
-        onCopy={copyWidget}
-        onCancel={cancelCopy}
-      />
-    </>
-  )
+  return <>
+    <Container>
+      <Helmet title="Widget" />
+      <Container.Title>
+        <Row>
+          <Col xl={18} lg={16} md={12} sm={24}>
+            <Breadcrumb className={utilStyles.breadcrumb}>
+              <Breadcrumb.Item>
+                <Link to="">Widget</Link>
+              </Breadcrumb.Item>
+            </Breadcrumb>
+          </Col>
+        </Row>
+      </Container.Title>
+      <Container.Body>
+        <Box>
+          <Box.Header>
+            <Box.Title>
+              <BarsOutlined />
+              Widget List
+            </Box.Title>
+            <Box.Tools>
+              <Tooltip placement="bottom" title="新增">
+                <AdminButton
+                  type="primary"
+                  icon="plus"
+                  onClick={toWorkbench()}
+                />
+              </Tooltip>
+            </Box.Tools>
+          </Box.Header>
+          <Box.Body>
+            <Row>
+              <Col span={24}>
+                <Table
+                  rowKey="id"
+                  bordered
+                  dataSource={filterWidgets}
+                  columns={tableColumns}
+                  pagination={tablePagination}
+                  loading={loading}
+                  onChange={tableChange}
+                />
+              </Col>
+            </Row>
+          </Box.Body>
+        </Box>
+      </Container.Body>
+    </Container>
+    <CopyModal
+      visible={copyModalVisible}
+      loading={false}
+      fromWidget={copyFromWidget}
+      onCheckUniqueName={onCheckName}
+      onCopy={copyWidget}
+      onCancel={cancelCopy}
+    />
+  </>;
 }
 
 export default WidgetList

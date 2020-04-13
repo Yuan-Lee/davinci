@@ -2,7 +2,10 @@ import React from 'react'
 import classnames from 'classnames'
 import debounce from 'lodash/debounce'
 import { IOrganizationMember } from 'containers/Organizations/types'
-import { Button, Form, Input, Icon } from 'antd'
+import { PlusOutlined, UserOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Input } from 'antd';
 const FormItem = Form.Item
 const InputGroup = Input.Group
 const styles = require('../Team.less')
@@ -143,9 +146,9 @@ export class AddForm extends React.PureComponent<IAddFormProps, IAddFormStates> 
                   {o && o.user && o.user.username ? o.user.username : ''}
                 </span>
               </span>
-            <Icon type="plus" className={styles.iconPlus}/>
+            <PlusOutlined className={styles.iconPlus} />
           </li>
-        )
+        );
       } else {
         return (
           <li key={o.id} className={searchLi} onClick={this.selectOption(o)}>
@@ -155,9 +158,9 @@ export class AddForm extends React.PureComponent<IAddFormProps, IAddFormStates> 
                 {o.name ? o.name : o.username}
               </span>
             </span>
-            <Icon type="plus" className={styles.iconPlus}/>
+            <PlusOutlined className={styles.iconPlus} />
           </li>
-        )
+        );
       }
     }) : ''
     return (
@@ -169,11 +172,11 @@ export class AddForm extends React.PureComponent<IAddFormProps, IAddFormStates> 
               <span className={styles.create}>
                 创建
               </span>
-              <Icon type="plus" className={styles.iconPlus}/>
+              <PlusOutlined className={styles.iconPlus} />
             </li> : ''
         }
       </ul>
-    )
+    );
   }
 
   public render () {
@@ -209,7 +212,7 @@ export class AddForm extends React.PureComponent<IAddFormProps, IAddFormStates> 
       <div className={styles.addFormWrapper}>
         <div className={styles.titleWrapper}>
           <div className={styles.icon}>
-            <Icon type="user"/>
+            <UserOutlined />
           </div>
           <div className={styles.title}>
             添加{category}到<span className={styles.orgName}>{orgOrTeamName}</span>
@@ -235,7 +238,7 @@ export class AddForm extends React.PureComponent<IAddFormProps, IAddFormStates> 
                   <Input style={{width: '65%'}} autoComplete="off"/>
                 )}
                 <Button className={styles.plusBtn}  type="primary" onClick={this.props.addHandler} disabled={isDisabled}>
-                  {this.submitText(category)}<Icon type="plus"/>
+                  {this.submitText(category)}<PlusOutlined />
                 </Button>
                 {optionList}
               </InputGroup>
@@ -243,7 +246,7 @@ export class AddForm extends React.PureComponent<IAddFormProps, IAddFormStates> 
           </Form>
         </div>
       </div>
-    )
+    );
   }
 }
 

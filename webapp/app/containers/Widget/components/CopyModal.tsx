@@ -19,8 +19,10 @@
  */
 
 import React from 'react'
-import { Modal, Form, Input } from 'antd'
-import { FormComponentProps } from 'antd/lib/form'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Input } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { IWidgetBase } from '../types'
 const FormItem = Form.Item
 

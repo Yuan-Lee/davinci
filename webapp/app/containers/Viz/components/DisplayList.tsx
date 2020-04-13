@@ -4,7 +4,9 @@ import { createStructuredSelector } from 'reselect'
 import { makeSelectProjectRoles } from 'containers/Projects/selectors'
 import { connect } from 'react-redux'
 import {compose} from 'redux'
-import { Col, Tooltip, Icon, Popconfirm, Row } from 'antd'
+import { Icon } from '@ant-design/compatible'
+import { PlusCircleOutlined } from '@ant-design/icons'
+import { Col, Tooltip, Popconfirm, Row } from 'antd'
 import { IconProps } from 'antd/lib/icon'
 const styles = require('../Viz.less')
 
@@ -159,7 +161,7 @@ export class DisplayList extends React.PureComponent<IDisplayListProps, IDisplay
         <div className={styles.display}>
           <div className={styles.container} onClick={this.showDisplayFormModal('add')}>
             <div className={styles.central}>
-              <div className={`${styles.item} ${styles.icon}`}><Icon type="plus-circle-o" /></div>
+              <div className={`${styles.item} ${styles.icon}`}><PlusCircleOutlined /></div>
               <div className={`${styles.item} ${styles.text}`}>创建新 Display</div>
             </div>
           </div>

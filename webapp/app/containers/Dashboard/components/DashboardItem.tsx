@@ -34,7 +34,19 @@ import Widget, { IWidgetConfig, IPaginationParams, RenderType } from 'containers
 import { ChartTypes } from 'containers/Widget/config/chart/ChartTypes'
 import { DrillableChart } from 'containers/Widget/config/chart/DrillableChart'
 import { IconProps } from 'antd/lib/icon'
-import { Icon, Tooltip, Popconfirm, Popover, Dropdown, Menu } from 'antd'
+
+import {
+  EllipsisOutlined,
+  FullscreenOutlined,
+  InfoCircleOutlined,
+  LoadingOutlined,
+  ReloadOutlined,
+  WarningOutlined
+} from '@ant-design/icons'
+
+import { Icon as LegacyIcon } from '@ant-design/compatible'
+import { Icon } from '@ant-design/compatible'
+import { Tooltip, Popconfirm, Popover, Dropdown, Menu } from 'antd'
 import { getPagination, getNativeQuery} from 'containers/Viz/utils'
 
 import ModulePermission from 'containers/Account/components/checkModulePermission'
@@ -47,7 +59,7 @@ const styles = require('../Dashboard.less')
 const utilStyles = require('assets/less/util.less')
 
 export type IGetChartData = (renderType: RenderType, itemId: number, widgetId: number, queryConditions?: any) => void
- 
+
 interface IDashboardItemProps {
   itemId: number
   widget: any
@@ -791,7 +803,7 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
       )
       dropdownMenu = (
         <Dropdown overlay={menu} placement="bottomRight" trigger={['click']}>
-          <Icon type="ellipsis" />
+          <EllipsisOutlined />
         </Dropdown>
       )
     }
@@ -799,7 +811,7 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
     const controls = widgetProps.controls
     const controlToggle = !!controls.length && (
       <Tooltip title="选择参数">
-        <Icon
+        <LegacyIcon
           className={styles.toggle}
           type={controlPanelVisible ? 'up-square-o' : 'down-square-o'}
           onClick={this.toggleControlPanel}
@@ -807,7 +819,7 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
       </Tooltip>
     )
 
-    const loadingIcon = loading && <Icon className={styles.toggle} type="loading" />
+    const loadingIcon = loading && <LoadingOutlined className={styles.toggle} />
 
     const descToggle = widget.description && (
       <Popover
@@ -815,7 +827,7 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
         content={widget.description}
         overlayClassName={styles.widgetInfoContent}
       >
-        <Icon className={styles.toggle} type="info-circle" />
+        <InfoCircleOutlined className={styles.toggle} />
       </Popover>
     )
 
@@ -830,10 +842,7 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
         placement="bottomLeft"
         overlayClassName={styles.widgetInfoContent}
       >
-        <Icon
-          className={`${styles.toggle} ${styles.error}`}
-          type="warning"
-        />
+        <WarningOutlined className={`${styles.toggle} ${styles.error}`} />
       </Tooltip>
     )
 
@@ -990,11 +999,11 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
             </div>
             <div className={styles.tools}>
               <Tooltip title="同步数据">
-                {!loading && <Icon type="reload" onClick={this.onSyncBizdatas} />}
+                {!loading && <ReloadOutlined onClick={this.onSyncBizdatas} />}
               </Tooltip>
               {widgetButton}
               <Tooltip title="全屏">
-                <Icon type="fullscreen" onClick={this.onFullScreen} className={styles.fullScreen} />
+                <FullscreenOutlined onClick={this.onFullScreen} className={styles.fullScreen} />
               </Tooltip>
               {shareButton}
               {downloadButton}

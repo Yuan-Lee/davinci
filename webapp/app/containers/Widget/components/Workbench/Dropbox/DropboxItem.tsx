@@ -8,7 +8,9 @@ import { getAggregatorLocale, decodeMetricName } from '../../util'
 import { IChartInfo } from '../../Widget'
 import { getAvailableSettings, getSettingsDropdownList, getSettingKeyByDropItem, MapSettingTypes, MapItemTypes, MapItemValueTypes } from './settings'
 
-import { Icon, Menu, Dropdown, Tooltip } from 'antd'
+import { CloseSquareOutlined, DownOutlined } from '@ant-design/icons';
+
+import { Menu, Dropdown, Tooltip } from 'antd';
 const { Item: MenuItem, SubMenu, Divider: MenuDivider } = Menu
 const styles = require('../Workbench.less')
 
@@ -134,7 +136,7 @@ export class DropboxItem extends React.PureComponent<IDropboxItemProps, IDropbox
     const aliasText = getFieldAlias(field, {})
     const content = (
       <p>
-        <Icon type="down" />
+        <DownOutlined />
         {agg ? ` [${getAggregatorLocale(agg)}] ${name} ` : ` ${name} `}
         {aliasText && (
           <Tooltip title={desc} placement="right">
@@ -179,14 +181,10 @@ export class DropboxItem extends React.PureComponent<IDropboxItemProps, IDropbox
         >
           {pivotChartSelector}
           {contentWithDropdownList}
-          <Icon
-            type="close-square-o"
-            className={styles.remove}
-            onClick={onRemove}
-          />
+          <CloseSquareOutlined className={styles.remove} onClick={onRemove} />
         </div>
       </div>
-    )
+    );
   }
 }
 

@@ -10,7 +10,23 @@ import { ITableColumnConfig, ITableConditionStyle } from './types'
 import ColorPicker from 'components/ColorPicker'
 import ConditionStyleConfigModal from './ConditionStyleConfigModal'
 
-import { Row, Col, Tooltip, Form, Select, InputNumber, Button, Radio, Checkbox, Table, Modal } from 'antd'
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import {
+  Row,
+  Col,
+  Tooltip,
+  Select,
+  InputNumber,
+  Button,
+  Radio,
+  Checkbox,
+  Table,
+  Modal,
+} from 'antd';
 const RadioGroup = Radio.Group
 const RadioButton = Radio.Button
 const FormItem = Form.Item
@@ -118,8 +134,8 @@ export class ColumnStyleConfig extends React.PureComponent<IColumnStyleConfigPro
     width: 60,
     render: (_, record) => (
       <div className={styles.btns}>
-        <Button onClick={this.editConditionStyle(record)} icon="edit" shape="circle" size="small" />
-        <Button onClick={this.deleteConditionStyle(record.key)} icon="delete" shape="circle" size="small" />
+        <Button onClick={this.editConditionStyle(record)} icon={<EditOutlined />} shape="circle" size="small" />
+        <Button onClick={this.deleteConditionStyle(record.key)} icon={<DeleteOutlined />} shape="circle" size="small" />
       </div>
     )
   }]
@@ -346,7 +362,7 @@ export class ColumnStyleConfig extends React.PureComponent<IColumnStyleConfigPro
               </div>
               <div className={styles.title}>
                 <h2>条件样式</h2>
-                <Button type="primary" onClick={this.addConditionStyle} shape="circle" icon="plus" size="small" />
+                <Button type="primary" onClick={this.addConditionStyle} shape="circle" icon={<PlusOutlined />} size="small" />
               </div>
               <div className={styles.table}>
                 <Table
@@ -366,7 +382,7 @@ export class ColumnStyleConfig extends React.PureComponent<IColumnStyleConfigPro
           onSave={this.saveConditionStyleConfig}
         />
       </Modal>
-    )
+    );
   }
 }
 

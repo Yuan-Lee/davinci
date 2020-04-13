@@ -20,7 +20,9 @@
 
 import React, { useContext, useCallback } from 'react'
 
-import { Button, Icon } from 'antd'
+import { CopyOutlined, SnippetsOutlined } from '@ant-design/icons';
+
+import { Button } from 'antd';
 const ButtonGroup = Button.Group
 
 import { DisplayToolbarContext } from './util'
@@ -42,30 +44,28 @@ const OperationBar: React.FC<IOperationBarProps> = (props) => {
     onOperate(LayerOperations.Paste)
   }, [onOperate])
 
-  return (
-    <>
-      <ButtonGroup size={size}>
-        <Button type="ghost" onClick={copyLayers}>
-          <Icon type="copy" />
-          {comment && '复制'}
-        </Button>
-        <Button type="ghost" onClick={pasteLayers}>
-          <Icon type="snippets" />
-          {comment && '粘贴'}
-        </Button>
-      </ButtonGroup>
-      {/* @TODO layers undo/redo */}
-      {/* <ButtonGroup size={size}>
-        <Button type="ghost">
-          <Icon type="undo" />
-          {comment && '撤销'}
-        </Button>
-        <Button type="ghost">
-          <Icon type="redo" />
-          {comment && '恢复'}
-        </Button>
-      </ButtonGroup> */}
-    </>
-  )
+  return <>
+    <ButtonGroup size={size}>
+      <Button type="ghost" onClick={copyLayers}>
+        <CopyOutlined />
+        {comment && '复制'}
+      </Button>
+      <Button type="ghost" onClick={pasteLayers}>
+        <SnippetsOutlined />
+        {comment && '粘贴'}
+      </Button>
+    </ButtonGroup>
+    {/* @TODO layers undo/redo */}
+    {/* <ButtonGroup size={size}>
+      <Button type="ghost">
+        <Icon type="undo" />
+        {comment && '撤销'}
+      </Button>
+      <Button type="ghost">
+        <Icon type="redo" />
+        {comment && '恢复'}
+      </Button>
+    </ButtonGroup> */}
+  </>;
 }
 export default OperationBar

@@ -80,7 +80,6 @@ export function renderDate (filter: IGlobalControl, onChange, extraProps?) {
     Datetime,
     DatetimeMinute
   } = DatePickerFormats
-  debugger
   if (filter.multiple) {
     return (
       <MultiDatePicker

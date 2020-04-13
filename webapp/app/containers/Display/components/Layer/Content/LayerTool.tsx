@@ -20,7 +20,9 @@
 
 import React, { useContext, useCallback } from 'react'
 
-import { Tooltip, Icon } from 'antd'
+import { EditOutlined } from '@ant-design/icons';
+
+import { Tooltip } from 'antd';
 
 import { LayerContext, LayerListContext } from '../util'
 
@@ -37,10 +39,10 @@ const LayerTool: React.FC = () => {
   return (
     <div className="display-slide-layer-tools">
       <Tooltip title="编辑">
-        <Icon type="edit" onClick={edit} />
+        <EditOutlined onClick={edit} />
       </Tooltip>
     </div>
-  )
+  );
 }
 
 export default LayerTool

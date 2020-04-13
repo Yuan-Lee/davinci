@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { DropboxType, IDataParamSource } from './'
 import ColorPanel from '../ColorPanel'
-import { Icon } from 'antd'
+import { ArrowRightOutlined } from '@ant-design/icons';
 const styles = require('../Workbench.less')
 
 interface IDropboxContentProps {
@@ -29,12 +29,12 @@ export class DropboxContent extends React.PureComponent<IDropboxContentProps, {}
 
     return (
       <p className={styles.dropboxContent}>
-        <Icon type="arrow-right" />
+        <ArrowRightOutlined />
         <span>
           拖拽<b>{typeInPlaceholder}</b>字段{title}
         </span>
       </p>
-    )
+    );
   }
 }
 

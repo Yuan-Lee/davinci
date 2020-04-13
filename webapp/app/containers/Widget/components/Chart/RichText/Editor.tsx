@@ -19,7 +19,8 @@
  */
 
 import React from 'react'
-import { Icon, Dropdown, Menu, Row, Col, Button, Modal } from 'antd'
+import { SelectOutlined } from '@ant-design/icons';
+import { Dropdown, Menu, Row, Col, Button, Modal } from 'antd';
 const MenuItem = Menu.Item
 import ReactQuill, { Quill } from 'react-quill'
 import ImageResize from 'quill-image-resize-module'
@@ -128,7 +129,7 @@ export class RichTextEditor extends React.Component<IRichTextEditorProps, IRichT
 
           <Dropdown overlay={fieldItems}>
             <a className={Styles.selectLink}>
-              <Icon type="select" />
+              <SelectOutlined />
             </a>
           </Dropdown>
         </div>
@@ -153,7 +154,7 @@ export class RichTextEditor extends React.Component<IRichTextEditorProps, IRichT
           <Preview content={content} fieldBoundaries={fieldBoundaries} data={data} mapFields={mapFields} />
         </Modal>
       </div>
-    )
+    );
   }
 }
 

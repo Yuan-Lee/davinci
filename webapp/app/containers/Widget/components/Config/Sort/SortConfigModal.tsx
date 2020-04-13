@@ -5,7 +5,9 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import { IFieldSortConfig } from './types'
 import { FieldSortTypes } from './constants'
 
-import { Icon, Button, Tooltip, Modal } from 'antd'
+import { InfoCircleOutlined } from '@ant-design/icons';
+
+import { Button, Tooltip, Modal } from 'antd';
 import SortItem from './SortItem'
 
 import Styles from './Sort.less'
@@ -96,7 +98,7 @@ class SortConfigModal extends React.PureComponent<ISortConfigModalProps, ISortCo
     <>
       自定义排序
       <Tooltip title="拖拽更改列表中的条目顺序进行排序">
-        <Icon className={Styles.sortInfo} type="info-circle" />
+        <InfoCircleOutlined className={Styles.sortInfo} />
       </Tooltip>
     </>
   )

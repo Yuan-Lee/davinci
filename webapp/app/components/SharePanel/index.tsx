@@ -21,7 +21,8 @@
 import * as React from 'react'
 
 import ShareForm from './ShareForm'
-import { Icon, Input, Button, Row, Col, Radio } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons';
+import { Input, Button, Row, Col, Radio } from 'antd';
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
@@ -157,7 +158,7 @@ export class SharePanel extends React.PureComponent<ISharePanelProps, ISharePane
       )
     } else {
       if (shareInfoLoading) {
-        content = (<Icon type="loading" />)
+        content = (<LoadingOutlined />)
       } else {
         content = (<Button size="small" onClick={this.getShareInfo}>点击重新加载</Button>)
       }
@@ -172,7 +173,7 @@ export class SharePanel extends React.PureComponent<ISharePanelProps, ISharePane
       )
     } else {
       if (shareInfoLoading) {
-        secretContent = (<Icon type="loading" />)
+        secretContent = (<LoadingOutlined />)
       } else {
         secretContent = (
           <Row gutter={8} className={styles.shareRow}>

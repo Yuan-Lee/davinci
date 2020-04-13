@@ -20,7 +20,8 @@
 
 import React from 'react'
 import classnames from 'classnames'
-import { Icon, Empty, Popover, Tag, Badge } from 'antd'
+import { CloudDownloadOutlined } from '@ant-design/icons'
+import { Empty, Popover, Tag, Badge } from 'antd'
 import { IDownloadRecord, DownloadStatus } from 'app/containers/App/types'
 import { DOWNLOAD_STATUS_COLORS, DOWNLOAD_STATUS_LOCALE } from 'app/containers/App/constants'
 
@@ -86,7 +87,7 @@ export function DownloadList (props: IDownloadListProps) {
       onVisibleChange={downloadListPanelVisibleChange}
     >
       <Badge count={downloadable}>
-        <Icon type="cloud-download" onClick={getDownloadList(props)} />
+        <CloudDownloadOutlined onClick={getDownloadList(props)} style={{ fontSize : '25px'}}/>
       </Badge>
     </Popover>
   )

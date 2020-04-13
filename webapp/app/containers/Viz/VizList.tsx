@@ -14,7 +14,9 @@ import { VizActions } from '../Viz/actions'
 import { makeSelectCurrentProject } from '../Projects/selectors'
 import { makeSelectPortals, makeSelectDisplays } from '../Viz/selectors'
 
-import { Icon, Row, Col, Breadcrumb } from 'antd'
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+
+import { Row, Col, Breadcrumb } from 'antd';
 import Box from 'components/Box'
 import Container from 'components/Container'
 import PortalList from './components/PortalList'
@@ -155,7 +157,7 @@ export class VizList extends React.Component<
               <Box.Title>
                 <Row onClick={this.onCollapseChange('dashboard')}>
                   <Col span={20}>
-                    <Icon
+                    <LegacyIcon
                       type={`${
                         this.state.collapse.dashboard ? 'down' : 'right'
                       }`}
@@ -185,7 +187,7 @@ export class VizList extends React.Component<
               <Box.Title>
                 <Row onClick={this.onCollapseChange('display')}>
                   <Col span={20}>
-                    <Icon
+                    <LegacyIcon
                       type={`${this.state.collapse.display ? 'down' : 'right'}`}
                     />
                     Display
@@ -210,7 +212,7 @@ export class VizList extends React.Component<
           </Box>
         </Container.Body>
       </Container>
-    )
+    );
   }
 }
 

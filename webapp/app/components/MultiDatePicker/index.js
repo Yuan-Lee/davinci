@@ -4,7 +4,7 @@ import $ from 'jquery'
 import moment from 'moment'
 import 'bootstrap-datepicker'
 
-import { Icon } from 'antd'
+import { CalendarOutlined } from '@ant-design/icons';
 
 import styles from './MultiDatePicker.less'
 
@@ -58,9 +58,9 @@ export class MultiDatePicker extends Component {
           ref="input"
           readOnly
         />
-        <Icon type="calendar" />
+        <CalendarOutlined />
       </span>
-    )
+    );
   }
 }
 

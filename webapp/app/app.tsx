@@ -28,7 +28,7 @@ import history from 'utils/history'
 
 import App from 'containers/App'
 
-import { LocaleProvider } from 'antd'
+import { ConfigProvider } from 'antd';
 import zh_CN from 'antd/lib/locale-provider/zh_CN'
 import LanguageProvider from 'containers/LanguageProvider'
 import { translationMessages } from './i18n'
@@ -95,11 +95,11 @@ const render = (messages) => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
-        <LocaleProvider locale={zh_CN}>
+        <ConfigProvider locale={zh_CN}>
           <ConnectedRouter history={history}>
             <App />
           </ConnectedRouter>
-        </LocaleProvider>
+        </ConfigProvider>
       </LanguageProvider>
     </Provider>,
     MOUNT_NODE

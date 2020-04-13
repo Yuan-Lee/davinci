@@ -1,6 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Icon, Tabs, Breadcrumb } from 'antd'
+
+import {
+  ApiOutlined,
+  LeftCircleOutlined,
+  SettingOutlined,
+  UsergroupAddOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+
+import { Tabs, Breadcrumb } from 'antd';
 import Box from 'components/Box'
 const styles = require('./Organization.less')
 import MemberList from './component/MemberList'
@@ -120,7 +129,7 @@ export class Organization extends React.PureComponent <IOrganizationProps & Rout
             <Breadcrumb className={utilStyles.breadcrumb}>
               <Breadcrumb.Item>
                 <Link to="/account/organizations">
-                  <Icon type="left-circle-o" />返回组织列表
+                  <LeftCircleOutlined />返回组织列表
                 </Link>
               </Breadcrumb.Item>
             </Breadcrumb>
@@ -132,7 +141,7 @@ export class Organization extends React.PureComponent <IOrganizationProps & Rout
             <div className={styles.title}>{name}</div>
           </div>
           <Tabs>
-            <TabPane tab={<span><Icon type="api" />项目<span className={styles.badge}>{projectNum}</span></span>} key="projects">
+            <TabPane tab={<span><ApiOutlined />项目<span className={styles.badge}>{projectNum}</span></span>} key="projects">
               <ProjectList
                 currentOrganization={currentOrganization}
                 organizationId={organizationId}
@@ -142,7 +151,7 @@ export class Organization extends React.PureComponent <IOrganizationProps & Rout
                 organizationMembers={currentOrganizationMembers}
               />
             </TabPane>
-            <TabPane tab={<span><Icon type="user" />成员<span className={styles.badge}>{memberNum}</span></span>} key="members">
+            <TabPane tab={<span><UserOutlined />成员<span className={styles.badge}>{memberNum}</span></span>} key="members">
               <MemberList
                 loginUser={loginUser}
                 toThatUserProfile={this.toThatTeam}
@@ -157,7 +166,7 @@ export class Organization extends React.PureComponent <IOrganizationProps & Rout
                 changeOrganizationMemberRole={this.props.onChangeOrganizationMemberRole}
               />
             </TabPane>
-            <TabPane tab={<span><Icon type="usergroup-add" />角色<span className={styles.badge}>{roleNum}</span></span>} key="roles">
+            <TabPane tab={<span><UsergroupAddOutlined />角色<span className={styles.badge}>{roleNum}</span></span>} key="roles">
               <RoleList
                 isLoginUserOwner={isLoginUserOwner}
                 onLoadOrganizationDetail={this.props.onLoadOrganizationDetail}
@@ -167,7 +176,7 @@ export class Organization extends React.PureComponent <IOrganizationProps & Rout
               />
             </TabPane>
             {
-              currentOrganization && currentOrganization.role === 1 ? <TabPane tab={<span><Icon type="setting" />设置</span>} key="settings">
+              currentOrganization && currentOrganization.role === 1 ? <TabPane tab={<span><SettingOutlined />设置</span>} key="settings">
                 <Setting
                   currentOrganization={this.props.currentOrganization}
                   editOrganization={this.editOrganization}
@@ -177,7 +186,7 @@ export class Organization extends React.PureComponent <IOrganizationProps & Rout
           </Tabs>
         </Box.Body>
       </Box>
-    )
+    );
   }
 }
 

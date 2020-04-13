@@ -20,6 +20,8 @@
 
 import React from 'react'
 
+import { CaretRightOutlined } from '@ant-design/icons';
+
 import { Row, Col, Button, InputNumber, Tooltip } from 'antd'
 
 import Styles from '../View.less'
@@ -53,7 +55,7 @@ export const EditorBottom = (props: IEditorBottomProps) => {
         type="primary"
         disabled={loading}
         loading={loading}
-        icon="caret-right"
+        icon={<CaretRightOutlined />}
         onClick={onExecuteSql}
       >
         执行
@@ -65,7 +67,7 @@ export const EditorBottom = (props: IEditorBottomProps) => {
       </Tooltip>
     </Col>
   </Row>
-  )
+  );
 }
 
 export default EditorBottom

@@ -19,7 +19,17 @@
  */
 
 import React from 'react'
-import { Icon, Tooltip, Popover } from 'antd'
+
+import {
+  DeleteOutlined,
+  DownloadOutlined,
+  EditOutlined,
+  EllipsisOutlined,
+  SwapOutlined,
+} from '@ant-design/icons';
+
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Tooltip, Popover } from 'antd';
 const styles = require('../Dashboard.less')
 import { IProject } from 'containers/Projects/types'
 import ShareDownloadPermission from 'containers/Account/components/checkShareDownloadPermission'
@@ -87,7 +97,7 @@ export class DashboardAction extends React.PureComponent<IDashboardActionProps, 
     const EditActionButton = ModulePermission<React.DetailedHTMLProps<React.HTMLAttributes<HTMLLIElement>, HTMLLIElement>>(currentProject, 'viz')(Li)
     const editAction = (
       <EditActionButton onClick={this.operateMore(item, 'edit')}>
-        <Icon type="edit" /> 编辑
+        <EditOutlined /> 编辑
       </EditActionButton>
     )
 
@@ -95,7 +105,7 @@ export class DashboardAction extends React.PureComponent<IDashboardActionProps, 
 
     const downloadAction = (
       <DownloadButton style={{cursor: 'pointer'}} onClick={this.operateMore(item, 'download')}>
-        <Icon type="download" className={styles.swap} /> 下载
+        <DownloadOutlined className={styles.swap} /> 下载
       </DownloadButton>
     )
 
@@ -103,14 +113,14 @@ export class DashboardAction extends React.PureComponent<IDashboardActionProps, 
 
     const moveAction = (
       <EditActionButton onClick={this.operateMore(item, 'move')}>
-        <Icon type="swap" className={styles.swap} /> 移动
+        <SwapOutlined className={styles.swap} /> 移动
       </EditActionButton>
     )
 
     const DeleteActionButton = ModulePermission<React.DetailedHTMLProps<React.HTMLAttributes<HTMLLIElement>, HTMLLIElement>>(currentProject, 'viz', true)(Li)
     const deleteAction = (
       <DeleteActionButton onClick={this.operateMore(item, 'delete')}>
-        <Icon type="delete" /> 删除
+        <DeleteOutlined /> 删除
       </DeleteActionButton>
     )
 
@@ -132,11 +142,7 @@ export class DashboardAction extends React.PureComponent<IDashboardActionProps, 
     )
 
     const icon = (
-      <Icon
-        type="ellipsis"
-        className={styles.itemAction}
-        title="More"
-      />
+      <EllipsisOutlined className={styles.itemAction} title="More" />
     )
 
     let ulPopover
@@ -169,14 +175,14 @@ export class DashboardAction extends React.PureComponent<IDashboardActionProps, 
             item.type === 0
               ? <h4 className={styles.dashboardTitle} style={{ width: titleWidth }}>{computeTitleWidth(item.name, computeWidth)}</h4>
               : <span className={styles.dashboardTitle} style={{width: titleWidth}} onClick={initChangeDashboard(item.id)}>
-                  <Icon type={`${item.type === 2 ? 'table' : 'dot-chart'}`} />
+                  <LegacyIcon type={`${item.type === 2 ? 'table' : 'dot-chart'}`} />
                   <span className={styles.itemName}>{computeTitleWidth(item.name, computeWidth)}</span>
                 </span>
           }
           {ulPopover}
         </Tooltip>
       </span>
-    )
+    );
   }
 }
 

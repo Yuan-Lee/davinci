@@ -18,7 +18,9 @@
  * >>
  */
 import * as React from 'react'
-import { Form, Row, Col, Input, Radio, Steps, Transfer } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row, Col, Input, Radio, Steps, Transfer } from 'antd';
 
 interface IRoleFormProps {
   form: any

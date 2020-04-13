@@ -1,5 +1,7 @@
 import * as React from 'react'
-import { Col, Row, Input, Button, Form } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Col, Row, Input, Button } from 'antd';
 const FormItem = Form.Item
 const styles = require('../Profile/profile.less')
 

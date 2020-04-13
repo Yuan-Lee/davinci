@@ -11,7 +11,9 @@ import {
   TableCellStyleTypes, DefaultTableCellStyle } from 'containers/Widget/components/Config/Table'
 import { pageSizeOptions } from './constants'
 
-import { Icon, Row, Col, Select, Radio, Checkbox, Modal } from 'antd'
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+
+import { Row, Col, Select, Radio, Checkbox, Modal } from 'antd';
 const { Option } = Select
 const RadioGroup = Radio.Group
 const RadioButton = Radio.Button
@@ -304,15 +306,15 @@ export class TableSection extends React.PureComponent<ITableSectionProps, ITable
         <div className={styles.paneBlock}>
           <h4>
             <span>表头样式与分组</span>
-            <Icon type="delete" onClick={this.deleteHeaderConfig} />
-            <Icon type="edit" onClick={this.showHeaderConfig} />
+            <DeleteOutlined onClick={this.deleteHeaderConfig} />
+            <EditOutlined onClick={this.showHeaderConfig} />
           </h4>
         </div>
         <div className={styles.paneBlock}>
           <h4>
             <span>表格数据列</span>
-            <Icon type="delete" onClick={this.deleteColumnConfig} />
-            <Icon type="edit" onClick={this.showColumnConfig} />
+            <DeleteOutlined onClick={this.deleteColumnConfig} />
+            <EditOutlined onClick={this.showColumnConfig} />
           </h4>
         </div>
         <div className={styles.paneBlock}>
@@ -440,7 +442,7 @@ export class TableSection extends React.PureComponent<ITableSectionProps, ITable
           />
         </React.Suspense>
       </div>
-    )
+    );
   }
 }
 

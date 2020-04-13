@@ -20,7 +20,9 @@
 
 import React, { useContext, useCallback } from 'react'
 
-import { Button, Icon } from 'antd'
+import { SettingOutlined } from '@ant-design/icons';
+
+import { Button } from 'antd';
 const ButtonGroup = Button.Group
 
 import { DisplayToolbarContext } from './util'
@@ -35,9 +37,9 @@ const Setting: React.FC<IToolbarSettingProps> = (props) => {
   return (
     <ButtonGroup size={size}>
       <Button type="ghost" onClick={onSetting}>
-        <Icon type="setting" /> {comment && '大屏设置'}
+        <SettingOutlined /> {comment && '大屏设置'}
       </Button>
     </ButtonGroup>
-  )
+  );
 }
 export default Setting

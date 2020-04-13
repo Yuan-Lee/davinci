@@ -29,7 +29,7 @@ import {
 import { showNavigator } from 'containers/App/actions'
 import { makeSelectCurrentProject } from 'containers/Projects/selectors'
 
-import { Icon } from 'antd'
+import { ClockCircleOutlined } from '@ant-design/icons'
 import SidebarOption from 'components/SidebarOption'
 import Sidebar from 'components/Sidebar'
 
@@ -65,7 +65,7 @@ const sidebarSource: Array<{
     permissionName: 'sourcePermission'
   },
   {
-    icon: <Icon type="clock-circle" />,
+    icon: <ClockCircleOutlined style={{ fontSize : '23px'}}/>,
     routes: ['schedules'],
     permissionName: 'schedulePermission'
   }

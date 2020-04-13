@@ -20,16 +20,10 @@
 
 import React, { useContext } from 'react'
 import classnames from 'classnames'
-import {
-  Input,
-  InputNumber,
-  Radio,
-  Checkbox,
-  Select,
-  Form,
-  Icon,
-  Col
-} from 'antd'
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, InputNumber, Radio, Checkbox, Select, Col } from 'antd';
 const RadioGroup = Radio.Group
 const CheckboxGroup = Checkbox.Group
 const { Option } = Select
@@ -141,16 +135,14 @@ const Item: React.FC<IItemProps> = (props) => {
           {img ? (
             <div className="display-setting-form-img">
               <img src={img} alt={item.title} />
-              <Icon
-                type="delete"
+              <DeleteOutlined
                 onClick={(e) => {
                   e.stopPropagation()
                   form.setFieldsValue({ [item.name]: null })
-                }}
-              />
+                }} />
             </div>
           ) : (
-            <Icon type="plus" />
+            <PlusOutlined />
           )}
         </Upload>
       )

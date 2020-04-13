@@ -25,7 +25,7 @@ import { createStructuredSelector } from 'reselect'
 import { RouteComponentProps } from 'react-router-dom'
 
 import LoginForm from './LoginForm'
-import { Icon } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons';
 
 import { compose } from 'redux'
 import injectReducer from 'utils/injectReducer'
@@ -132,7 +132,7 @@ export class Login extends React.PureComponent<ILoginProps & RouteComponentProps
         >
           {
             loginLoading
-              ? <Icon type="loading" />
+              ? <LoadingOutlined />
               : ''
           }
           登 录
@@ -142,7 +142,7 @@ export class Login extends React.PureComponent<ILoginProps & RouteComponentProps
           <a href="javascript:;" onClick={this.toSignUp}>注册davinci账号</a>
         </p>
       </div>
-    )
+    );
   }
 }
 

@@ -20,22 +20,17 @@
 
 import React, { useCallback } from 'react'
 
-import {
-  Modal,
-  Form,
-  Card,
-  Row,
-  Col,
-  Checkbox,
-  InputNumber,
-  Radio,
-  Select
-} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Modal, Card, Row, Col, Checkbox, InputNumber, Radio, Select } from 'antd';
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
 const { Option } = Select
 
-import { FormComponentProps, FormItemProps } from 'antd/lib/form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
+
+import { FormItemProps } from 'antd/lib/form';
 import { IDisplayParams } from 'containers/Viz/types'
 
 import { DefaultDisplayParams } from './constants'

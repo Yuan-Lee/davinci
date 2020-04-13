@@ -19,7 +19,9 @@
  */
 
 import React from 'react'
-import { Form, Row, Col, Input, Button } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row, Col, Input, Button } from 'antd';
 const FormItem = Form.Item
 const TextArea = Input.TextArea
 const styles = require('../Organization.less')

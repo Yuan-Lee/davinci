@@ -44,8 +44,10 @@ import vizReducer from 'containers/Viz/reducer'
 import vizSaga from 'containers/Viz/sagas'
 import dashboardSaga from 'containers/Dashboard/sagas'
 
-import { Row, Col, Card, Button, Icon, Tooltip, message } from 'antd'
-import { FormComponentProps } from 'antd/lib/form/Form'
+import { LeftOutlined } from '@ant-design/icons';
+
+import { Row, Col, Card, Button, Tooltip, message } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form/Form';
 
 import ScheduleBaseConfig, {
   ScheduleBaseFormProps
@@ -225,74 +227,72 @@ const ScheduleEditor: React.FC<ScheduleEditorProps> = (props) => {
     })
   }
 
-  return (
-    <>
-      <Helmet title="Schedule" />
-      <div className={Styles.scheduleEditor}>
-        <div className={StylesHeader.editorHeader}>
-          <Icon type="left" className={StylesHeader.back} onClick={goBack} />
-          <div className={StylesHeader.title}>
-            <span className={StylesHeader.name}>{`${
-              scheduleId ? '修改' : '新增'
-            } Schedule`}</span>
-          </div>
-          <div className={StylesHeader.actions}>
-            <Tooltip
-              placement="bottom"
-              title={jobStatus === 'started' ? '停止后允许修改' : ''}
-            >
-              <Button
-                type="primary"
-                disabled={loading.edit || jobStatus === 'started'}
-                onClick={saveSchedule}
-              >
-                保存
-              </Button>
-            </Tooltip>
-          </div>
+  return <>
+    <Helmet title="Schedule" />
+    <div className={Styles.scheduleEditor}>
+      <div className={StylesHeader.editorHeader}>
+        <LeftOutlined className={StylesHeader.back} onClick={goBack} />
+        <div className={StylesHeader.title}>
+          <span className={StylesHeader.name}>{`${
+            scheduleId ? '修改' : '新增'
+          } Schedule`}</span>
         </div>
-        <div className={Styles.containerVertical}>
-          <Row gutter={8}>
-            <Col span={12}>
-              <Card title="基本设置" size="small">
-                <ScheduleBaseConfig
-                  wrappedComponentRef={(inst) => {
-                    baseConfigForm = inst
-                  }}
-                  schedule={editingSchedule}
-                  loading={loading.schedule}
-                  onCheckUniqueName={onCheckUniqueName}
-                />
-              </Card>
-              <Card title="邮件设置" size="small" style={{ marginTop: 8 }}>
-                <ScheduleMailConfig
-                  wrappedComponentRef={(inst) => {
-                    mailConfigForm = inst
-                  }}
-                  config={config}
-                  loading={loading.schedule}
-                  mailList={suggestMails}
-                  onLoadMailList={onLoadSuggestMails}
-                />
-              </Card>
-            </Col>
-            <Col span={12}>
-              <Card title="发送内容设置" size="small">
-                <ScheduleVizConfig
-                  displays={displays}
-                  portals={portals}
-                  portalDashboards={portalDashboards}
-                  value={localContentList}
-                  onLoadPortalDashboards={onLoadDashboards}
-                  onChange={setLocalContentList}
-                />
-              </Card>
-            </Col>
-          </Row>
+        <div className={StylesHeader.actions}>
+          <Tooltip
+            placement="bottom"
+            title={jobStatus === 'started' ? '停止后允许修改' : ''}
+          >
+            <Button
+              type="primary"
+              disabled={loading.edit || jobStatus === 'started'}
+              onClick={saveSchedule}
+            >
+              保存
+            </Button>
+          </Tooltip>
         </div>
       </div>
-    </>
-  )
+      <div className={Styles.containerVertical}>
+        <Row gutter={8}>
+          <Col span={12}>
+            <Card title="基本设置" size="small">
+              <ScheduleBaseConfig
+                wrappedComponentRef={(inst) => {
+                  baseConfigForm = inst
+                }}
+                schedule={editingSchedule}
+                loading={loading.schedule}
+                onCheckUniqueName={onCheckUniqueName}
+              />
+            </Card>
+            <Card title="邮件设置" size="small" style={{ marginTop: 8 }}>
+              <ScheduleMailConfig
+                wrappedComponentRef={(inst) => {
+                  mailConfigForm = inst
+                }}
+                config={config}
+                loading={loading.schedule}
+                mailList={suggestMails}
+                onLoadMailList={onLoadSuggestMails}
+              />
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card title="发送内容设置" size="small">
+              <ScheduleVizConfig
+                displays={displays}
+                portals={portals}
+                portalDashboards={portalDashboards}
+                value={localContentList}
+                onLoadPortalDashboards={onLoadDashboards}
+                onChange={setLocalContentList}
+              />
+            </Card>
+          </Col>
+        </Row>
+      </div>
+    </div>
+  </>;
 }
 
 const mapStateToProps = createStructuredSelector({

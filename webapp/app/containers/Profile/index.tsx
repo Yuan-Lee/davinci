@@ -1,7 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Icon, Col, message, Row, Input, Form, Button, Breadcrumb } from 'antd'
+import { BarsOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Col, message, Row, Input, Button, Breadcrumb } from 'antd';
 const FormItem = Form.Item
 const styles = require('./profile.less')
 import Box from 'components/Box'
@@ -70,7 +73,7 @@ export class Profile extends React.PureComponent<IProfileProps, {}> {
             <Breadcrumb className={utilStyles.breadcrumb}>
               <Breadcrumb.Item>
                 <Link to="/account/profile">
-                  <Icon type="bars" />个人信息
+                  <BarsOutlined />个人信息
                 </Link>
               </Breadcrumb.Item>
             </Breadcrumb>
@@ -141,7 +144,7 @@ export class Profile extends React.PureComponent<IProfileProps, {}> {
           </div>
         </Box.Body>
       </Box>
-    )
+    );
   }
 }
 

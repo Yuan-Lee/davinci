@@ -22,8 +22,11 @@ import React, { PureComponent } from 'react'
 import classnames from 'classnames'
 import { uuid } from 'utils/util'
 
-import { FormComponentProps } from 'antd/lib/form/Form'
-import { Form, Input, InputNumber, Select, Radio, Button, Icon } from 'antd'
+import { FormComponentProps } from '@ant-design/compatible/lib/form/Form';
+import { ForkOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, InputNumber, Select, Radio, Button } from 'antd';
 const Option = Select.Option
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
@@ -122,7 +125,7 @@ export class ConditionalFilterPanel extends PureComponent<IConditionalFilterPane
     })
 
     const forkButton = filter.root || (
-      <Button shape="circle" icon="fork" type="primary" onClick={this.forkNode(filter.id)} />
+      <Button shape="circle" icon={<ForkOutlined />} type="primary" onClick={this.forkNode(filter.id)} />
     )
 
     const operatorSelectOptions = this.generateFilterOperatorOptions(type)
@@ -158,11 +161,11 @@ export class ConditionalFilterPanel extends PureComponent<IConditionalFilterPane
             valueInput
           )}
         </FormItem>
-        <Button shape="circle" icon="plus" type="primary" onClick={this.addParallelNode(filter.id)} />
+        <Button shape="circle" icon={<PlusOutlined />} type="primary" onClick={this.addParallelNode(filter.id)} />
         {forkButton}
-        <Button shape="circle" icon="minus" onClick={this.deleteNode(filter.id)} />
+        <Button shape="circle" icon={<MinusOutlined />} onClick={this.deleteNode(filter.id)} />
       </div>
-    )
+    );
   }
 
   private renderFilters (filter) {
@@ -175,10 +178,10 @@ export class ConditionalFilterPanel extends PureComponent<IConditionalFilterPane
       return (
         <div className={styles.empty} onClick={this.props.onAddRoot}>
           <h3>
-            <Icon type="plus" /> 点击添加
+            <PlusOutlined /> 点击添加
           </h3>
         </div>
-      )
+      );
     }
   }
 

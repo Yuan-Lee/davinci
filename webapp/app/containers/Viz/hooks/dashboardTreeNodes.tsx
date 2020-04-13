@@ -19,7 +19,8 @@
  */
 
 import React, { useMemo } from 'react'
-import { Tree, TreeSelect, Icon } from 'antd'
+import { DotChartOutlined } from '@ant-design/icons';
+import { Tree, TreeSelect } from 'antd';
 
 import { IDashboardNode, DashboardTypes } from '../types'
 
@@ -46,12 +47,12 @@ const renderTreeNodes = (
     <TreeNode
       key={`${dashboardNodeKeyPrefix}${node.id}`}
       title={node.name}
-      icon={!node.children && <Icon type="dot-chart" />}
+      icon={!node.children && <DotChartOutlined />}
       isLeaf={!node.children}
     >
       {renderTreeNodes(node.children, folderOnly, treeSelect)}
     </TreeNode>
-  ))
+  ));
 }
 
 const findFirstLeaf = (nodes: IDashboardNode[], folderOnly: boolean): string[] => {

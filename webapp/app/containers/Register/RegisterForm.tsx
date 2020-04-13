@@ -19,7 +19,7 @@
  */
 
 import * as React from 'react'
-import { Icon } from 'antd'
+import { MailOutlined, UnlockOutlined, UserOutlined } from '@ant-design/icons';
 const styles = require('../Login/Login.less')
 
 interface IRegisterFormProps {
@@ -74,7 +74,7 @@ export class RegisterForm extends React.PureComponent<IRegisterFormProps, {}> {
     return (
       <div className={styles.form}>
         <div className={styles.input}>
-          <Icon type="user" />
+          <UserOutlined />
           <input
             placeholder="用户名"
             value={username}
@@ -84,7 +84,7 @@ export class RegisterForm extends React.PureComponent<IRegisterFormProps, {}> {
           />
         </div>
         <div className={styles.input}>
-          <Icon type="mail" />
+          <MailOutlined />
           <input
             placeholder="邮箱"
             value={email}
@@ -94,7 +94,7 @@ export class RegisterForm extends React.PureComponent<IRegisterFormProps, {}> {
           />
         </div>
         <div className={styles.input}>
-          <Icon type="unlock" />
+          <UnlockOutlined />
           <input
             placeholder="密码"
             type="password"
@@ -105,7 +105,7 @@ export class RegisterForm extends React.PureComponent<IRegisterFormProps, {}> {
           />
         </div>
         <div className={styles.input}>
-          <Icon type="unlock" />
+          <UnlockOutlined />
           <input
             placeholder="确认密码"
             type="password"
@@ -116,7 +116,7 @@ export class RegisterForm extends React.PureComponent<IRegisterFormProps, {}> {
           />
         </div>
       </div>
-    )
+    );
   }
 }
 

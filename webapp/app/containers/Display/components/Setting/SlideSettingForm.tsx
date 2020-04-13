@@ -21,7 +21,7 @@
 import React, { useEffect } from 'react'
 import { SlideLayerSettingForm } from './Form'
 
-import { WrappedFormUtils } from 'antd/lib/form/Form'
+import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
 import { slideSettings, GraphTypes } from './Form/constants'
 import { ISlideParams } from 'containers/Viz/types'
 const slideSetting = slideSettings[GraphTypes.Slide]

@@ -33,12 +33,14 @@ const SizeStyle = Quill.import('attributors/style/size')
 const FontStyle = Quill.import('attributors/style/font')
 const AlignStyle = Quill.import('attributors/style/align')
 const DirectionStyle = Quill.import('attributors/style/direction')
-import { Form, Row, Col, Input, Select, Icon, InputNumber, Spin } from 'antd'
+import { Form, Icon as LegacyIcon } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row, Col, Input, Select, InputNumber, Spin } from 'antd';
 const FormItem = Form.Item
 const { Option } = Select
 import MailTag from './MailTag'
 
-import { FormComponentProps } from 'antd/lib/form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { IScheduleMailConfig, IUserInfo } from './types'
 import {
   FormItemStyle,
@@ -95,7 +97,7 @@ export const ScheduleMailConfig: React.FC<IScheduleMailConfigProps> = (
   const ccLabel = (
     <span>
       <span>抄送</span>
-      <Icon
+      <LegacyIcon
         style={{ marginLeft: 8 }}
         type={showBcc ? 'up-circle' : 'down-circle'}
         onClick={() => setShowBcc(!showBcc)}

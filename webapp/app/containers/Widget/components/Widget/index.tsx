@@ -2,7 +2,6 @@ import React, { createRef } from 'react'
 import classnames from 'classnames'
 import Pivot from '../Pivot'
 import Chart from '../Chart'
-import { Icon } from 'antd'
 import {
   AggregatorType,
   DragType,

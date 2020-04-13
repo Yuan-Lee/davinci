@@ -19,7 +19,8 @@
  */
 
 import React from 'react'
-import { Menu, Dropdown, Icon } from 'antd'
+import { CopyOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Menu, Dropdown } from 'antd';
 const { Item: MenuItem } = Menu
 import IconFont from 'components/IconFont'
 
@@ -29,10 +30,10 @@ import { ContextMenuProxy } from './ContextMenuProxy'
 const menu = (
   <Menu>
     <MenuItem key="copy">
-      <Icon type="copy" /> 复制
+      <CopyOutlined /> 复制
     </MenuItem>
     <MenuItem key="delete">
-      <Icon type="delete" /> 删除
+      <DeleteOutlined /> 删除
     </MenuItem>
     {LayerCommands.map(({ title, icon, operation }) => (
       <MenuItem key={operation}>

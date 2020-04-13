@@ -1,7 +1,9 @@
 import React from 'react'
 import { fromJS } from 'immutable'
 
-import { Icon, Row, Col, Modal, InputNumber, Button, Radio, Select } from 'antd'
+import { EditOutlined } from '@ant-design/icons';
+
+import { Row, Col, Modal, InputNumber, Button, Radio, Select } from 'antd';
 const RadioGroup = Radio.Group
 const Option = Select.Option
 
@@ -199,10 +201,10 @@ class ConditionStyleConfigModal extends React.PureComponent<IConditionStyleConfi
       <Row gutter={8} type="flex" align="middle" className={stylesConfig.rowBlock}>
         <Col span={6}>编辑文本：</Col>
         <Col span={3}>
-          <Icon type="edit" />
+          <EditOutlined />
         </Col>
       </Row>
-    )
+    );
   }
 
   private cancel = () => {

@@ -22,7 +22,10 @@ import * as React from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import * as classnames from 'classnames'
-import { Icon, Button, Row, Col, Input, Tooltip, Popconfirm, Table, Modal, Form } from 'antd'
+import { PlusOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Row, Col, Input, Tooltip, Popconfirm, Table, Modal } from 'antd';
 const FormItem = Form.Item
 const InputGroup = Input.Group
 import AdminForm from './Transfer'
@@ -181,7 +184,7 @@ export class ProjectAdmin extends React.PureComponent<IProjectAdminProps, IProje
         <Tooltip placement="bottom" title="添加">
           <Button
             type="primary"
-            icon="plus"
+            icon={<PlusOutlined />}
             onClick={this.toggleAdminForm}
           >
             添加管理员

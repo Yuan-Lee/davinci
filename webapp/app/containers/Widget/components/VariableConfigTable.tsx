@@ -20,7 +20,12 @@
 
 import * as React from 'react'
 
-import { Form, Row, Col, Table, Input, Select, Button, Checkbox } from 'antd'
+import { PlusOutlined } from '@ant-design/icons';
+
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Row, Col, Table, Input, Select, Button, Checkbox } from 'antd';
 const FormItem = Form.Item
 const Option = Select.Option
 
@@ -237,7 +242,7 @@ export class VariableConfigTable extends React.Component<IVariableConfigTablePro
     return (
       <Row className={styles.variableConfigTable}>
         <Col span={24} className={styles.addCol}>
-          <Button type="primary" icon="plus" onClick={onAddConfigValue}>添加选项</Button>
+          <Button type="primary" icon={<PlusOutlined />} onClick={onAddConfigValue}>添加选项</Button>
         </Col>
         <Col span={24}>
           <Form>
@@ -250,7 +255,7 @@ export class VariableConfigTable extends React.Component<IVariableConfigTablePro
           </Form>
         </Col>
       </Row>
-    )
+    );
   }
 }
 

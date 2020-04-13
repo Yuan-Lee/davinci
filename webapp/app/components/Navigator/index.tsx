@@ -35,7 +35,9 @@ import {
   makeSelectDownloadListLoading
 } from 'containers/App/selectors'
 
-import { Dropdown, Menu, Icon } from 'antd'
+import { FileTextOutlined, GithubOutlined, UserOutlined } from '@ant-design/icons'
+
+import { Dropdown, Menu } from 'antd'
 import { IDownloadRecord } from 'app/containers/App/types'
 
 const styles = require('./Navigator.less')
@@ -105,14 +107,14 @@ export function Navigator (props: INavigatorProps) {
           />
         </li>
         <li>
-          <Icon type="file-text" onClick={goDoc} />
+          <FileTextOutlined onClick={goDoc} style={{ fontSize : '25px'}}/>
         </li>
         <li>
-          <Icon type="github" onClick={goGithub}/>
+          <GithubOutlined onClick={goGithub}  style={{ fontSize : '25px'}}/>
         </li>
         <li>
-          <Dropdown overlay={menu} trigger={['click']} placement="bottomCenter">
-            <Icon type="user" />
+          <Dropdown overlay={menu} trigger={['click']} placement="bottomCenter" >
+            <UserOutlined  style={{ fontSize : '25px'}}/>
           </Dropdown>
         </li>
       </ul>

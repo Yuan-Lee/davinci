@@ -2,7 +2,7 @@ import React from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { SortItemType } from './constants'
 
-import { Icon } from 'antd'
+import { MoreOutlined } from '@ant-design/icons';
 
 import { ISortDragItem, ISortCollectedProps } from './types'
 import Styles from './Sort.less'
@@ -43,10 +43,10 @@ const SortItem = (props: ISortItemProps) => {
 
   return (
     <div ref={dragRef} className={Styles.sortItem} style={{opacity}}>
-      <Icon className={Styles.sortIcon} type="more" />
+      <MoreOutlined className={Styles.sortIcon} />
       <span>{value}</span>
     </div>
-  )
+  );
 }
 
 export default SortItem

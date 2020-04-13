@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Icon, Row, Col, Modal, Breadcrumb } from 'antd'
-import { WrappedFormUtils } from 'antd/lib/form/Form'
+import { BarsOutlined, PlusCircleOutlined, SettingOutlined } from '@ant-design/icons';
+import { Row, Col, Modal, Breadcrumb } from 'antd';
+import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
 import { Link } from 'react-router-dom'
 import Box from 'components/Box'
 import { compose } from 'redux'
@@ -111,7 +112,7 @@ export class Organizations extends React.PureComponent<IOrganizationsProps & Rou
             </div>
           </div>
           <div className={styles.setting}>
-            <Icon type="setting"/>
+            <SettingOutlined />
           </div>
         </div>
       )
@@ -125,13 +126,13 @@ export class Organizations extends React.PureComponent<IOrganizationsProps & Rou
                 <Breadcrumb className={utilStyles.breadcrumb}>
                   <Breadcrumb.Item>
                     <Link to="/account/organizations">
-                      <Icon type="bars" />我的组织
+                      <BarsOutlined />我的组织
                     </Link>
                   </Breadcrumb.Item>
                 </Breadcrumb>
               </Col>
               <Col span={1} offset={3}>
-                <Icon type="plus-circle-o"  className={styles.create} onClick={this.showOrganizationForm()}/>
+                <PlusCircleOutlined className={styles.create} onClick={this.showOrganizationForm()} />
               </Col>
             </Row>
           </Box.Title>
@@ -152,7 +153,7 @@ export class Organizations extends React.PureComponent<IOrganizationsProps & Rou
           />
         </Modal>
       </Box>
-    )
+    );
   }
 }
 

@@ -2,8 +2,9 @@ import * as React from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Icon, message, Breadcrumb } from 'antd'
-import { WrappedFormUtils } from 'antd/lib/form/Form'
+import { BarsOutlined } from '@ant-design/icons';
+import { message, Breadcrumb } from 'antd';
+import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
 import Box from 'components/Box'
 const styles = require('../Profile/profile.less')
 const utilStyles = require('assets/less/util.less')
@@ -55,7 +56,7 @@ export class ResetPassword extends React.PureComponent<IResetPasswordProps> {
             <Breadcrumb className={utilStyles.breadcrumb}>
               <Breadcrumb.Item>
                 <Link to="/account/resetPassword">
-                  <Icon type="bars" />修改密码
+                  <BarsOutlined />修改密码
                 </Link>
               </Breadcrumb.Item>
             </Breadcrumb>
@@ -70,7 +71,7 @@ export class ResetPassword extends React.PureComponent<IResetPasswordProps> {
           </div>
         </Box.Body>
       </Box>
-    )
+    );
   }
 }
 

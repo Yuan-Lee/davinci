@@ -21,7 +21,9 @@
 import * as React from 'react'
 
 import VariableConfigTable from './VariableConfigTable'
-import { Form, Input, Select, Radio, Button, Row, Col, Checkbox } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Select, Radio, Button, Row, Col, Checkbox } from 'antd';
 const FormItem = Form.Item
 const Option = Select.Option
 const RadioButton = Radio.Button

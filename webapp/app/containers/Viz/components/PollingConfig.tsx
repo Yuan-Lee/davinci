@@ -19,11 +19,15 @@
  */
 
 import React, { useState } from 'react'
-import { Form, Row, Col, Select, InputNumber } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row, Col, Select, InputNumber } from 'antd';
 const FormItem = Form.Item
 const { Option } = Select
 
-import { FormItemProps, FormComponentProps } from 'antd/lib/form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
+
+import { FormItemProps } from 'antd/lib/form';
 
 export type PollingSetting = {
   polling: 'true' | 'false'

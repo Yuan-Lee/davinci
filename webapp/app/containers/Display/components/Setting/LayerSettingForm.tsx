@@ -20,7 +20,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 
-import { WrappedFormUtils } from 'antd/lib/form/Form'
+import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
 import { SlideLayerSettingForm } from './Form'
 
 import {

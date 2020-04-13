@@ -11,7 +11,8 @@ import { IFieldConfig } from '../../Config/Field'
 import { IFieldFormatConfig } from '../../Config/Format'
 import { IFieldSortConfig, FieldSortTypes } from '../../Config/Sort'
 import { decodeMetricName } from '../../util'
-import { Popover, Icon } from 'antd'
+import { SettingOutlined } from '@ant-design/icons';
+import { Popover } from 'antd';
 import { IFilters } from 'app/components/Filters/types'
 
 const styles = require('../Workbench.less')
@@ -352,7 +353,7 @@ export class Dropbox extends React.PureComponent<IDropboxProps, IDropboxStates> 
           placement="right"
         >
           <span className={styles.setting}>
-            <Icon type="setting" /> 设置
+            <SettingOutlined /> 设置
           </span>
         </Popover>
       )

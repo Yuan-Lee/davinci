@@ -1,7 +1,7 @@
 import React from 'react'
 import { IOrganization } from '../types'
 const styles = require('../Organization.less')
-import { Tag, Icon, Popconfirm, Tooltip } from 'antd'
+import { Tag, Popconfirm, Tooltip } from 'antd';
 import ComponentPermission from 'containers/Account/components/checkMemberPermission'
 import Star from 'components/StarPanel/Star'
 import { IProject, IStarUser } from 'containers/Projects/types'

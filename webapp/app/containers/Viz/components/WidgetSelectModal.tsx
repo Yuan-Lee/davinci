@@ -27,7 +27,7 @@ import { IWidgetRaw } from 'containers/Widget/types'
 import WidgetSelector from 'containers/Widget/components/WidgetSelector'
 import PollingConfig, { PollingSetting } from './PollingConfig'
 import { NativeButtonProps } from 'antd/lib/button/button'
-import { WrappedFormUtils } from 'antd/lib/form/Form'
+import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
 
 interface IWidgetSelectModalProps {
   visible: boolean

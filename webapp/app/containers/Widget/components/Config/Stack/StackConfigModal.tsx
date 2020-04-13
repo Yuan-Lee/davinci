@@ -4,10 +4,15 @@ import produce from 'immer'
 import { StackGroup, IStackConfig, IStackMetrics } from './types'
 import { EmptyStack } from './constants'
 
-import { Row, Col, Form, Button, Tooltip, Icon, Checkbox, Modal } from 'antd'
+import { InfoCircleOutlined } from '@ant-design/icons';
+
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Row, Col, Button, Tooltip, Checkbox, Modal } from 'antd';
 const FormItem = Form.Item
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'
-import { FormComponentProps } from 'antd/lib/form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 
 import { FontSetting } from 'components/StyleSetting/Font'
 import StackContainer from './StackContainer'
@@ -104,7 +109,7 @@ class StackConfigModal extends React.PureComponent<
     <>
       堆叠设置
       <Tooltip title="拖拽指标至分组中以进行堆叠设置">
-        <Icon className={Styles.stackInfo} type="info-circle" />
+        <InfoCircleOutlined className={Styles.stackInfo} />
       </Tooltip>
     </>
   )

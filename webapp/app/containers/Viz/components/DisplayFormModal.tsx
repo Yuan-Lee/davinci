@@ -19,8 +19,10 @@
  */
 
 import React from 'react'
-import { Form, Row, Col, Input, Radio, Button, Tabs, Modal, Checkbox } from 'antd'
-import { FormComponentProps } from 'antd/lib/form/Form'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row, Col, Input, Radio, Button, Tabs, Modal, Checkbox } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form/Form';
 const TextArea = Input.TextArea
 const FormItem = Form.Item
 const RadioGroup = Radio.Group

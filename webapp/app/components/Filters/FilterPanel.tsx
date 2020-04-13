@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import { FormComponentProps } from 'antd/lib/form/Form'
+import { FormComponentProps } from '@ant-design/compatible/lib/form/Form';
 import {
   IGlobalControl,
   IControlRelatedField,
@@ -24,7 +24,12 @@ import { defaultFilterControlGridProps, SHOULD_LOAD_OPTIONS, fullScreenGlobalCon
 import FilterControl from './FilterControl'
 import { globalControlMigrationRecorder } from 'app/utils/migrationRecorders'
 
-import { Row, Col, Form, Button } from 'antd'
+import { ReloadOutlined, SearchOutlined } from '@ant-design/icons';
+
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Row, Col, Button } from 'antd';
 
 const styles = require('./filter.less')
 
@@ -82,7 +87,7 @@ export class FilterPanel extends Component<IFilterPanelProps & FormComponentProp
       }
       this.deep_set(o, key.split(/[\[\]]/g).filter((x) => x), value)
       return o
-    }, {})
+    }, {});
   }
 
   private qs = this.querystring(location.href.substr(location.href.indexOf('?') + 1))
@@ -467,23 +472,21 @@ export class FilterPanel extends Component<IFilterPanelProps & FormComponentProp
       [styles.mt16]: isFullScreen
     })
 
-    return (
-      isRender && <Form className={panelClass}>
-        <div className={controlClass}>
-          <Row gutter={8}>
-            {this.renderFilterControls(renderTree)}
-          </Row>
-        </div>
-        {
-          queryMode === GlobalControlQueryMode.Manually && (
-            <div className={actionClass}>
-              <Button type="primary" icon="search" onClick={this.manualSearch}>查询</Button>
-              <Button icon="reload" onClick={this.reset}>重置</Button>
-            </div>
-          )
-        }
-      </Form>
-    )
+    return isRender && <Form className={panelClass}>
+      <div className={controlClass}>
+        <Row gutter={8}>
+          {this.renderFilterControls(renderTree)}
+        </Row>
+      </div>
+      {
+        queryMode === GlobalControlQueryMode.Manually && (
+          <div className={actionClass}>
+            <Button type="primary" icon={<SearchOutlined />} onClick={this.manualSearch}>查询</Button>
+            <Button icon={<ReloadOutlined />} onClick={this.reset}>重置</Button>
+          </div>
+        )
+      }
+    </Form>;
   }
 
 }

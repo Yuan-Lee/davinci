@@ -20,9 +20,11 @@
 
 import React from 'react'
 import { EditableCellInputTypes } from './types'
-import { Input, Form, InputNumber, Checkbox } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, InputNumber, Checkbox } from 'antd';
 const FormItem = Form.Item
-import { WrappedFormUtils } from 'antd/lib/form/Form'
+import { WrappedFormUtils } from '@ant-design/compatible/lib/form/Form';
 import { EditableContext } from './util'
 
 const renderInputControl = (inputType: EditableCellInputTypes, autoFocus: boolean) => {
