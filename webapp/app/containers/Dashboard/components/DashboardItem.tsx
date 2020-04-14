@@ -758,7 +758,6 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
       const EditButton = ModulePermission<React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>>(currentProject, 'viz', false)(Span)
       widgetButton = (
         <Tooltip title="编辑widget">
-          {/* <i className="iconfont icon-edit-2" onClick={this.toWorkbench} /> */}
           <i>
             <EditButton className="iconfont icon-edit-2" onClick={this.toWorkbench} />
           </i>

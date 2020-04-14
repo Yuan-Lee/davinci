@@ -65,7 +65,7 @@ const sidebarSource: Array<{
     permissionName: 'sourcePermission'
   },
   {
-    icon: <ClockCircleOutlined style={{ fontSize : '23px' }} />,
+    icon: <ClockCircleOutlined className="icon-clock-layout" style={{ fontSize : '23px' }} />,
     routes: ['schedules'],
     permissionName: 'schedulePermission'
   }
