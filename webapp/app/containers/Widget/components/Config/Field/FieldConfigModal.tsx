@@ -337,7 +337,7 @@ class FieldConfig extends React.PureComponent<IFieldConfigProps, IFieldConfigSta
           onTest={this.testExpressionResult}
         />
       </Modal>
-    );
+    )
   }
 }
 

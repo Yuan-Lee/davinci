@@ -4,6 +4,7 @@ export enum DatePickerFormats {
   DatetimeMinute = 'YYYY-MM-DD HH:mm',
   Month = 'YYYY-MM',
   Week = 'YYYY-wo',
+  Quarter = 'YYYY-\\QQ',
   Year = 'YYYY'
 }
 
@@ -13,6 +14,7 @@ export const DatePickerFormatsLocale = {
   [DatePickerFormats.DatetimeMinute]: '日期时间分钟',
   [DatePickerFormats.Month]: '月',
   [DatePickerFormats.Week]: '周',
+  [DatePickerFormats.Quarter]: '季度',
   [DatePickerFormats.Year]: '年'
 }
 
@@ -23,6 +25,7 @@ export const DatePickerFormatsSelectSetting = {
     DatePickerFormats.DatetimeMinute,
     DatePickerFormats.Month,
     DatePickerFormats.Week,
+    DatePickerFormats.Quarter,
     DatePickerFormats.Year
   ],
   multiple: [

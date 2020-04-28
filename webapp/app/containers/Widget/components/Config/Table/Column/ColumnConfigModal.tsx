@@ -10,7 +10,7 @@ import { ITableColumnConfig, ITableConditionStyle } from './types'
 import ColorPicker from 'components/ColorPicker'
 import ConditionStyleConfigModal from './ConditionStyleConfigModal'
 
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
 
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';

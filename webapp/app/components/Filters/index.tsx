@@ -78,6 +78,7 @@ export function renderDate (filter: IGlobalControl, onChange, extraProps?) {
     Month,
     Year,
     Datetime,
+    Quarter,
     DatetimeMinute
   } = DatePickerFormats
   if (filter.multiple) {
@@ -103,6 +104,17 @@ export function renderDate (filter: IGlobalControl, onChange, extraProps?) {
           <MonthPicker
             className={styles.controlComponent}
             placeholder="请选择"
+            format={filter.dateFormat}
+            {...onChange && {onChange}}
+            {...extraProps}
+          />
+        )
+      case Quarter:
+        return (
+          <DatePicker
+            className={styles.controlComponent}
+            placeholder="请选择"
+            picker="quarter"
             format={filter.dateFormat}
             {...onChange && {onChange}}
             {...extraProps}

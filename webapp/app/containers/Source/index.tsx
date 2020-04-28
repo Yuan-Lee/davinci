@@ -39,7 +39,7 @@ import SourceConfigModal from './components/SourceConfigModal'
 import UploadCsvModal from './components/UploadCsvModal'
 import ResetConnectionModal from './components/ResetConnectionModal'
 
-import { BarsOutlined, PlusOutlined } from '@ant-design/icons'
+import { BarsOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons'
 
 import { message, Row, Col, Table, Button, Tooltip, Popconfirm, Breadcrumb } from 'antd'
 import { ButtonProps } from 'antd/lib/button/button'
@@ -62,6 +62,7 @@ import { makeSelectCurrentProject } from '../Projects/selectors'
 import ModulePermission from '../Account/components/checkModulePermission'
 import { initializePermission } from '../Account/components/checkUtilPermission'
 import { IProject } from 'containers/Projects/types'
+import { ReloadOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { ISource, ICSVMetaInfo, ISourceFormValues, IDatasourceInfo, SourceResetConnectionProperties } from './types'
 
 interface ISourceListStateProps {
@@ -249,10 +250,10 @@ export class SourceList extends React.PureComponent<ISourceListProps, ISourceLis
         render: (_, record) => (
           <span className="ant-table-action-column">
             <Tooltip title="重置连接">
-              <EditButton icon="reload" shape="circle" type="ghost" disabled={resetLoading} onClick={this.openResetSource(record)} />
+              <EditButton icon={<ReloadOutlined />} shape="circle" type="ghost" disabled={resetLoading} onClick={this.openResetSource(record)} />
             </Tooltip>
             <Tooltip title="修改">
-              <EditButton icon="edit" shape="circle" type="ghost" onClick={this.editSource(record.id)} />
+              <EditButton icon={<EditOutlined />} shape="circle" type="ghost" onClick={this.editSource(record.id)} />
             </Tooltip>
             <Popconfirm
               title="确定删除？"
@@ -260,12 +261,12 @@ export class SourceList extends React.PureComponent<ISourceListProps, ISourceLis
               onConfirm={this.deleteSource(record.id)}
             >
               <Tooltip title="删除">
-                <AdminButton icon="delete" shape="circle" type="ghost" />
+                <AdminButton icon={<DeleteOutlined />} shape="circle" type="ghost" />
               </Tooltip>
             </Popconfirm>
             {
               record && record.type === 'csv' ? <Tooltip title="上传">
-                <EditButton icon="upload" shape="circle" type="ghost" onClick={this.showUpload(record.id)} />
+                <EditButton icon={<UploadOutlined />} shape="circle" type="ghost" onClick={this.showUpload(record.id)} />
               </Tooltip> : ''
             }
           </span>
