@@ -272,7 +272,6 @@ export function deserializeDefaultValue (control: IControlBase) {
   const { type, dynamicDefaultValue, defaultValue, multiple, dateFormat } = control
   switch (type) {
  case FilterTypes.DateRange:
-   console.log('dynamicDefaultValue', dynamicDefaultValue, 'defaultValue', defaultValue, 'multiple', multiple)
    const nowDay = moment().format(DatePickerFormats.Date)
    if (dynamicDefaultValue) {
      switch (dynamicDefaultValue) {
@@ -300,9 +299,10 @@ export function deserializeDefaultValue (control: IControlBase) {
          return [moment(nowDay), moment(nowDay)]
      }
    } else {
-     return [moment(nowDay), moment(nowDay)]
+     return null
    }
     case FilterTypes.Date:
+      console.log('2222dynamicDefaultValue', dynamicDefaultValue, 'defaultValue', defaultValue)
       if (dynamicDefaultValue) {
         switch (dynamicDefaultValue) {
           case DatePickerDefaultValues.Today:

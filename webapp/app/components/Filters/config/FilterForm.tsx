@@ -36,6 +36,7 @@ const FormItem = Form.Item
 const Option = Select.Option
 const RadioGroup = Radio.Group
 const RadioButton = Radio.Button
+let isSelectedTypeChanged = false
 
 import { FilterTypeList, FilterTypesLocale, FilterTypes, FilterTypesDynamicDefaultValueSetting } from '../filterTypes'
 import { renderDate, renderDateRange, renderDateRangeWithSize } from '..'
@@ -113,7 +114,7 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
             {
               showDefaultValue && (
                 <Suspense fallback={null}>
-                  <Col span={16}>
+                  <Col span={14}>
                     <FormItem label=" " colon={false}>
                       {getFieldDecorator('defaultValue', {})(
                         renderDateRangeWithSize(controlFormValues, null, 'small')
@@ -188,6 +189,12 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
           </>
         )
         break
+    }
+    // 控件类型发生改变重置默认值
+    if (isSelectedTypeChanged === true) {
+      controlFormValues.dynamicDefaultValue = undefined
+      controlFormValues.defaultValue = undefined
+      isSelectedTypeChanged = false
     }
     return container
   }
@@ -296,7 +303,7 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
           <Col span={8}>
             <FormItem label="类型">
               {getFieldDecorator('type', {})(
-                <Select size="small">
+                <Select size="small" onChange={selectTypeChange}>
                   {
                     FilterTypeList.map((filterType) => (
                       <Option key={filterType} value={filterType}>{FilterTypesLocale[filterType]}</Option>
@@ -518,6 +525,11 @@ const formOptions = {
           }, {})
       : null
   }
+}
+
+export function selectTypeChange () {
+  isSelectedTypeChanged = true
+  console.log('selecteTypeChange', isSelectedTypeChanged)
 }
 
 const mapStateToProps = createStructuredSelector({
