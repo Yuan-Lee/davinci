@@ -15,9 +15,9 @@ import FilterListItem from './FilterListItem'
 
 const styles = require('../filter.less')
 
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons'
 
-import { Tree } from 'antd';
+import { Tree } from 'antd'
 const { TreeNode } = Tree
 
 interface IFilterListProps {
@@ -201,7 +201,7 @@ class FilterList extends Component<IFilterListProps, IFilterListStates> {
           </Tree>
         </div>
       </div>
-    );
+    )
   }
 }
 

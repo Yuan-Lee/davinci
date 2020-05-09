@@ -163,6 +163,23 @@ export function renderDateRange (filter, onChange) {
   )
 }
 
+export function renderDateRangeWithSize (filter, onChange, size) {
+  const placeholder: [string, string] = ['从', '到']
+  const { Datetime, DatetimeMinute } = DatePickerFormats
+  const isDatetimePicker = [Datetime, DatetimeMinute].includes(filter.dateFormat)
+  return (
+    <RangePicker
+      className={styles.controlComponent}
+      placeholder={placeholder}
+      showTime={isDatetimePicker}
+      format={filter.dateFormat}
+      size={size}
+      onChange={isDatetimePicker ? datetimePickerChange(onChange) : onChange}
+      onOk={onChange}
+    />
+  )
+}
+
 function datetimePickerChange (onChange) {
   return function (val) {
     if (!val || (Array.isArray(val) && !val.length)) {

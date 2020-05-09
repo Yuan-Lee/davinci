@@ -1,6 +1,6 @@
 
 import OperatorTypes from 'utils/operatorTypes'
-import { DatePickerDefaultValues } from './datePickerFormats'
+import { DatePickerDefaultValues, DatePickerRangeDefaultValues } from './datePickerFormats'
 
 export enum FilterTypes {
   Select = 'select',
@@ -88,6 +88,22 @@ export const FilterTypesDynamicDefaultValueSetting = {
       DatePickerDefaultValues.Custom
     ],
     multiple: [DatePickerDefaultValues.Custom]
+  }
+}
+
+export const FilterTypesDynamicRangeDefaultValueSetting = {
+  [FilterTypes.DateRange]: {
+    normal: [
+      DatePickerRangeDefaultValues.Today,
+      DatePickerRangeDefaultValues.Week,
+      DatePickerRangeDefaultValues.Day7,
+      DatePickerRangeDefaultValues.Month,
+      DatePickerRangeDefaultValues.Day30,
+      DatePickerRangeDefaultValues.Quarter,
+      DatePickerRangeDefaultValues.Year,
+      DatePickerRangeDefaultValues.Custom
+    ],
+    multiple: [DatePickerRangeDefaultValues.Custom]
   }
 }
 

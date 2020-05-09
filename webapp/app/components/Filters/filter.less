@@ -59,6 +59,7 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
+  background: #ffffff;
 
   .title {
     flex-shrink: 0;
@@ -104,6 +105,7 @@
       label {
         padding-left: 8px;
         cursor: pointer;
+
       }
 
       &:hover {
@@ -124,9 +126,9 @@
   }
 
   .tree {
-    // :global(li) {
-    //   padding: 2px 0;
-    // }
+     //:global(li) {
+     //  padding: 2px 0;
+     //}
     :global(li span.ant-tree-switcher),
     :global(li span.ant-tree-iconEle) {
       height: 28px;
@@ -139,14 +141,14 @@
     :global(.ant-tree-child-tree > li:first-child) {
       padding-top: 2px;
     }
-    // :global(li .ant-tree-node-content-wrapper:hover),
-    // :global(li .ant-tree-node-content-wrapper.ant-tree-node-selected) {
-    //   background-color: transparent;
-    // }
-    // :global(li .ant-tree-node-content-wrapper.ant-tree-node-selected) {
-    //   color: @primary-color;
-    //   font-weight: bold;
-    // }
+     //:global(li .ant-tree-node-content-wrapper:hover),
+     //:global(li .ant-tree-node-content-wrapper.ant-tree-node-selected) {
+     //  background-color: transparent;
+     //}
+     //:global(li .ant-tree-node-content-wrapper.ant-tree-node-selected) {
+     //  color: @primary-color;
+     //  font-weight: bold;
+     //}
   }
 }
 
@@ -285,14 +287,14 @@
       width: 100%;
     }
 
-    :global(.ant-form-item-label) {
+    :global(.ant-legacy-form-item-label) {
       line-height: 32px;
 
       label {
         color: @light-text-color;
       }
     }
-    :global(.ant-form-item-control) {
+    :global(.ant-legacy-form-item-control) {
       line-height: 32px;
     }
   }
@@ -309,22 +311,31 @@
     padding: 0 16px;
   }
 
-  :global(.ant-form-item) {
-    margin-bottom: 4px;
+  :global(.ant-legacy-form-item) {
+    margin-bottom: 1px;
+    display: flex;
+    flex-direction: column;
+    min-height: 50px;
+    justify-content: left;
+    child-align: left;
   }
-  :global(.ant-form-item-label) {
+  :global(.ant-legacy-form-item-label) {
+    display: flex;
     line-height: 1em;
+    justify-content: left;
+    align-items: flex-start;
+    margin-bottom: 2px;
   }
-  :global(.ant-form-item-label label) {
+  :global(.ant-legacy-form-item-label label) {
     color: @disabled-text-color;
     font-size: 12px;
     font-weight: bold;
   }
-  :global(.ant-form-item-required:before) {
+  :global(.ant-legacy-form-item-required:before) {
     margin-right: 2px;
     vertical-align: middle;
   }
-  :global(.ant-form-item-control) {
+  :global(.ant-legacy-form-item-control) {
     line-height: 32px;
   }
 }
@@ -343,12 +354,12 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
+  overflow-y: auto;
   .controlFormAntdOverride;
 
   .optionList {
     flex: 1;
     padding: 0 16px 16px;
-    overflow-y: auto;
   }
 }
 
@@ -423,20 +434,30 @@
 }
 
 .controlItem {
-  margin: 2px 0;
-  :global(.ant-form-item) {
+  margin-bottom: 2px;
+  margin-top: 2px;
+  display: flex;
+  flex-direction: column;
+  min-height: 48px;
+  justify-content: left;
+
+  :global(.ant-legacy-form-item) {
     margin-bottom: 4px;
   }
-  :global(.ant-form-item-label) {
+  :global(.ant-legacy-form-item-label) {
+    display: flex;
     line-height: 1em;
+    justify-content: left;
+    align-items: flex-start;
+    margin-bottom: 4px;
   }
-  :global(.ant-form-item-label label) {
+  :global(.ant-legacy-form-item-label label) {
     color: @disabled-text-color;
     font-size: 12px;
     font-weight: bold;
   }
-  :global(.ant-form-item-required:before) {
-    margin-right: 2px;
+  :global(.ant-legacy-form-item-required:before) {
+    margin-right: 4px;
     vertical-align: middle;
   }
 }

@@ -23,29 +23,34 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import classnames from 'classnames'
 
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons'
 
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
 
-import { Row, Col, Input, InputNumber, Radio, Checkbox, Select, Button, Table } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/lib/form/Form';
+import { Row, Col, Input, InputNumber, Radio, Checkbox, Select, Button, Table } from 'antd'
+import { FormComponentProps } from '@ant-design/compatible/lib/form/Form'
+
+
 const FormItem = Form.Item
 const Option = Select.Option
 const RadioGroup = Radio.Group
 const RadioButton = Radio.Button
 
 import { FilterTypeList, FilterTypesLocale, FilterTypes, FilterTypesDynamicDefaultValueSetting } from '../filterTypes'
-import { renderDate } from '..'
+import { renderDate, renderDateRange, renderDateRangeWithSize } from '..'
 import { InteractionType } from '../types'
 import {
   getOperatorOptions,
   getDatePickerFormatOptions,
-  getDynamicDefaultValueOptions
+  getDynamicDefaultValueOptions,
+  getDynamicDefaultRangeValueOptions
 } from '../util'
 import DatePickerFormats, {
   DatePickerFormatsLocale,
   DatePickerDefaultValuesLocales,
+  DatePickerRangeDefaultValuesLocales,
+  DatePickerRangeDefaultValues,
   DatePickerDefaultValues
 } from '../datePickerFormats'
 import { setControlFormValues } from 'containers/Dashboard/actions'
@@ -77,10 +82,50 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
     if (controlFormValues) {
       type = controlFormValues.type
       multiple = controlFormValues.multiple
-      showDefaultValue = controlFormValues.dynamicDefaultValue === DatePickerDefaultValues.Custom
+      if (type === FilterTypes.Date) {
+        showDefaultValue = controlFormValues.dynamicDefaultValue === DatePickerDefaultValues.Custom
+      } else if (type === FilterTypes.DateRange) {
+        showDefaultValue = controlFormValues.dynamicDefaultValue === DatePickerRangeDefaultValues.Custom
+      }
     }
 
     switch (type) {
+      case FilterTypes.DateRange:
+        container = (
+          <>
+            <Col span={8}>
+              <FormItem label="默认值">
+                {getFieldDecorator('dynamicDefaultValue', {})(
+                  <Select
+                    size="small"
+                    placeholder="默认值"
+                    allowClear
+                  >
+                    {
+                      getDynamicDefaultRangeValueOptions(type, multiple).map((val) => (
+                        <Option key={val} value={val}>{DatePickerRangeDefaultValuesLocales[val]}</Option>
+                      ))
+                    }
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+            {
+              showDefaultValue && (
+                <Suspense fallback={null}>
+                  <Col span={16}>
+                    <FormItem label=" " colon={false}>
+                      {getFieldDecorator('defaultValue', {})(
+                        renderDateRangeWithSize(controlFormValues, null, 'small')
+                      )}
+                    </FormItem>
+                  </Col>
+                </Suspense>
+              )
+            }
+          </>
+        )
+        break
       case FilterTypes.Date:
         container = (
           <>
@@ -117,8 +162,33 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
           </>
         )
         break
+      case FilterTypes.InputText:
+        container = (
+          <>
+            <Col span={8}>
+              <FormItem label="默认值">
+                {getFieldDecorator('defaultValue', {})(
+                  <Input size="small"  allowClear />
+                )}
+              </FormItem>
+            </Col>
+          </>
+        )
+        break
+      case FilterTypes.Select:
+        container = (
+          <>
+            <Col span={16}>
+              <FormItem label="默认值">
+                {getFieldDecorator('defaultValue', {})(
+                  <Input size="small" />
+                )}
+              </FormItem>
+            </Col>
+          </>
+        )
+        break
     }
-
     return container
   }
 
@@ -178,7 +248,7 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
           filterTypeRelatedInput.push(multipleFormComponent)
           break
         case FilterTypes.DateRange:
-          filterTypeRelatedInput.push(dateFormatFormComponent)
+         // filterTypeRelatedInput.push(dateFormatFormComponent)
           break
         case FilterTypes.Select:
           filterTypeRelatedInput.push(multipleFormComponent)
@@ -355,7 +425,7 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
           )
         }
         {
-          type === FilterTypes.Select2 && (
+         (
             <Row gutter={8} className={styles.formBody}>
               <Col span={8}>
                 <FormItem label="显隐控制参数">
@@ -364,6 +434,12 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
                   )}
                 </FormItem>
               </Col>
+            </Row>
+          )
+        }
+        {
+          type === FilterTypes.Select2 && (
+            <Row gutter={8} className={styles.formBody}>
               <Col span={8}>
                 <FormItem label="联动参数">
                   {getFieldDecorator('subjoin', {})(
@@ -387,7 +463,7 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
           )
         }
       </Form>
-    );
+    )
   }
 }
 

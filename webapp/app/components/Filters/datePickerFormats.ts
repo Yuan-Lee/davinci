@@ -53,6 +53,28 @@ export enum DatePickerDefaultValues {
   Custom = 'custom'
 }
 
+export enum DatePickerRangeDefaultValues {
+  Today = 'today',
+  Week = 'week',
+  Day7 = 'day7',
+  Month = 'month',
+  Day30 = 'day30',
+  Quarter = 'quarter',
+  Year = 'year',
+  Custom = 'custom'
+}
+
+export const DatePickerRangeDefaultValuesLocales = {
+  [DatePickerDefaultValues.Today]: '今天',
+  [DatePickerDefaultValues.Week]: '本周',
+  [DatePickerDefaultValues.Day7]: '7天前',
+  [DatePickerDefaultValues.Month]: '本月',
+  [DatePickerDefaultValues.Day30]: '30天前',
+  [DatePickerDefaultValues.Quarter]: '本季度',
+  [DatePickerDefaultValues.Year]: '今年',
+  [DatePickerDefaultValues.Custom]: '自定义'
+}
+
 export const DatePickerDefaultValuesLocales = {
   [DatePickerDefaultValues.Today]: '今天',
   [DatePickerDefaultValues.Yesterday]: '昨天',

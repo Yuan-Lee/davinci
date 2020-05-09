@@ -29,11 +29,11 @@ import {
   IFilters
 } from './types'
 import { uuid } from 'app/utils/util'
-import FilterTypes, { FilterTypesOperatorSetting, IS_RANGE_TYPE, FilterTypesDynamicDefaultValueSetting } from './filterTypes'
+import FilterTypes, { FilterTypesOperatorSetting, IS_RANGE_TYPE, FilterTypesDynamicDefaultValueSetting, FilterTypesDynamicRangeDefaultValueSetting } from './filterTypes'
 import { DEFAULT_CACHE_EXPIRED, SQL_NUMBER_TYPES, SQL_DATE_TYPES } from 'app/globalConstants'
 import { IFormedView, IViewModelProps, IViewVariable } from 'app/containers/View/types'
 import { ViewVariableValueTypes, ViewVariableTypes, ViewModelTypes } from 'app/containers/View/constants'
-import DatePickerFormats, { DatePickerDefaultValues, DatePickerFormatsSelectSetting } from './datePickerFormats'
+import DatePickerFormats, { DatePickerDefaultValues, DatePickerFormatsSelectSetting, DatePickerRangeDefaultValues } from './datePickerFormats'
 import OperatorTypes from 'app/utils/operatorTypes'
 
 export function getDefaultGlobalControl (): IGlobalControl {
@@ -269,8 +269,39 @@ export function getValidVariableValue (value, valueType: ViewVariableValueTypes)
 }
 
 export function deserializeDefaultValue (control: IControlBase) {
-  const { type, dynamicDefaultValue, defaultValue, multiple } = control
+  const { type, dynamicDefaultValue, defaultValue, multiple, dateFormat } = control
   switch (type) {
+ case FilterTypes.DateRange:
+   console.log('dynamicDefaultValue', dynamicDefaultValue, 'defaultValue', defaultValue, 'multiple', multiple)
+   const nowDay = moment().format(DatePickerFormats.Date)
+   if (dynamicDefaultValue) {
+     switch (dynamicDefaultValue) {
+       case DatePickerRangeDefaultValues.Today:
+         return [moment(nowDay), moment(nowDay)]
+       case DatePickerRangeDefaultValues.Week:
+         return [moment(moment().startOf('week'), DatePickerFormats.Date), moment(nowDay)]
+       case DatePickerRangeDefaultValues.Day7:
+         return [moment(moment().subtract(7, 'days'), DatePickerFormats.Date), moment(nowDay)]
+       case DatePickerRangeDefaultValues.Month:
+         return [moment(moment().startOf('month'), DatePickerFormats.Date), moment(nowDay)]
+       case DatePickerRangeDefaultValues.Day30:
+         return [moment(moment().subtract(30, 'days'), DatePickerFormats.Date), moment(nowDay)]
+       case DatePickerRangeDefaultValues.Quarter:
+         return [moment(moment().startOf('quarter'), DatePickerFormats.Date), moment(nowDay)]
+       case DatePickerRangeDefaultValues.Year:
+         return [moment(moment().startOf('year'), DatePickerFormats.Date), moment(nowDay)]
+       case DatePickerRangeDefaultValues.Custom:
+         if (defaultValue) {
+           return [moment(defaultValue[0], DatePickerFormats.Date), moment(defaultValue[1], DatePickerFormats.Date)]
+         } else {
+           return [moment(nowDay), moment(nowDay)]
+         }
+       default:
+         return [moment(nowDay), moment(nowDay)]
+     }
+   } else {
+     return [moment(nowDay), moment(nowDay)]
+   }
     case FilterTypes.Date:
       if (dynamicDefaultValue) {
         switch (dynamicDefaultValue) {
@@ -354,6 +385,17 @@ export function getDynamicDefaultValueOptions (type: FilterTypes, multiple: bool
       return multiple
         ? FilterTypesDynamicDefaultValueSetting[type]['multiple']
         : FilterTypesDynamicDefaultValueSetting[type]['normal']
+    default:
+      return []
+  }
+}
+
+export function getDynamicDefaultRangeValueOptions (type: FilterTypes, multiple: boolean): DatePickerRangeDefaultValues[] {
+  switch (type) {
+    case FilterTypes.DateRange:
+      return multiple
+        ? FilterTypesDynamicRangeDefaultValueSetting[type]['multiple']
+        : FilterTypesDynamicRangeDefaultValueSetting[type]['normal']
     default:
       return []
   }
