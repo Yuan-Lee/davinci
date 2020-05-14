@@ -20,12 +20,12 @@
 
 import * as React from 'react'
 
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
 
-import { Row, Col, Input, Radio, Select, Tabs, Checkbox } from 'antd';
+import { Row, Col, Input, Radio, Select, Tabs, Checkbox } from 'antd'
 import { IExludeRoles } from 'containers/Viz/components/PortalList'
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { FormComponentProps } from '@ant-design/compatible/lib/form'
 const styles = require('containers/Viz/Viz.less')
 const TabPane = Tabs.TabPane
 const Option = Select.Option
@@ -74,6 +74,10 @@ export class DashboardForm extends React.PureComponent<IDashboardFormProps, {}> 
     const { dashboards, type, itemId, exludeRoles } = this.props
     const commonFormItemStyle = {
       labelCol: { span: 6 },
+      wrapperCol: { span: 16 }
+    }
+    const commonFormItemLongStyle = {
+      labelCol: { span: 10 },
       wrapperCol: { span: 16 }
     }
     const authControl = exludeRoles && exludeRoles.length ? exludeRoles.map((role) => (
@@ -125,7 +129,7 @@ export class DashboardForm extends React.PureComponent<IDashboardFormProps, {}> 
         <Tabs defaultActiveKey="dashboardInfo">
           <TabPane tab="基本信息" key="dashboardInfo">
           <Col span={24}>
-            <FormItem label="所属文件夹" {...commonFormItemStyle}>
+            <FormItem label="所属文件夹" {...commonFormItemLongStyle}>
               {getFieldDecorator('folder', {
                 rules: [{
                   required: true,
@@ -152,7 +156,7 @@ export class DashboardForm extends React.PureComponent<IDashboardFormProps, {}> 
             </FormItem>
             <FormItem
               label={type === 'copy' ? '重命名' : '名称'}
-              {...commonFormItemStyle}
+              {...commonFormItemLongStyle}
               hasFeedback
               className={type === 'move' ? utilStyles.hide : ''}
             >

@@ -354,7 +354,7 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
           {
             type === FilterTypes.Select && (
               <>
-                <Col key="cache" span={6}>
+                <Col key="cache" span={8}>
                   <FormItem label="缓存">
                     {getFieldDecorator('cache', {})(
                       <RadioGroup size="small">

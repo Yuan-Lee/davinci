@@ -20,9 +20,9 @@
 
 import React from 'react'
 
-import { DeleteOutlined, EditOutlined, SwapOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, SwapOutlined } from '@ant-design/icons'
 
-import { Menu } from 'antd';
+import { Menu } from 'antd'
 const MenuItem = Menu.Item
 
 import useProjectPermission from 'containers/Projects/hooks/projectPermission'
