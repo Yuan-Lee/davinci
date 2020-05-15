@@ -19,17 +19,8 @@
  */
 
 import React from 'react'
-
-import {
-  DeleteOutlined,
-  DownloadOutlined,
-  EditOutlined,
-  EllipsisOutlined,
-  SwapOutlined,
-} from '@ant-design/icons';
-
-import { Icon as LegacyIcon } from '@ant-design/compatible';
-import { Tooltip, Popover } from 'antd';
+import { Tooltip, Popover } from 'antd'
+import { DeleteOutlined, EditOutlined, DownloadOutlined, SwapOutlined, EllipsisOutlined, TableOutlined, DotChartOutlined } from '@ant-design/icons'
 const styles = require('../Dashboard.less')
 import { IProject } from 'containers/Projects/types'
 import ShareDownloadPermission from 'containers/Account/components/checkShareDownloadPermission'
@@ -105,7 +96,7 @@ export class DashboardAction extends React.PureComponent<IDashboardActionProps, 
 
     const downloadAction = (
       <DownloadButton style={{cursor: 'pointer'}} onClick={this.operateMore(item, 'download')}>
-        <DownloadOutlined className={styles.swap} /> 下载
+        <DownloadOutlined className={styles.swap}/>下载
       </DownloadButton>
     )
 
@@ -113,7 +104,7 @@ export class DashboardAction extends React.PureComponent<IDashboardActionProps, 
 
     const moveAction = (
       <EditActionButton onClick={this.operateMore(item, 'move')}>
-        <SwapOutlined className={styles.swap} /> 移动
+        <SwapOutlined className={styles.swap}/> 移动
       </EditActionButton>
     )
 
@@ -142,7 +133,10 @@ export class DashboardAction extends React.PureComponent<IDashboardActionProps, 
     )
 
     const icon = (
-      <EllipsisOutlined className={styles.itemAction} title="More" />
+      <EllipsisOutlined
+        className={styles.itemAction}
+        title="More"
+      />
     )
 
     let ulPopover
@@ -170,19 +164,26 @@ export class DashboardAction extends React.PureComponent<IDashboardActionProps, 
     const computeTitleWidth = this.computeTitleWidth
     return (
       <span className={styles.portalTreeItem}>
-        <Tooltip placement="right" title={`名称：${item.name}`}>
+        <Tooltip
+          placement="right"
+          title={`名称：${item.name}`}
+          autoAdjustOverflow={false}
+        >
           {
             item.type === 0
               ? <h4 className={styles.dashboardTitle} style={{ width: titleWidth }}>{computeTitleWidth(item.name, computeWidth)}</h4>
               : <span className={styles.dashboardTitle} style={{width: titleWidth}} onClick={initChangeDashboard(item.id)}>
-                  <LegacyIcon type={`${item.type === 2 ? 'table' : 'dot-chart'}`} />
+                  { item.type === 2
+                    ? <TableOutlined />
+                    : <DotChartOutlined />
+                  }
                   <span className={styles.itemName}>{computeTitleWidth(item.name, computeWidth)}</span>
                 </span>
           }
           {ulPopover}
         </Tooltip>
       </span>
-    );
+    )
   }
 }
 

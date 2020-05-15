@@ -125,12 +125,22 @@ export function getVariableValue (filter: IControlBase, fields: IControlRelatedF
       }
       break
     case FilterTypes.DateRange:
-      if (value.length) {
-        variable = value
-          .map((v, index) => {
+      // if (value.length) {
+        // variable = value
+        //   .map((v, index) => {
+        //     const { name } = fields[index]
+        //     return { name, value: `'${moment(v).format(DatePickerFormats.Date)}'` }
+        //   })
+      // }
+      if (value.length && fields) {
+        const tempValue = []
+        value.forEach((item, index) => {
+          if (index < fields.length) {
             const { name } = fields[index]
-            return { name, value: `'${moment(v).format(dateFormat)}'` }
-          })
+            tempValue.push({ name, value: `'${moment(item).format(DatePickerFormats.Date)}'` })
+          }
+        })
+        return tempValue
       }
       break
     default:
@@ -225,12 +235,12 @@ export function getModelValue (control: IControlBase, field: IControlRelatedFiel
         const filterJson1 = {
           ...commanFilterJson,
           operator: '>=',
-          value: getValidColumnValue(moment(value[0]).format(dateFormat), sqlType)
+          value: getValidColumnValue(moment(value[0]).format(DatePickerFormats.Date), sqlType)
         }
         const filterJson2 = {
           ...commanFilterJson,
           operator: '<=',
-          value: getValidColumnValue(moment(value[1]).format(dateFormat), sqlType)
+          value: getValidColumnValue(moment(value[1]).format(DatePickerFormats.Date), sqlType)
         }
         filters.push(filterJson1)
         filters.push(filterJson2)
@@ -270,10 +280,6 @@ export function getValidVariableValue (value, valueType: ViewVariableValueTypes)
 
 export function deserializeDefaultValue (control: IControlBase) {
   const { type, dynamicDefaultValue, defaultValue, multiple, dateFormat } = control
-  console.log('deserializeDefaultValue')
-  console.log('defaultValue', defaultValue)
-  console.log('dynamicDefaultValue', dynamicDefaultValue)
-  console.log(type)
   switch (type) {
  case FilterTypes.DateRange:
    const nowDay = moment().format(DatePickerFormats.Date)
@@ -294,8 +300,11 @@ export function deserializeDefaultValue (control: IControlBase) {
        case DatePickerRangeDefaultValues.Year:
          return [moment(moment().startOf('year'), DatePickerFormats.Date), moment(nowDay)]
        case DatePickerRangeDefaultValues.Custom:
+         console.log('deserializeDefaultValue')
+         console.log('defaultValue', defaultValue)
+         console.log('dynamicDefaultValue', dynamicDefaultValue)
          if (defaultValue) {
-           return [moment(defaultValue[0], DatePickerFormats.Date), moment(defaultValue[1], DatePickerFormats.Date)]
+           return [moment(moment(defaultValue[0]).format(DatePickerFormats.Date)), moment(moment(defaultValue[1]).format(DatePickerFormats.Date))]
          } else {
            return [moment(nowDay), moment(nowDay)]
          }
