@@ -278,13 +278,15 @@ export class DashboardItemForm extends React.PureComponent<IDashboardItemFormPro
           </Col>
         </Row>
         <Row gutter={20} className={selectWidgetStep}>
-          <Table
-            dataSource={tableWidget}
-            columns={columns}
-            pagination={pagination}
-            onChange={this.handleTableChange}
-            rowSelection={rowSelection}
-          />
+          <Col span={24}>
+            <Table
+              dataSource={tableWidget}
+              columns={columns}
+              pagination={pagination}
+              onChange={this.handleTableChange}
+              rowSelection={rowSelection}
+            />
+          </Col>
         </Row>
         <div className={inputFormStep}>
           <Row gutter={8}>

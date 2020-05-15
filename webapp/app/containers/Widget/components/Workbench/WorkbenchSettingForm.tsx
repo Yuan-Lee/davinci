@@ -92,7 +92,7 @@ export class WorkbenchSettingForm extends PureComponent<IWorkbenchSettingFormPro
 
     return (
       <Modal
-        title="Widget 编辑器设置"
+        title="Widget 编辑器设置"
         wrapClassName="ant-modal-small"
         visible={visible}
         footer={modalButtons}
@@ -102,7 +102,7 @@ export class WorkbenchSettingForm extends PureComponent<IWorkbenchSettingFormPro
         <Form>
           <Row gutter={8}>
             <Col span={24}>
-              <FormItem label="查询触发模式" {...this.commonFormItemStyle}>
+              <FormItem label="查询触发模式" {...this.commonFormItemStyle}>
                 {getFieldDecorator('queryMode', {})(
                   <RadioGroup>
                     <Radio value={WorkbenchQueryMode.Manually}>手动</Radio>
@@ -112,7 +112,7 @@ export class WorkbenchSettingForm extends PureComponent<IWorkbenchSettingFormPro
               </FormItem>
             </Col>
             <Col span={24}>
-              <FormItem label="多选拖拽" {...this.commonFormItemStyle}>
+              <FormItem label="多选拖拽" {...this.commonFormItemStyle}>
                 {getFieldDecorator('multiDrag', {})(
                   <RadioGroup>
                     <Radio value={true}>是</Radio>

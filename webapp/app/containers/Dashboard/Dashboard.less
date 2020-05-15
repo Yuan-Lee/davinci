@@ -571,15 +571,20 @@
   }
 
   .itemAction {
-    display: none;
+    display: inline-block !important;
+    svg {
+      height: 0px;
+    }
   }
 
   &:hover {
     .itemAction {
-      display: inline-block !important;
       cursor: pointer;
       font-weight: 900;
       margin-bottom: 1px;
+      svg {
+        height: 14px;
+      }
     }
   }
 

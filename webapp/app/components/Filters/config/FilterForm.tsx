@@ -255,7 +255,7 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
           filterTypeRelatedInput.push(multipleFormComponent)
           break
         case FilterTypes.DateRange:
-         // filterTypeRelatedInput.push(dateFormatFormComponent)
+          // filterTypeRelatedInput.push(dateFormatFormComponent)
           break
         case FilterTypes.Select:
           filterTypeRelatedInput.push(multipleFormComponent)
@@ -354,7 +354,7 @@ export class FilterForm extends React.Component<IFilterFormProps, {}> {
           {
             type === FilterTypes.Select && (
               <>
-                <Col key="cache" span={6}>
+                <Col key="cache" span={8}>
                   <FormItem label="缓存">
                     {getFieldDecorator('cache', {})(
                       <RadioGroup size="small">
@@ -493,7 +493,6 @@ const formOptions = {
 
         switch (type) {
           case FilterTypes.Date:
-          case FilterTypes.DateRange:
             if (!datePickerFormatOptions.includes(dateFormat)) {
               changedValues.dateFormat = DatePickerFormats.Date
             }
