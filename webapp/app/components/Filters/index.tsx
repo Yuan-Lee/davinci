@@ -150,14 +150,14 @@ export function renderDate (filter: IGlobalControl, onChange, extraProps?) {
 export function renderDateRange (filter, onChange) {
   const placeholder: [string, string] = ['从', '到']
   const { Datetime, DatetimeMinute } = DatePickerFormats
-  const yformat = "YYYY"
   const isDatetimePicker = [Datetime, DatetimeMinute].includes(filter.dateFormat)
+  const isShowTime = true
   return (
     <RangePicker
       className={styles.controlComponent}
       placeholder={placeholder}
-      showTime={isDatetimePicker}
-      format={DatePickerFormats.Date}
+      showTime={isShowTime}
+      format={DatePickerFormats.Datetime}
       onChange={isDatetimePicker ? datetimePickerChange(onChange) : onChange}
       onOk={onChange}
     />
@@ -168,12 +168,13 @@ export function renderDateRangeWithSize (filter, onChange, size) {
   const placeholder: [string, string] = ['从', '到']
   const { Datetime, DatetimeMinute } = DatePickerFormats
   const isDatetimePicker = [Datetime, DatetimeMinute].includes(filter.dateFormat)
+  const isShowTime = true
   return (
     <RangePicker
       className={styles.controlComponent}
       placeholder={placeholder}
-      showTime={isDatetimePicker}
-      format={DatePickerFormats.Date}
+      showTime={isShowTime}
+      format={DatePickerFormats.Datetime}
       size={size}
       onChange={isDatetimePicker ? datetimePickerChange(onChange) : onChange}
       onOk={onChange}

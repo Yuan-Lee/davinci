@@ -137,7 +137,7 @@ export function getVariableValue (filter: IControlBase, fields: IControlRelatedF
         value.forEach((item, index) => {
           if (index < fields.length) {
             const { name } = fields[index]
-            tempValue.push({ name, value: `'${moment(item).format(DatePickerFormats.Date)}'` })
+            tempValue.push({ name, value: `'${moment(item).format(DatePickerFormats.Datetime)}'` })
           }
         })
         return tempValue
@@ -235,12 +235,12 @@ export function getModelValue (control: IControlBase, field: IControlRelatedFiel
         const filterJson1 = {
           ...commanFilterJson,
           operator: '>=',
-          value: getValidColumnValue(moment(value[0]).format(DatePickerFormats.Date), sqlType)
+          value: getValidColumnValue(moment(value[0]).format(DatePickerFormats.Datetime), sqlType)
         }
         const filterJson2 = {
           ...commanFilterJson,
           operator: '<=',
-          value: getValidColumnValue(moment(value[1]).format(DatePickerFormats.Date), sqlType)
+          value: getValidColumnValue(moment(value[1]).format(DatePickerFormats.Datetime), sqlType)
         }
         filters.push(filterJson1)
         filters.push(filterJson2)
@@ -282,29 +282,30 @@ export function deserializeDefaultValue (control: IControlBase) {
   const { type, dynamicDefaultValue, defaultValue, multiple, dateFormat } = control
   switch (type) {
  case FilterTypes.DateRange:
-   const nowDay = moment().format(DatePickerFormats.Date)
+   const nowDay = moment().format(DatePickerFormats.Datetime)
+   console.log('hahah', nowDay)
    if (dynamicDefaultValue) {
      switch (dynamicDefaultValue) {
        case DatePickerRangeDefaultValues.Today:
-         return [moment(nowDay), moment(nowDay)]
+         return [moment(moment().startOf('day'), DatePickerFormats.Datetime), moment(nowDay)]
        case DatePickerRangeDefaultValues.Week:
-         return [moment(moment().startOf('week'), DatePickerFormats.Date), moment(nowDay)]
+         return [moment(moment().startOf('week'), DatePickerFormats.Datetime), moment(nowDay)]
        case DatePickerRangeDefaultValues.Day7:
-         return [moment(moment().subtract(7, 'days'), DatePickerFormats.Date), moment(nowDay)]
+         return [moment(moment().subtract(7, 'days'), DatePickerFormats.Datetime), moment(nowDay)]
        case DatePickerRangeDefaultValues.Month:
-         return [moment(moment().startOf('month'), DatePickerFormats.Date), moment(nowDay)]
+         return [moment(moment().startOf('month'), DatePickerFormats.Datetime), moment(nowDay)]
        case DatePickerRangeDefaultValues.Day30:
-         return [moment(moment().subtract(30, 'days'), DatePickerFormats.Date), moment(nowDay)]
+         return [moment(moment().subtract(30, 'days'), DatePickerFormats.Datetime), moment(nowDay)]
        case DatePickerRangeDefaultValues.Quarter:
-         return [moment(moment().startOf('quarter'), DatePickerFormats.Date), moment(nowDay)]
+         return [moment(moment().startOf('quarter'), DatePickerFormats.Datetime), moment(nowDay)]
        case DatePickerRangeDefaultValues.Year:
-         return [moment(moment().startOf('year'), DatePickerFormats.Date), moment(nowDay)]
+         return [moment(moment().startOf('year'), DatePickerFormats.Datetime), moment(nowDay)]
        case DatePickerRangeDefaultValues.Custom:
          console.log('deserializeDefaultValue')
          console.log('defaultValue', defaultValue)
          console.log('dynamicDefaultValue', dynamicDefaultValue)
          if (defaultValue) {
-           return [moment(moment(defaultValue[0]).format(DatePickerFormats.Date)), moment(moment(defaultValue[1]).format(DatePickerFormats.Date))]
+           return [moment(moment(defaultValue[0]).format(DatePickerFormats.Datetime)), moment(moment(defaultValue[1]).format(DatePickerFormats.Datetime))]
          } else {
            return [moment(nowDay), moment(nowDay)]
          }

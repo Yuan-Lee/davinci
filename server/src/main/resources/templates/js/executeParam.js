@@ -5077,7 +5077,7 @@ function getVariableValue(filter, fields, value) {
                 variable = value
                     .map(function (v, index) {
                         var name = fields[index].name;
-                        return {name: name, value: "'" + moment(v).format(DatePickerFormats.Date) + "'"};
+                        return {name: name, value: "'" + moment(v).format(DatePickerFormats.Datetime) + "'"};
                     });
             }
             break;
@@ -5164,11 +5164,11 @@ function getModelValue(control, field, value) {
             if (value.length) {
                 filters.push(Object.assign({}, commanFilterJson, {
                     operator: '>=',
-                    value: getValidColumnValue(moment(value[0]).format(DatePickerFormats.Date), sqlType)
+                    value: getValidColumnValue(moment(value[0]).format(DatePickerFormats.Datetime), sqlType)
                 }));
                 filters.push(Object.assign({}, commanFilterJson, {
                     operator: '<=',
-                    value: getValidColumnValue(moment(value[1]).format(DatePickerFormats.Date), sqlType)
+                    value: getValidColumnValue(moment(value[1]).format(DatePickerFormats.Datetime), sqlType)
                 }));
             }
             break;

@@ -35,7 +35,7 @@ const { TextArea } = Input
 const { Option } = Select
 const { RangePicker } = DatePicker
 
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { FormComponentProps } from '@ant-design/compatible/lib/form'
 import {
   SchedulePeriodUnit,
   ISchedule,
@@ -44,6 +44,7 @@ import {
 import { FormItemStyle, LongFormItemStyle } from '../constants'
 
 import Styles from './ScheduleBaseConfig.less'
+import DatePickerFormats from "components/Filters/datePickerFormats"
 
 const periodUnitList: SchedulePeriodUnit[] = [
   'Minute',
@@ -251,7 +252,7 @@ export const ScheduleBaseConfig: React.FC<IScheduleBaseConfigProps> = (
           <RangePicker
             style={{ width: '100%' }}
             showTime
-            format="YYYY-MM-DD HH:mm:ss"
+            format={DatePickerFormats.Datetime}
           />
         )}
       </FormItem>

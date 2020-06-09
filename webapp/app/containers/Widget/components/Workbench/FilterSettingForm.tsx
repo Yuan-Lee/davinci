@@ -8,6 +8,7 @@ import { decodeMetricName } from '../util'
 import { uuid } from 'utils/util'
 import { Transfer, Radio, Button, DatePicker } from 'antd'
 import { IFilters } from 'app/components/Filters/types'
+import DatePickerFormats from "components/Filters/datePickerFormats"
 const RadioGroup = Radio.Group
 const RadioButton = Radio.Button
 const RangePicker = DatePicker.RangePicker
@@ -377,6 +378,7 @@ export class FilterSettingForm extends PureComponent<IFilterSettingFormProps, IF
       )
     }
 
+
     const dateRadios = this.dateRadioSource.map((arr, index) => {
       return arr.map((s) => (
         <Radio key={s.value} value={s.value} className={styles.radio}>{s.name}</Radio>
@@ -411,6 +413,7 @@ export class FilterSettingForm extends PureComponent<IFilterSettingFormProps, IF
         </div>
       )
     } else {
+      const isShowTime = true
       shownBlock = (
         <div className={styles.dateBlock}>
           <RadioGroup
@@ -423,9 +426,9 @@ export class FilterSettingForm extends PureComponent<IFilterSettingFormProps, IF
           {selectedDate === 'other' && (
             <RangePicker
               value={datepickerValue}
-              format={DEFAULT_DATETIME_FORMAT}
+              format={DatePickerFormats.Datetime}
               onChange={this.datepickerChange}
-              showTime
+              showTime={isShowTime}
             />
           )}
         </div>
