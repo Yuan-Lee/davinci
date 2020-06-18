@@ -73,7 +73,8 @@ export class Chart extends React.PureComponent<IChartProps> {
   }
 
   public collectSelectedItems = (params) => {
-    const { data, onSelectChartsItems, selectedChart, onDoInteract, onCheckTableInteract } = this.props
+    const { data, onSelectChartsItems, selectedChart, onDoInteract, onCheckTableInteract, downDrillSettingObj } = this.props
+    console.log('downDrillSettingObj', downDrillSettingObj)
     let selectedItems = []
     if (this.props.selectedItems && this.props.selectedItems.length) {
       selectedItems = [...this.props.selectedItems]
@@ -116,6 +117,10 @@ export class Chart extends React.PureComponent<IChartProps> {
     }, 500)
     if (onSelectChartsItems) {
       onSelectChartsItems(selectedItems)
+    }
+    if (downDrillSettingObj && downDrillSettingObj.customDrill === 1) {
+      const { url } = downDrillSettingObj
+      window.open(url)
     }
   }
 

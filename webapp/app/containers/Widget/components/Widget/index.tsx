@@ -163,6 +163,7 @@ export interface IWidgetProps {
   onPaginationChange?: (pageNo: number, pageSize: number, order?: { column: string, direction: string }) => void
   onChartStylesChange?: (propPath: string[], value: string) => void
   isDrilling?: boolean
+  downDrillSettingObj?: any
   whichDataDrillBrushed?: boolean | object[]
   computed?: any[]
   selectedItems?: number[]

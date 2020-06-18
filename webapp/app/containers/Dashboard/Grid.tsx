@@ -40,6 +40,7 @@ import Container from 'components/Container'
 import DashboardToolbar from './components/DashboardToolbar'
 import DashboardItemForm from './components/DashboardItemForm'
 import DrillPathSetting from './components/DrillPathSetting'
+import DownDrillSetting from './components/DownDrillSetting'
 import DashboardItem from './components/DashboardItem'
 import DashboardLinkageConfig from './components/DashboardLinkageConfig'
 
@@ -266,6 +267,7 @@ interface IGridStates {
   dashboardSharePanelAuthorized: boolean
   nextMenuTitle: string
   drillPathSettingVisible: boolean
+  downDrillSettingVisible: boolean
 }
 
 interface IDashboardItemForm extends AntdFormType {
@@ -303,6 +305,7 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
       dashboardItemFormType: '',
       dashboardItemFormVisible: false,
       drillPathSettingVisible: false,
+      downDrillSettingVisible: false,
       dashboardItemFormStep: 0,
       modalLoading: false,
       selectedWidgets: [],
@@ -872,6 +875,20 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
       modalLoading: false,
       dashboardItemFormVisible: false,
       selectedWidgets: []
+    })
+  }
+
+  private showDownDrillDashboardItemForm = (itemId) => () => {
+    const dashboardItem = this.props.currentItems.find((c) => c.id === itemId)
+    this.setState({
+      downDrillSettingVisible: true,
+      selectedWidgets: [dashboardItem.widgetId],
+      currentItemId: itemId
+    })
+  }
+  private hideDownDrillDashboardItemForm = () => {
+    this.setState({
+      downDrillSettingVisible: false
     })
   }
 
@@ -1561,6 +1578,39 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
     })
   }
 
+  private saveDownDrillSetting = (setting) => {
+    const {currentItems, match, onLoadDashboardDetail} = this.props
+    const { params } = match
+    const portalId = +params.portalId
+    const { selectedWidgets } = this.state
+    const dashboardItem = currentItems.find((item) => item.widgetId === Number(selectedWidgets[0]))
+    const config = dashboardItem.config
+    let configObj = null
+    try {
+       configObj = config && config.length > 0 ? JSON.parse(config) : {}
+    } catch (err) {
+      throw new Error(err)
+    }
+
+    if (!configObj) {
+      configObj = {
+        downDrillSettingObj: setting
+      }
+    }
+    configObj['downDrillSettingObj'] = setting
+
+    const modifiedDashboardItem = {
+      ...dashboardItem,
+      config: JSON.stringify(configObj)
+    }
+
+    this.props.onEditDashboardItem(portalId, modifiedDashboardItem, () => {
+      if (params.dashboardId && Number(params.dashboardId) !== -1) {
+        onLoadDashboardDetail(+params.projectId, +params.portalId, +params.dashboardId)
+      }
+    })
+  }
+
   private selectChartsItems = (itemId, renderType, selectedItems) => {
     const { onSelectDashboardItemChart } = this.props
     onSelectDashboardItemChart(itemId, renderType, selectedItems)
@@ -1600,7 +1650,8 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
       globalFilterConfigVisible,
       allowFullScreen,
       dashboardSharePanelAuthorized,
-      drillPathSettingVisible
+      drillPathSettingVisible,
+      downDrillSettingVisible
     } = this.state
     let dashboardType: number
     if (currentDashboard) {
@@ -1650,7 +1701,19 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
       const gridEditable = hasVizEditPermission(currentProject.permission)
 
       currentItems.forEach((dashboardItem) => {
-        const { id, x, y, width, height, widgetId, polling, frequency } = dashboardItem
+        const { id, x, y, width, height, widgetId, polling, frequency, config } = dashboardItem
+        let dashboardItemConfig
+        if (config && config.length) {
+          try {
+            dashboardItemConfig = JSON.parse(config)
+          } catch (error) {
+            message.error(error)
+          }
+        }
+        let downDrillSettingObj
+        if (dashboardItemConfig) {
+          downDrillSettingObj = dashboardItemConfig.downDrillSettingObj
+        }
         const {
           datasource,
           loading,
@@ -1685,6 +1748,7 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
               datasource={datasource}
               loading={loading}
               polling={polling}
+              downDrillSettingObj={downDrillSettingObj}
               interacting={interacting}
               frequency={frequency}
               shareInfo={shareInfo}
@@ -1705,6 +1769,7 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
               onGetChartData={this.getChartData}
               onShowEdit={this.showEditDashboardItemForm}
               onShowDrillEdit={this.showDrillDashboardItemForm}
+              onShowDownDrillEdit={this.showDownDrillDashboardItemForm}
               onDeleteDashboardItem={this.deleteItem}
               onLoadWidgetShareLink={onLoadWidgetShareLink}
               onDownloadCsv={this.initiateWidgetDownloadTask}
@@ -1885,6 +1950,24 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
              saveDrillPathSetting={this.saveDrillPathSetting}
              cancel={this.hideDrillPathSettingModal}
           /> */}
+        </Modal>
+        <Modal
+          key={`dfd${uuid(8, 16)}`}
+          title="下钻设置"
+          wrapClassName="ant-modal-large"
+          visible={downDrillSettingVisible}
+          footer={null}
+          onCancel={this.hideDownDrillDashboardItemForm}
+        >
+          <DownDrillSetting
+            itemId={currentItemId}
+            currentItems={currentItems}
+            selectedWidget={this.state.selectedWidgets}
+            widgets={widgets || []}
+            views={views || []}
+            saveDownDrillSetting={this.saveDownDrillSetting}
+            cancel={this.hideDownDrillDashboardItemForm}
+          />
         </Modal>
         <DashboardLinkageConfig
           currentDashboard={currentDashboard}
