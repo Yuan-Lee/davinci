@@ -7,12 +7,10 @@ const RadioGroup = Radio.Group
 
 interface IDownDrillSettingProps {
   widgets: any[]
-  views: any[]
   itemId: number | boolean
   currentItems: any[]
   selectedWidget: number[]
   saveDownDrillSetting: (flag: any) => any
-  cancel: () => any
 }
 
 interface IDownDrillSettingStates {
@@ -32,11 +30,18 @@ export class DownDrillSetting extends React.PureComponent<IDownDrillSettingProps
   }
 
   public componentWillMount () {
-    this.init()
+    const { itemId, currentItems } = this.props
+    this.init(itemId, currentItems)
   }
 
-  private init = () => {
-    const { itemId, currentItems } = this.props
+  public componentWillReceiveProps (nextProps) {
+    const { itemId, currentItems } = nextProps
+    if (this.props.itemId !== itemId) {
+      this.init(itemId, currentItems)
+    }
+  }
+
+  private init = (itemId, currentItems) => {
     const currentItem = currentItems.find(item => {
       return item.id === itemId
     })
@@ -67,18 +72,10 @@ export class DownDrillSetting extends React.PureComponent<IDownDrillSettingProps
     return currentWidget
   }
 
-  private hideDownDrillSettingModal = () => {
-    const { cancel } = this.props
-    if (cancel) {
-      cancel()
-    }
-  }
-
   private onSaveDownDrillSetting = () => {
     const { saveDownDrillSetting } = this.props
     const { settingObj } = this.state
     saveDownDrillSetting(settingObj)
-    this.hideDownDrillSettingModal()
   }
 
   private customDrillChange = (e) => {

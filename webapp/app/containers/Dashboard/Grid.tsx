@@ -1608,6 +1608,7 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
       if (params.dashboardId && Number(params.dashboardId) !== -1) {
         onLoadDashboardDetail(+params.projectId, +params.portalId, +params.dashboardId)
       }
+      this.hideDownDrillDashboardItemForm()
     })
   }
 
@@ -1952,7 +1953,7 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
           /> */}
         </Modal>
         <Modal
-          key={`dfd${uuid(8, 16)}`}
+          key={`downDrillSettingModal`}
           title="下钻设置"
           wrapClassName="ant-modal-large"
           visible={downDrillSettingVisible}
@@ -1964,9 +1965,7 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
             currentItems={currentItems}
             selectedWidget={this.state.selectedWidgets}
             widgets={widgets || []}
-            views={views || []}
             saveDownDrillSetting={this.saveDownDrillSetting}
-            cancel={this.hideDownDrillDashboardItemForm}
           />
         </Modal>
         <DashboardLinkageConfig
