@@ -1965,6 +1965,7 @@ export class Grid extends React.Component<IGridProps & RouteComponentWithParams,
             currentItems={currentItems}
             selectedWidget={this.state.selectedWidgets}
             widgets={widgets || []}
+            currentItemsInfo={currentItemsInfo}
             saveDownDrillSetting={this.saveDownDrillSetting}
           />
         </Modal>

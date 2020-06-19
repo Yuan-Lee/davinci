@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Radio, Input } from 'antd'
+import { Button, Radio, Input, Tag } from 'antd'
 
 const styles = require('../Dashboard.less')
 
@@ -7,6 +7,7 @@ const RadioGroup = Radio.Group
 
 interface IDownDrillSettingProps {
   widgets: any[]
+  currentItemsInfo: any
   itemId: number | boolean
   currentItems: any[]
   selectedWidget: number[]
@@ -14,7 +15,8 @@ interface IDownDrillSettingProps {
 }
 
 interface IDownDrillSettingStates {
-  settingObj: any
+  settingObj: any,
+  chartDataKeys: string[]
 }
 
 export class DownDrillSetting extends React.PureComponent<IDownDrillSettingProps, IDownDrillSettingStates> {
@@ -24,24 +26,28 @@ export class DownDrillSetting extends React.PureComponent<IDownDrillSettingProps
     this.state = {
       settingObj: {
         customDrill: 0,
-        url: ''
-      }
+        // way: 1,
+        url: '',
+        chartDataParams: '',
+        queryDataParams: ''
+      },
+      chartDataKeys: []
     }
   }
 
   public componentWillMount () {
-    const { itemId, currentItems } = this.props
-    this.init(itemId, currentItems)
+    const { itemId, currentItems, currentItemsInfo } = this.props
+    this.init(itemId, currentItems, currentItemsInfo)
   }
 
   public componentWillReceiveProps (nextProps) {
-    const { itemId, currentItems } = nextProps
+    const { itemId, currentItems, currentItemsInfo } = nextProps
     if (this.props.itemId !== itemId) {
-      this.init(itemId, currentItems)
+      this.init(itemId, currentItems, currentItemsInfo)
     }
   }
 
-  private init = (itemId, currentItems) => {
+  private init = (itemId, currentItems, currentItemsInfo) => {
     const currentItem = currentItems.find(item => {
       return item.id === itemId
     })
@@ -64,12 +70,19 @@ export class DownDrillSetting extends React.PureComponent<IDownDrillSettingProps
         })
       }
     }
-  }
-
-  private getCurrentWidget = (widgetId) => {
-    const { widgets } = this.props
-    const currentWidget = widgets.find((widget) => widget.id === widgetId)
-    return currentWidget
+    const dashboardItem = currentItemsInfo[itemId]
+    if (dashboardItem && dashboardItem.datasource && dashboardItem.datasource.columns) {
+      const chartDataKeys = []
+      dashboardItem.datasource.columns.forEach(colum => {
+        const { name } = colum
+        if (chartDataKeys.indexOf(name) === -1) {
+          chartDataKeys.push(name)
+        }
+      })
+      this.setState({
+        chartDataKeys
+      })
+    }
   }
 
   private onSaveDownDrillSetting = () => {
@@ -85,6 +98,13 @@ export class DownDrillSetting extends React.PureComponent<IDownDrillSettingProps
     })
   }
 
+  // private wayChange = (e) => {
+  //   const tempSettingObj = Object.assign({}, this.state.settingObj, { way: e.target.value })
+  //   this.setState({
+  //     settingObj: tempSettingObj
+  //   })
+  // }
+
   private urlChange = (e) => {
     const tempSettingObj = Object.assign({}, this.state.settingObj, { url: e.target.value })
     this.setState({
@@ -92,9 +112,36 @@ export class DownDrillSetting extends React.PureComponent<IDownDrillSettingProps
     })
   }
 
+  private chartDataParamsChange = (e) => {
+    const tempSettingObj = Object.assign({}, this.state.settingObj, { chartDataParams: e.target.value })
+    this.setState({
+      settingObj: tempSettingObj
+    })
+  }
+
+  private queryDataParamsChange = (e) => {
+    const tempSettingObj = Object.assign({}, this.state.settingObj, { queryDataParams: e.target.value })
+    this.setState({
+      settingObj: tempSettingObj
+    })
+  }
+
+  tagForMap = tag => {
+    const tagEle = (
+      <Tag color="#2db7f5">
+        {tag}
+      </Tag>
+    )
+    return (
+      <span key={tag} style={{ display: 'inline-block' }}>
+        {tagEle}
+      </span>
+    )
+  }
+
   public render () {
 
-    const { settingObj } = this.state
+    const { settingObj, chartDataKeys } = this.state
 
     const downDrillSettingButtons = [
       (
@@ -109,6 +156,8 @@ export class DownDrillSetting extends React.PureComponent<IDownDrillSettingProps
       )
     ]
 
+    const tagChild = chartDataKeys.map(this.tagForMap)
+
     return (
       <div className={styles.downDrillSetting}>
         <div>
@@ -118,9 +167,27 @@ export class DownDrillSetting extends React.PureComponent<IDownDrillSettingProps
             <Radio value={0} checked>否</Radio>
           </RadioGroup>
         </div>
+        {/* <div>
+          <div className={styles.label}>方式： </div>
+          <RadioGroup value={settingObj.way} onChange={this.wayChange}>
+            <Radio value={1} checked>新窗口</Radio>
+            <Radio value={2}>重定向</Radio>
+          </RadioGroup>
+        </div> */}
         <div>
           <div className={styles.label}>URL： </div>
           <Input placeholder="请输入URL" value={settingObj.url} onChange={this.urlChange} />
+        </div>
+        <div>
+          <div className={styles.label}>图表参数（多个参数使用&amp;符号连接）： </div>
+          <div style={{ marginBottom: '15px' }}>
+            {tagChild}
+          </div>
+          <Input placeholder="请输入图表参数" value={settingObj.chartDataParams} onChange={this.chartDataParamsChange} />
+        </div>
+        <div>
+          <div className={styles.label}>查询参数（多个参数使用&amp;符号连接）： </div>
+          <Input placeholder="请输入查询参数" value={settingObj.queryDataParams} onChange={this.queryDataParamsChange} />
         </div>
         <div className={styles.footer}>
           {downDrillSettingButtons}
