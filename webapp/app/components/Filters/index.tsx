@@ -7,6 +7,9 @@ const MultiDatePicker = React.lazy(() => import('../MultiDatePicker'))
 import DatePickerFormats from './datePickerFormats'
 import { IGlobalControl } from './types'
 import locale from 'antd/es/date-picker/locale/zh_CN'
+
+locale.lang.locale = 'zh_CN'
+
 const { WeekPicker, MonthPicker, RangePicker } = DatePicker
 
 const styles = require('./filter.less')
