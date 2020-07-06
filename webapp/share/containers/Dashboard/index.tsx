@@ -991,7 +991,19 @@ export class Share extends React.Component<IDashboardProps, IDashboardStates> {
       const layouts = {lg: []}
 
       currentItems.forEach((dashboardItem) => {
-        const { id, x, y, width, height, widgetId, polling, frequency } = dashboardItem
+        const { id, x, y, width, height, widgetId, polling, frequency, config } = dashboardItem
+        let dashboardItemConfig
+        if (config && config.length) {
+          try {
+            dashboardItemConfig = JSON.parse(config)
+          } catch (error) {
+            message.error(error)
+          }
+        }
+        let downDrillSettingObj
+        if (dashboardItemConfig) {
+          downDrillSettingObj = dashboardItemConfig.downDrillSettingObj
+        }
         const {
           datasource,
           loading,
@@ -1021,6 +1033,7 @@ export class Share extends React.Component<IDashboardProps, IDashboardStates> {
               datasource={datasource}
               loading={loading}
               polling={polling}
+              downDrillSettingObj={downDrillSettingObj}
               onDrillData={this.dataDrill}
               onSelectDrillHistory={this.selectDrillHistory}
               interacting={interacting}

@@ -73,7 +73,7 @@ export class Chart extends React.PureComponent<IChartProps> {
   }
 
   public collectSelectedItems = (params) => {
-    const { data, onSelectChartsItems, selectedChart, onDoInteract, onCheckTableInteract } = this.props
+    const { data, onSelectChartsItems, selectedChart, onDoInteract, onCheckTableInteract, downDrillSettingObj } = this.props
     let selectedItems = []
     if (this.props.selectedItems && this.props.selectedItems.length) {
       selectedItems = [...this.props.selectedItems]
@@ -116,6 +116,54 @@ export class Chart extends React.PureComponent<IChartProps> {
     }, 500)
     if (onSelectChartsItems) {
       onSelectChartsItems(selectedItems)
+    }
+    if (downDrillSettingObj && downDrillSettingObj.customDrill === 1) {
+      let { url, chartDataParams, queryDataParams } = downDrillSettingObj
+      if (chartDataParams) {
+        let chartDataParamsTemp = ''
+        const chartDataArr = chartDataParams.split('&')
+        chartDataArr.forEach((item, index) => {
+          const itemMatch = item.match(/\${\S*?}/g)
+          if (itemMatch && itemMatch.length) {
+            const chartData = data[dataIndex]
+            const param = itemMatch[0]
+            const key = param.replace('${', '').replace('}', '')
+            const value = chartData[key] !== undefined ? chartData[key] : ''
+            if (value !== '') {
+              chartDataParamsTemp += item.replace(param, value)
+              if (index !== chartDataArr.length - 1) {
+                chartDataParamsTemp += '&'
+              }
+            }
+          }
+        })
+        if (chartDataParamsTemp) {
+          url = `${url}${url.indexOf('?') === -1 ? '?' : '&'}${chartDataParamsTemp}`
+        }
+      }
+      if (queryDataParams) {
+        let queryDataParamsTemp = ''
+        const queryDataArr = queryDataParams.split('&')
+        queryDataArr.forEach((item, index) => {
+          const itemMatch = item.match(/\${\S*?}/g)
+          if (itemMatch && itemMatch.length) {
+            const queryData: any = this.props.queryVariables
+            const param = itemMatch[0]
+            const key = param.replace('${', '').replace('}', '')
+            const value = queryData[`$${key}$`] !== undefined ? queryData[`$${key}$`].replace("'", '').replace("'", '') : ''
+            if (value !== '') {
+              queryDataParamsTemp += item.replace(param, value)
+              if (index !== queryDataArr.length - 1) {
+                queryDataParamsTemp += '&'
+              }
+            }
+          }
+        })
+        if (queryDataParamsTemp) {
+          url = `${url}${url.indexOf('?') === -1 ? '?' : '&'}${queryDataParamsTemp}`
+        }
+      }
+      window.open(url)
     }
   }
 

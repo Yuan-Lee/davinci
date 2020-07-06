@@ -57,6 +57,7 @@ interface IDashboardItemProps {
   datasource: any
   loading: boolean
   polling: string
+  downDrillSettingObj?: any
   interacting: boolean
   frequency: string
   shareInfo: string
@@ -78,6 +79,7 @@ interface IDashboardItemProps {
   onGetChartData: IGetChartData
   onShowEdit?: (itemId: number) => (e: React.MouseEvent<HTMLSpanElement>) => void
   onShowDrillEdit?: (itemId: number) => (e: React.MouseEvent<HTMLSpanElement>) => void
+  onShowDownDrillEdit?: (itemId: number) => (e: React.MouseEvent<HTMLSpanElement>) => void
   onDeleteDashboardItem?: (itemId: number) => () => void
   onLoadWidgetShareLink?: (id: number, itemId: number, authName: string) => void
   onDownloadCsv: (itemId: number, widgetId: number, shareInfo?: string) => void
@@ -135,6 +137,7 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
   public static defaultProps = {
     onShowEdit: () => void 0,
     onShowDrillEdit: () => void 0,
+    onShowDownDrillEdit: () => void 0,
     onDeleteDashboardItem: () => void 0
   }
   private pollingTimer: number
@@ -679,6 +682,7 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
       currentProject,
       onShowEdit,
       onShowDrillEdit,
+      onShowDownDrillEdit,
       onSelectDrillHistory,
       onDeleteDashboardItem,
       onLoadWidgetShareLink,
@@ -778,6 +782,9 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
           {/* <Menu.Item className={styles.menuItem}>
             <InfoButton className={styles.menuText} onClick={onShowDrillEdit(itemId)}>钻取设置</InfoButton>
           </Menu.Item> */}
+          <Menu.Item className={styles.menuItem}>
+            <InfoButton className={styles.menuText} onClick={onShowDownDrillEdit(itemId)}>下钻设置</InfoButton>
+          </Menu.Item>
           <Menu.Item className={styles.menuItem}>
             <Popconfirm
               title="确定删除？"
@@ -960,6 +967,7 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
               onPaginationChange={this.paginationChange}
               getDataDrillDetail={this.getDataDrillDetail}
               isDrilling={this.state.isDrilling}
+              downDrillSettingObj={this.props.downDrillSettingObj}
               whichDataDrillBrushed={this.state.whichDataDrillBrushed}
               onSelectChartsItems={this.selectChartsItems}
               selectedItems={this.props.selectedItems}
@@ -1050,6 +1058,7 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
                 onPaginationChange={this.paginationChange}
                 getDataDrillDetail={this.getDataDrillDetail}
                 isDrilling={this.state.isDrilling}
+                downDrillSettingObj={this.props.downDrillSettingObj}
                 whichDataDrillBrushed={this.state.whichDataDrillBrushed}
                 onSelectChartsItems={this.selectChartsItems}
                 selectedItems={this.props.selectedItems}
