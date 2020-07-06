@@ -6,6 +6,7 @@ import NumberRange from '../NumberRange'
 const MultiDatePicker = React.lazy(() => import('../MultiDatePicker'))
 import DatePickerFormats from './datePickerFormats'
 import { IGlobalControl } from './types'
+import locale from 'antd/es/date-picker/locale/zh_CN'
 const { WeekPicker, MonthPicker, RangePicker } = DatePicker
 
 const styles = require('./filter.less')
@@ -93,6 +94,7 @@ export function renderDate (filter: IGlobalControl, onChange, extraProps?) {
       case Week:
         return (
           <WeekPicker
+            locale={locale}
             className={styles.controlComponent}
             placeholder="请选择"
             {...onChange && {onChange}}
@@ -103,6 +105,7 @@ export function renderDate (filter: IGlobalControl, onChange, extraProps?) {
       case Year:
         return (
           <MonthPicker
+            locale={locale}
             className={styles.controlComponent}
             placeholder="请选择"
             format={filter.dateFormat}
@@ -114,6 +117,7 @@ export function renderDate (filter: IGlobalControl, onChange, extraProps?) {
         const isDatetimePicker = [Datetime, DatetimeMinute].includes(filter.dateFormat)
         return (
           <DatePicker
+            locale={locale}
             className={styles.controlComponent}
             placeholder="请选择"
             showTime={isDatetimePicker}
@@ -133,6 +137,7 @@ export function renderDateRange (filter, onChange) {
   const isDatetimePicker = [Datetime, DatetimeMinute].includes(filter.dateFormat)
   return (
     <RangePicker
+      locale={locale}
       className={styles.controlComponent}
       placeholder={placeholder}
       showTime={isDatetimePicker}
