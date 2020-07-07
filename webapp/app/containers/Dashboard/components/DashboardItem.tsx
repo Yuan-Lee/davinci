@@ -1014,9 +1014,9 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
             <i className="iconfont icon-icon_linkage"/>
           </div> */}
 
-          <div className={styles.trigger}>
+          {/* <div className={styles.trigger}>
             {drillInteractIcon}
-          </div>
+          </div> */}
           <div
             className={styles.offInteract}
             onClick={this.turnOffInteract}
