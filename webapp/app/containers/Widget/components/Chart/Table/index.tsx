@@ -381,7 +381,7 @@ function getTableColumns (props: IChartProps) {
     }
   }
   const { cols, rows, metrics, data, queryVariables } = props
-  const { headerConfig, columnsConfig, autoMergeCell, leftFixedColumns, rightFixedColumns, withNoAggregators } = chartStyles.table
+  const { headerConfig, columnsConfig, autoMergeCell, mergeCells, leftFixedColumns, rightFixedColumns, withNoAggregators } = chartStyles.table
   const tableColumns: Array<ColumnProps<any>> = []
   const mapTableHeaderConfig: IMapTableHeaderConfig = {}
   const fixedColumnInfo: {[key: string]: number} = {}
@@ -409,7 +409,9 @@ function getTableColumns (props: IChartProps) {
     if (autoMergeCell) {
       column.render = (text, _, idx) => {
         // dimension cells needs merge
-        const rowSpan = getMergedCellSpan(data, name, idx)
+        const rowSpan = Array.isArray(mergeCells) && mergeCells.length > 0
+          ? (mergeCells.includes(name) ? getMergedCellSpan(data, name, idx) : 1)
+          : getMergedCellSpan(data, name, idx)
         return rowSpan === 1 ? text : { children: text, props: { rowSpan } }
       }
     }
