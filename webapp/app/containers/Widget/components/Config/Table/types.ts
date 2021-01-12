@@ -22,6 +22,7 @@ export interface ITableConfig {
   bordered: boolean
   size: 'default' | 'middle' | 'small'
   autoMergeCell: boolean
+  mergeCells: string[]
   withPaging: boolean
   pageSize: string
   withNoAggregators: boolean

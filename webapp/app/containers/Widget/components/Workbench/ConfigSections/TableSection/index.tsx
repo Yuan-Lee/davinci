@@ -212,11 +212,13 @@ export class TableSection extends React.PureComponent<ITableSectionProps, ITable
     onChange('headerConfig', config)
     const validFixedColumns = config.map((c) => c.headerName)
     const { config: tableConfig } = this.props
-    let { leftFixedColumns, rightFixedColumns } = tableConfig
+    let { leftFixedColumns, rightFixedColumns, mergeCells } = tableConfig
     leftFixedColumns = leftFixedColumns.filter((col) => ~validFixedColumns.indexOf(col))
     rightFixedColumns = rightFixedColumns.filter((col) => ~validFixedColumns.indexOf(col))
+    mergeCells = mergeCells.filter((col) => ~validFixedColumns.indexOf(col))
     this.selectChange('leftFixedColumns')(leftFixedColumns)
     this.selectChange('rightFixedColumns')(rightFixedColumns)
+    this.selectChange('mergeCells')(mergeCells)
     this.setState({
       headerConfigModalVisible: false
     })
@@ -288,16 +290,25 @@ export class TableSection extends React.PureComponent<ITableSectionProps, ITable
     return options
   }
 
+  private getValidMergeColumns (columns: IDataParamSource[]) {
+    let options: JSX.Element[]
+    options = columns.map((c) => {
+      const displayName = this.getColumnDisplayName(c)
+      return (<Option key={c.name} value={c.name}>{displayName}</Option>)
+    })
+    return options
+  }
+
   public render () {
     const { config } = this.props
     const {
       leftFixedColumns, rightFixedColumns, headerFixed, bordered, size,
-      autoMergeCell, withPaging, pageSize, withNoAggregators } = config
+      autoMergeCell, mergeCells, withPaging, pageSize, withNoAggregators } = config
     const {
       validColumns, validHeaderConfig, validColumnConfig,
       headerConfigModalVisible, columnConfigModalVisible } = this.state
     const fixedColumnOptions = this.getValidFixedColumns(validHeaderConfig, validColumns)
-
+    const mergeColumnOptions = this.getValidMergeColumns(validColumns)
 
     return (
       <div>
@@ -387,6 +398,25 @@ export class TableSection extends React.PureComponent<ITableSectionProps, ITable
               </Col>
             </Row>
           </div>
+          {autoMergeCell ?
+          (<>
+            <h4>合并列（此项为空表示全部）</h4>
+            <div className={styles.blockBody}>
+              <Row gutter={8} type="flex" align="middle" className={styles.rowBlock}>
+                <Col span={24}>
+                  <Select
+                    className={styles.blockElm}
+                    mode="tags"
+                    placeholder="请选择合并列"
+                    value={mergeCells}
+                    onChange={this.selectChange('mergeCells')}
+                  >
+                    {mergeColumnOptions}
+                  </Select>
+                </Col>
+              </Row>
+            </div>
+          </>) : null }
         </div>
         <div className={styles.paneBlock}>
           <h4>分页</h4>
